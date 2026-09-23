@@ -74,6 +74,71 @@ def build():
     out["mount_trunnions"] = _trunnions()
     out["mount_aft_lug"] = _aft_lug()
     out["coolant_lines"] = _coolant()
+    out["mode_valve_actuators"] = _mode_valve_actuators()
+    out.update(_hydraulics())
+    return out
+
+
+def _mode_valve_actuators():
+    """Two actuators high on the forward case, at 45 and 135 degrees, that
+    drive the mode valve's unison ring through the case. Each stands on two
+    lugs, and its rod enters the case through a boss."""
+    parts = []
+    x0, x1 = 530.0, 660.0
+    rb = 20.0
+    for clock in (45.0, 135.0):
+        r_c = max(outer_od(x0), outer_od(x1)) + rb + 8.0
+        body = mesh.pipe([common.polar(x0, r_c, clock),
+                          common.polar(x1 - 30.0, r_c, clock)], rb, 20)
+        rod = mesh.pipe([common.polar(x1 - 34.0, r_c, clock),
+                         common.polar(x1, r_c, clock),
+                         common.polar(x1 + 20.0, outer_od(x1 + 20.0) + 8.0, clock),
+                         common.polar(x1 + 20.0, outer_od(x1 + 20.0) - 2.0, clock)],
+                        7.0, 12, bend=10.0)
+        boss = common.radial_pin(x1 + 20.0, outer_od(x1 + 20.0) - 1.0,
+                                 outer_od(x1 + 20.0) + 6.0, 14.0, clock, 20)
+        lugs = [common.radial_pin(x, outer_od(x) - 1.0, r_c - rb + 3.0, 9.0,
+                                  clock, 12) for x in (x0 + 20.0, x1 - 50.0)]
+        parts += [body, rod, boss] + lugs
+    return mesh.join(*parts)
+
+
+def _hydraulics():
+    """A hydraulic pump under the gearbox's front and the lines from it aft
+    to the four nozzle actuators: along the lower flanks at 45 degrees
+    below the horizontal, out round the nozzle shroud and on to each
+    actuator's cap end."""
+    out = {}
+    zc = gb_centre_z()
+    zp = zc - G["depth"] / 2.0 - 32.0
+    pv, pf = mesh.revolve_ring([(430.0, 6.0), (520.0, 6.0), (520.0, 38.0),
+                                (430.0, 38.0)], 32)
+    out["hydraulic_pump"] = ([(x, y, z + zp) for (x, y, z) in pv], pf)
+    nz = spec.NOZZLE
+    from parts import nozzle as nzl
+    y_act = nzl.SW_OUT + nz["actuator_r"] - 0.2
+    x_act = nz["x_trans1"] + 30.0
+    z_act = nzl.H_TRANS * 0.62
+    lines = []
+    r_run = 530.0
+    for sy, clock in ((-1.0, -135.0), (1.0, -45.0)):
+        for sz, dz in ((-1.0, 0.0), (1.0, 14.0)):
+            r = r_run + dz
+            p_run = common.polar(0.0, r, clock)
+            path = [(470.0, sy * 20.0, zp),
+                    (470.0, sy * 200.0, zp - 6.0 - dz),
+                    (560.0, p_run[1], p_run[2]),
+                    (2800.0, p_run[1], p_run[2])]
+            if sz < 0:
+                path += [(3000.0, sy * 432.0, -380.0 - dz),
+                         (3110.0, sy * 432.0, -z_act - 20.0),
+                         (x_act + 12.0, sy * (y_act + 4.0), -z_act)]
+            else:
+                path += [(2960.0, sy * 440.0, -390.0 - dz),
+                         (3050.0, sy * 440.0, z_act - 40.0),
+                         (x_act + 12.0, sy * (y_act + 4.0), z_act)]
+            lines.append(mesh.pipe(path, 6.0, 12, bend=30.0))
+    out["hydraulic_lines"] = mesh.join(*lines)
     return out
 
 
@@ -245,11 +310,13 @@ def _fadec():
         out[name] = mesh.join(box, *posts)
     zc = gb_centre_z()
     looms = []
-    for clock, sy in ((-32.0, 1.0), (-148.0, -1.0)):
+    # each loom leaves its FADEC's front end, runs down the case under the
+    # hydraulic lines (which are at 45 degrees and 530 mm out) and plugs
+    # into the gearbox's aft sensor pad
+    for clock, c_mid, sy in ((-32.0, -60.0, 1.0), (-148.0, -120.0, -1.0)):
         r = outer_od(x0) + 12.0 + 30.0
-        a = math.radians(clock)
-        p0 = (x0 + 10.0, r * math.cos(a), r * math.sin(a))
-        p1 = (x0 - 20.0, 0.8 * r * math.cos(a) + sy * 20.0, -470.0)
+        p0 = common.polar(x0 + 10.0, r, clock)
+        p1 = common.polar(x0 - 20.0, 480.0, c_mid)
         p2 = (G["x1"] - 12.0, sy * (G["width"] / 2.0 - 30.0), zc + 30.0)
         looms.append(mesh.pipe([p0, p1, p2], 7.0, 14, bend=30.0))
     out["harnesses"] = mesh.join(*looms)

@@ -51,7 +51,33 @@ def build():
     out["service_struts"] = _service_struts()
     out["mode_valve"] = _mode_valve()
     out["tms_hx"] = _heat_exchanger()
+    out["case_ribs"] = _case_ribs()
     return out
+
+
+def _case_ribs():
+    """The orthogrid on the outer cases: rings and stringers standing on the
+    skin, 1 mm let into it, each stringer broken where something is bolted
+    through or on to the case."""
+    cr = spec.CASE_RIBS
+    parts = []
+    for x in cr["rings"]:
+        parts.append(common.ring(x - cr["w"] / 2, x + cr["w"] / 2,
+                                 lambda xx: outer_od(xx) - 1.0,
+                                 lambda xx: outer_od(xx) + cr["h"], step=cr["w"]))
+    # stringer runs between the gaps
+    runs, x = [], cr["x0"]
+    for g0, g1 in sorted(cr["gaps"]):
+        runs.append((x, g0))
+        x = g1
+    runs.append((x, cr["x1"]))
+    n = cr["n_stringers"]
+    for k in range(n):
+        clock = cr["phase_deg"] + 360.0 * k / n
+        for a, b in runs:
+            parts.append(common.strip(a, b, outer_od, cr["h"], cr["w"], clock,
+                                      (P["third"],)))
+    return mesh.join(*parts)
 
 
 # --------------------------------------------------------------------------

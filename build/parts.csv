@@ -18,8 +18,9 @@ brg_5_lp_roller,08 Spools and bearings,spools,steel,2080,2240,1894.0,1916.0,-98.
 case_combustor,07 Frames and casings,combustor,casing,14720,14720,1340.0,1686.0,-382.0,382.0,-382.0,382.0,382.0,,
 case_fan,07 Frames and casings,fan,casing,9600,9600,-8.0,425.0,-446.0,446.0,-446.0,446.0,446.0,,
 case_hpc,07 Frames and casings,compressor,casing,9600,9600,780.0,1340.0,-327.0,327.0,-327.0,327.0,327.0,,
-case_outer_aft,07 Frames and casings,frames,casing,13120,13120,1360.0,2850.0,-470.0,470.0,-470.0,470.0,470.0,,
+case_outer_aft,07 Frames and casings,frames,inconel,13120,13120,1360.0,2850.0,-470.0,470.0,-470.0,470.0,470.0,,
 case_outer_fwd,07 Frames and casings,frames,casing,8320,8320,425.0,1360.0,-446.0,446.0,-446.0,446.0,446.0,,
+case_ribs,07 Frames and casings,frames,casing,7936,7808,446.0,2836.0,-476.0,476.0,-476.0,476.0,476.0,,
 case_turbine,07 Frames and casings,turbine,casing,13440,13440,1686.0,2020.0,-382.0,382.0,-382.0,382.0,382.0,,
 cdfs_blisk,02 Compressor,compressor,titanium,17624,16472,546.0,646.1,-381.8,381.8,-381.8,381.8,382.4,hp,-1.0
 combustor_dome,03 Combustor,combustor,nickel_hot,1816,1192,1430.0,1440.0,-345.8,345.8,-345.8,345.8,345.9,,
@@ -42,7 +43,7 @@ fan_frame_struts,07 Frames and casings,frames,casing,1680,1456,440.0,540.0,-429.
 flameholder_vanes,05 Augmentor,augmentor,cmc,4320,3872,2290.0,2440.0,-420.0,420.0,-420.0,420.0,420.0,,
 flange_fan_aft,07 Frames and casings,frames,casing,2152,2440,417.0,439.0,-440.0,440.0,-440.0,440.0,440.0,,
 flange_inlet,07 Frames and casings,frames,casing,2152,2440,-16.0,6.0,-478.0,478.0,-478.0,478.0,478.0,,
-flange_outer_aft,07 Frames and casings,frames,casing,2320,2640,2842.0,2864.0,-492.0,492.0,-492.0,492.0,492.0,,
+flange_outer_aft,07 Frames and casings,frames,inconel,2320,2640,2842.0,2864.0,-492.0,492.0,-492.0,492.0,492.0,,
 flange_outer_mid,07 Frames and casings,frames,casing,2320,2640,1352.0,1374.0,-482.0,482.0,-482.0,482.0,482.0,,
 fuel_lines,09 Accessories,accessories,steel,1044,1012,761.0,2343.2,-217.1,-37.4,-646.2,-440.2,672.6,,
 fuel_manifold,03 Combustor,combustor,steel,2240,2240,1390.0,1410.0,-484.7,484.7,-484.7,484.7,484.7,,
@@ -53,16 +54,19 @@ gearbox,09 Accessories,accessories,casing,1728,1452,380.0,880.0,-119.0,119.0,-57
 gearbox_mounts,09 Accessories,accessories,casing,96,56,387.0,848.0,-78.0,78.0,-458.0,-405.7,464.6,,
 generator_l,09 Accessories,accessories,casing,1440,1440,600.0,820.0,105.0,239.0,-579.0,-445.0,607.1,,
 generator_r,09 Accessories,accessories,casing,1440,1440,600.0,820.0,-239.0,-105.0,-579.0,-445.0,607.1,,
-harnesses,09 Accessories,accessories,rubber,364,340,861.2,936.9,-420.4,420.4,-489.0,-256.5,586.9,,
+harnesses,09 Accessories,accessories,rubber,168,144,861.1,936.9,-418.6,418.6,-488.3,-253.5,496.1,,
 hp_front_drum,02 Compressor,compressor,titanium,960,960,622.3,824.8,-282.0,282.0,-282.0,282.0,282.0,hp,-1.0
 hpc_drum,02 Compressor,compressor,titanium,18240,18240,824.8,1407.0,-295.0,295.0,-295.0,295.0,295.0,hp,-1.0
 hpt_disc,04 Turbines,turbine,nickel,3840,3840,1722.6,1815.2,-262.0,262.0,-262.0,262.0,262.0,hp,-1.0
+hydraulic_lines,09 Accessories,accessories,steel,2160,2120,464.0,3145.8,-446.0,446.0,-628.3,197.6,656.9,,
+hydraulic_pump,09 Accessories,accessories,steel,128,128,430.0,520.0,-38.0,38.0,-642.0,-566.0,642.0,,
 igniters,03 Combustor,combustor,steel,128,72,1449.0,1475.0,-433.0,433.0,166.3,255.3,496.0,,
 inlet_case,07 Frames and casings,fan,casing,1600,1600,-190.0,-8.0,-446.0,446.0,-446.0,446.0,446.0,,
 intermediate_case,07 Frames and casings,frames,titanium,28800,28800,425.0,2020.0,-426.0,426.0,-426.0,426.0,426.0,,
 lpt_disc,04 Turbines,turbine,nickel,4000,4000,1941.5,2012.0,-250.8,250.8,-250.8,250.8,250.9,lp,1.0
 mixer,05 Augmentor,augmentor,nickel_hot,8832,8832,2020.0,2200.0,-414.5,414.5,-414.5,414.5,414.5,,
 mode_valve,07 Frames and casings,frames,titanium,2400,2352,618.0,687.9,-423.8,423.8,-423.8,423.8,423.8,,
+mode_valve_actuators,09 Accessories,accessories,steel,664,532,530.0,694.0,-355.2,355.2,300.5,355.2,493.8,,
 mount_aft_lug,09 Accessories,accessories,steel,56,36,2205.0,2295.0,-35.0,35.0,468.0,524.0,524.7,,
 mount_trunnions,09 Accessories,accessories,steel,224,120,446.0,534.0,-480.0,480.0,-44.0,44.0,481.3,,
 nozzle_actuators,06 Nozzle,nozzle,steel,288,176,3118.0,3342.0,-435.8,435.8,-240.5,240.5,488.6,,
@@ -70,10 +74,10 @@ nozzle_conv_flap_lower,06 Nozzle,nozzle,cmc,56,42,3100.0,3312.2,-360.0,360.0,-33
 nozzle_conv_flap_upper,06 Nozzle,nozzle,cmc,56,42,3100.0,3312.2,-360.0,360.0,196.9,336.2,491.7,,
 nozzle_div_flap_lower,06 Nozzle,nozzle,cmc,100,86,3310.0,3560.0,-360.0,360.0,-275.4,-196.9,444.0,,
 nozzle_div_flap_upper,06 Nozzle,nozzle,cmc,100,86,3310.0,3560.0,-360.0,360.0,196.9,275.4,444.0,,
-nozzle_ext_flap_lower,06 Nozzle,nozzle,casing,52,50,3100.0,3561.6,-384.0,384.0,-375.8,-276.5,537.3,,
-nozzle_ext_flap_upper,06 Nozzle,nozzle,casing,52,50,3100.0,3561.6,-384.0,384.0,276.5,375.8,537.3,,
+nozzle_ext_flap_lower,06 Nozzle,nozzle,inconel,52,50,3100.0,3561.6,-384.0,384.0,-375.8,-276.5,537.3,,
+nozzle_ext_flap_upper,06 Nozzle,nozzle,inconel,52,50,3100.0,3561.6,-384.0,384.0,276.5,375.8,537.3,,
 nozzle_hinges,06 Nozzle,nozzle,steel,128,72,3084.0,3326.0,-380.0,380.0,-337.0,337.0,507.9,,
-nozzle_shroud,06 Nozzle,nozzle,casing,2880,2880,2850.0,3100.0,-469.9,469.9,-469.9,469.9,505.5,,
+nozzle_shroud,06 Nozzle,nozzle,inconel,2880,2880,2850.0,3100.0,-469.9,469.9,-469.9,469.9,505.5,,
 nozzle_sidewalls,06 Nozzle,nozzle,casing,16,12,3100.0,3560.0,-384.0,384.0,-368.0,368.0,531.9,,
 nozzle_transition,06 Nozzle,nozzle,cmc,2496,2496,2850.0,3100.0,-426.0,426.0,-426.0,426.0,459.5,,
 oil_lines,09 Accessories,accessories,steel,414,382,449.0,1870.9,-6.0,6.0,-517.9,-107.0,517.9,,
@@ -81,7 +85,7 @@ oil_tank,09 Accessories,accessories,steel,362,396,876.0,1060.0,-56.0,56.0,-568.0
 service_struts,07 Frames and casings,frames,casing,840,728,1835.0,1925.0,-462.0,462.0,-462.0,462.0,462.0,,
 shaft_hp,08 Spools and bearings,spools,steel,3328,3256,470.0,1858.0,-151.0,151.0,-151.0,151.0,151.0,hp,-1.0
 shaft_lp,08 Spools and bearings,spools,steel,3520,3520,10.0,2012.0,-62.0,62.0,-62.0,62.0,62.0,lp,1.0
-spinner,01 Fan,fan,titanium,4802,4960,-168.0,-8.0,-128.0,128.0,-128.0,128.0,128.0,lp,1.0
+spinner,01 Fan,fan,titanium,4802,4960,-236.0,-8.0,-128.0,128.0,-128.0,128.0,128.0,lp,1.0
 sump_front,08 Spools and bearings,spools,steel,4160,4160,219.0,542.0,-286.0,286.0,-286.0,286.0,286.0,,
 sump_rear,08 Spools and bearings,spools,steel,1920,1920,1834.0,1916.0,-251.8,251.8,-251.8,251.8,251.8,,
 swirlers,03 Combustor,combustor,nickel_hot,5760,5472,1422.0,1448.0,-320.5,320.5,-325.0,325.0,325.0,,

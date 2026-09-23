@@ -62,10 +62,12 @@ def setup_lights(scale=1.0):
     for o in [o for o in bpy.data.objects if o.type == "LIGHT"]:
         bpy.data.objects.remove(o, do_unlink=True)
     c = (X_MID, 0.0, 0.0)
-    area_light("key", (X_MID - 2.5, -6.5, 5.0), c, 2600 * scale, 7.0)
-    area_light("fill", (X_MID + 2.0, 6.0, -2.0), c, 900 * scale, 9.0)
-    area_light("rim", (X_MID + 6.5, 3.0, 3.5), c, 2200 * scale, 4.0)
-    area_light("nose", (X_MID - 7.0, -2.0, 1.2), c, 1200 * scale, 3.5)
+    # a raking key from high front-left, a soft low fill, a rim from behind
+    # to separate the silhouette from the background, and a kicker on the nose
+    area_light("key", (X_MID - 2.5, -6.5, 5.0), c, 1300 * scale, 7.0)
+    area_light("fill", (X_MID + 2.0, 6.0, -2.0), c, 380 * scale, 9.0)
+    area_light("rim", (X_MID + 6.5, 3.0, 3.5), c, 1300 * scale, 4.0)
+    area_light("nose", (X_MID - 7.0, -2.0, 1.2), c, 500 * scale, 3.5)
 
 
 def aim(obj, look_at):
@@ -95,7 +97,7 @@ def setup_render(samples=64, res=(1920, 1080)):
     s.render.resolution_x, s.render.resolution_y = res
     s.render.film_transparent = False
     s.view_settings.view_transform = "AgX"
-    s.view_settings.exposure = -0.4
+    s.view_settings.exposure = -0.7
     s.view_settings.look = "AgX - Medium High Contrast"
     try:
         prefs = bpy.context.preferences.addons["cycles"].preferences
@@ -181,14 +183,14 @@ def section(x0=-1.0, x1=5.0, hide_externals=True):
 
 def mode_hero(samples):
     reset(); setup_render(samples); setup_world(); setup_lights()
-    area_light("face", (X_MID - 7.5, -3.0, 0.8), (0, 0, 0), 1400, 3.0)
+    area_light("face", (X_MID - 7.5, -3.0, 0.8), (0, 0, 0), 600, 3.0)
     setup_camera((X_MID - 6.6, -6.0, 2.3), (X_MID - 0.35, 0, -0.05), lens=58)
     shoot("01_hero")
 
 
 def mode_rear(samples):
     reset(); setup_render(samples); setup_world(); setup_lights()
-    area_light("tail", (X_MID + 6.0, -2.5, 2.0), (X_MID + 1.8, 0, 0), 1800, 3.0)
+    area_light("tail", (X_MID + 6.0, -2.5, 2.0), (X_MID + 1.8, 0, 0), 700, 3.0)
     setup_camera((X_MID + 5.6, -4.6, 1.9), (X_MID + 0.7, 0, -0.05), lens=55)
     shoot("02_rear_quarter")
 
@@ -196,8 +198,8 @@ def mode_rear(samples):
 def mode_cutaway(samples):
     reset(); setup_render(samples); setup_world(0.28); setup_lights()
     section()
-    area_light("bore", (X_MID - 0.2, -3.8, 1.2), (X_MID, 0, 0), 1500, 7.0)
-    area_light("bore2", (X_MID + 1.0, -2.4, 2.8), (X_MID, 0, 0), 700, 5.0)
+    area_light("bore", (X_MID - 0.2, -3.8, 1.2), (X_MID, 0, 0), 500, 7.0)
+    area_light("bore2", (X_MID + 1.0, -2.4, 2.8), (X_MID, 0, 0), 250, 5.0)
     setup_camera((X_MID - 1.6, -7.4, 2.4), (X_MID + 0.05, 0, -0.05), lens=52)
     shoot("03_cutaway")
 
@@ -235,11 +237,11 @@ CLOSEUPS = {
 def mode_closeup(name, samples):
     reset(); setup_render(samples, (1600, 900)); setup_world(0.3)
     cam, tgt, lens, cut = CLOSEUPS[name]
-    setup_lights(0.8)
+    setup_lights(0.6)
     if cut:
         section()
     area_light("near", tuple(c + d for c, d in zip(cam, (0.3, -0.6, 0.9))),
-               tgt, 450, 1.6)
+               tgt, 130, 1.6)
     setup_camera(cam, tgt, lens)
     shoot(name)
 

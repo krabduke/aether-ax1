@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aether AX-1</title>
+<meta name="description" content="Interactive model of the Aether AX-1 adaptive-cycle turbofan with a 2D thrust-vectoring nozzle.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231B2025'/%3E%3Cpath d='M3 11h14l6-3v16l-6-3H3z' fill='%23C6A15B'/%3E%3Crect x='23' y='10' width='6' height='12' fill='%23D9663B'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#1B2025;
+    --panel:#252B31;
+    --line:#39414A;
+    --ink:#DAD8D0;
+    --muted:#8B928D;
+    --cold:#5C8CA6;
+    --warm:#C6A15B;
+    --hot:#D9663B;
+    --focus:#9CC3D6;
+    --strip-h:132px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--ground); color:var(--ink); overflow:hidden;
+    font-family:"Barlow Semi Condensed",system-ui,sans-serif; font-size:15px;
+    font-variant-numeric:tabular-nums; -webkit-font-smoothing:antialiased;
+  }
+  canvas{display:block; touch-action:none}
+  #stage{position:fixed; inset:0 0 var(--strip-h) 0}
+
+  #title{position:fixed; top:20px; left:24px; z-index:5; pointer-events:none; max-width:min(560px,60vw)}
+  #title h1{margin:0; font-size:34px; font-weight:600; letter-spacing:-.01em; line-height:1}
+  #title p{margin:6px 0 0; color:var(--muted); font-size:15px; line-height:1.35}
+
+  #figures{
+    position:fixed; top:20px; right:24px; z-index:5; margin:0;
+    display:grid; grid-template-columns:auto auto; column-gap:14px; row-gap:2px;
+    font-size:14px; pointer-events:none; text-align:right;
+  }
+  #figures dt{color:var(--muted)}
+  #figures dd{margin:0; font-weight:500}
+
+  #controls{
+    position:fixed; left:24px; right:24px; bottom:calc(var(--strip-h) + 14px); z-index:6;
+    display:flex; flex-wrap:wrap; gap:18px 28px; align-items:flex-end; pointer-events:none;
+  }
+  #controls > *{pointer-events:auto}
+  .group{display:flex; flex-direction:column; gap:6px}
+  .group > span{color:var(--muted); font-size:13px}
+  .seg{display:flex; border:1px solid var(--line); border-radius:3px; overflow:hidden; background:rgba(27,32,37,.8)}
+  .seg button{
+    font:inherit; color:var(--ink); background:none; border:0; padding:6px 13px; cursor:pointer;
+    border-right:1px solid var(--line);
+  }
+  .seg button:last-child{border-right:0}
+  .seg button[aria-pressed="true"]{background:var(--ink); color:var(--ground)}
+  .seg button[data-t="max"][aria-pressed="true"]{background:var(--hot); color:#1B2025}
+  button:focus-visible, input:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+  .toggle{
+    font:inherit; color:var(--ink); background:rgba(27,32,37,.8); border:1px solid var(--line);
+    border-radius:3px; padding:6px 13px; cursor:pointer;
+  }
+  .toggle[aria-pressed="true"]{border-color:var(--ink)}
+  #vector{width:200px; accent-color:var(--warm)}
+  #vecval{min-width:3.5em; display:inline-block}
+  #gauges{display:flex; gap:22px; margin-left:auto; font-size:14px; pointer-events:none}
+  #gauges b{display:block; font-size:24px; font-weight:600; line-height:1.05}
+  #gauges span{color:var(--muted)}
+
+  #probe{
+    position:fixed; top:50%; right:24px; transform:translateY(-50%); z-index:6;
+    width:250px; padding:12px 14px; background:rgba(37,43,49,.94); border:1px solid var(--line);
+    border-left:3px solid var(--probe, var(--muted)); border-radius:3px;
+    opacity:0; transition:opacity .12s; pointer-events:none;
+  }
+  #probe.on{opacity:1}
+  #probe h2{margin:0 0 4px; font-size:17px; font-weight:600}
+  #probe p{margin:0; color:var(--muted); font-size:14px; line-height:1.4}
+
+  #strip{position:fixed; left:0; right:0; bottom:0; height:var(--strip-h); background:var(--panel); border-top:1px solid var(--line); z-index:5}
+  #strip svg{display:block; width:100%; height:100%}
+  #strip .caption{font-size:12.5px; fill:var(--muted)}
+  #strip .stn{font-size:13px; fill:var(--ink); font-weight:600}
+  #strip .tick{stroke:var(--muted); stroke-width:1}
+  #strip .wall{fill:#4B535B}
+  #strip .span{fill:rgba(218,216,208,.14); stroke:rgba(218,216,208,.55)}
+
+  #loading{position:fixed; inset:0; display:grid; place-items:center; z-index:20; background:var(--ground); transition:opacity .5s}
+  #loading.gone{opacity:0; pointer-events:none}
+  #loading p{color:var(--muted)}
+  #loading .bar{width:220px; height:2px; background:var(--line); margin-top:10px}
+  #loading .bar i{display:block; height:100%; width:0; background:var(--warm)}
+
+  @media (max-width:760px){
+    :root{--strip-h:96px}
+    #title h1{font-size:26px}
+    #title p{display:none}
+    #figures{display:none}
+    #gauges{margin-left:0}
+    #probe{top:auto; bottom:calc(var(--strip-h) + 150px); right:12px; transform:none; width:210px}
+    #controls{left:12px; right:12px; gap:12px 16px}
+  }
+  @media (prefers-reduced-motion: reduce){ *{transition-duration:.01ms !important} }
+</style>
+</head>
+<body>
+<div id="stage" aria-label="Aether AX-1 3D model. Drag to orbit, scroll to zoom."></div>
+
+<header id="title">
+  <h1>Aether AX-1</h1>
+  <p id="tagline">Adaptive-cycle turbofan with a two-dimensional vectoring nozzle</p>
+</header>
+
+<dl id="figures" aria-label="Design point, sea-level static"></dl>
+
+<div id="controls">
+  <div class="group">
+    <span id="thr-l">Throttle</span>
+    <div class="seg" role="group" aria-labelledby="thr-l">
+      <button data-t="off" aria-pressed="true">Off</button>
+      <button data-t="idle" aria-pressed="false">Idle</button>
+      <button data-t="mil" aria-pressed="false">Military</button>
+      <button data-t="max" aria-pressed="false">Max reheat</button>
+    </div>
+  </div>
+  <div class="group">
+    <label for="vector">Pitch vector <span id="vecval">0°</span></label>
+    <input id="vector" type="range" min="-20" max="20" step="1" value="0">
+  </div>
+  <div class="group">
+    <span>View</span>
+    <div style="display:flex; gap:8px">
+      <button class="toggle" id="cut" aria-pressed="false">Cutaway</button>
+      <button class="toggle" id="air" aria-pressed="true">Airflow</button>
+    </div>
+  </div>
+  <div id="gauges" aria-live="polite">
+    <div><b id="g-n1">0</b><span>N1 fan %</span></div>
+    <div><b id="g-n2">0</b><span>N2 core %</span></div>
+    <div><b id="g-thr">0</b><span>thrust kN</span></div>
+    <div><b id="g-t4">15</b><span>turbine inlet °C</span></div>
+  </div>
+</div>
+
+<aside id="probe" aria-live="polite"><h2 id="p-name"></h2><p id="p-body"></p></aside>
+
+<div id="strip"><svg id="flow" preserveAspectRatio="none" aria-label="Meridional flowpath coloured by gas temperature, with station numbers"></svg></div>
+
+<div id="loading"><div><p id="load-msg">Loading the engine</p><div class="bar"><i id="load-bar"></i></div></div></div>
+
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+}}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+
+/* Part names this page drives. The validator checks every one resolves. */
+const named = (...n) => n;
+const matching = (...n) => n;
+const NOZZLE = named('nozzle_div_flap_upper', 'nozzle_div_flap_lower',
+                     'nozzle_ext_flap_upper', 'nozzle_ext_flap_lower');
+// static shells the cutaway peels on the viewer's side
+const SHELLS = matching('case_', 'inlet_case', 'containment', 'flange_',
+  'intermediate_case', 'core_cowl', 'core_splitter', 'fan_frame_hub',
+  'service_struts', 'tms_hx', 'mode_valve', 'combustor_liner_',
+  'combustor_inner_case', 'combustor_dome', 'augmentor_', 'mixer',
+  'nozzle_transition', 'nozzle_shroud', 'fuel_manifold', 'ab_fuel_manifold',
+  'vsv_actuation', 'sump_', 'tailcone');
+
+const MM = 0.001;
+const $ = (id) => document.getElementById(id);
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const M = await (await fetch('parts.json')).json();
+const F = M.figures;
+
+/* ---------------- figures ---------------- */
+$('tagline').textContent = M.tagline.charAt(0).toUpperCase() + M.tagline.slice(1);
+const figs = [
+  ['Thrust, dry', `${F.thrust_dry_kn} kN`], ['Thrust, reheat', `${F.thrust_ab_kn} kN`],
+  ['Airflow', `${F.airflow_kg_s} kg/s`], ['Overall pressure ratio', F.opr],
+  ['Fan pressure ratio', F.fpr], ['Bypass ratio', `${F.bpr} (${F.bpr_total} with 3rd stream)`],
+  ['Turbine inlet', `${F.t4_k} K`], ['SFC dry / reheat', `${F.sfc_dry} / ${F.sfc_ab} mg/N·s`],
+  ['Mass, estimated', `${F.mass_kg.toLocaleString()} kg`], ['Thrust / weight', F.tw],
+  ['Stages', F.stages], ['Aerofoils', F.airfoils.toLocaleString()],
+];
+$('figures').innerHTML = figs.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+
+/* ---------------- scene ---------------- */
+const stage = $('stage');
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.AgXToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.localClippingEnabled = true;
+stage.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x1B2025);
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.55;
+const key = new THREE.DirectionalLight(0xfff4e8, 2.2); key.position.set(-3, 5, 6); scene.add(key);
+const rim = new THREE.DirectionalLight(0xc8dcff, 1.4); rim.position.set(6, 2, -5); scene.add(rim);
+scene.add(new THREE.HemisphereLight(0xb8c4cc, 0x20252a, 0.5));
+
+const camera = new THREE.PerspectiveCamera(32, 1, 0.02, 100);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.08;
+const X_MID = ((M.modules[0].x0 + Math.max(...M.modules.map(m => m.x1))) / 2) * MM;
+controls.target.set(X_MID, 0, 0);
+camera.position.set(X_MID - 4.1, 1.5, 4.2);
+
+function resize(){
+  const w = stage.clientWidth, h = stage.clientHeight;
+  renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix();
+}
+addEventListener('resize', resize); resize();
+
+/* ---------------- model ---------------- */
+const cutPlane = new THREE.Plane(new THREE.Vector3(0, 0, -1), 0);
+const meshes = new Map();            // part name -> [mesh]
+const draco = new DRACOLoader();
+draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/libs/draco/gltf/');
+const loader = new GLTFLoader(); loader.setDRACOLoader(draco);
+
+const partOf = (o) => { while (o && !M.parts[o.name]) o = o.parent; return o ? o.name : null; };
+const PAL = {};
+for (const [k, v] of Object.entries(M.palette)) PAL[k] = v;
+
+let gltf;
+try {
+  gltf = await new Promise((res, rej) => loader.load('../build/aether_web.glb', res,
+    (e) => { if (e.total) $('load-bar').style.width = `${100 * e.loaded / e.total}%`; }, rej));
+} catch (e) {
+  $('load-msg').textContent = 'The model file build/aether_web.glb could not be loaded. Run `make web`, then serve the repo root with `make viewer`.';
+  throw e;
+}
+scene.add(gltf.scene);
+gltf.scene.traverse(o => {
+  if (!o.isMesh) return;
+  const name = partOf(o);
+  if (!name) return;
+  const info = M.parts[name];
+  const p = PAL[info.mat];
+  const shell = SHELLS.some(s => name.startsWith(s));
+  const mat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color().setRGB(...p.rgb, THREE.LinearSRGBColorSpace),
+    metalness: p.metal, roughness: p.rough, side: THREE.DoubleSide,
+    clippingPlanes: shell ? [cutPlane] : null, clipShadows: true,
+  });
+  o.material = mat;
+  o.userData.part = name;
+  if (!meshes.has(name)) meshes.set(name, []);
+  meshes.get(name).push(o);
+});
+
+/* spools: every mesh on a spool turns about the engine axis, which is the
+   object's own X axis because every part was built about the origin */
+const spoolMeshes = {lp: [], hp: []};
+for (const [name, list] of meshes) {
+  const s = M.parts[name].spool;
+  if (s) for (const m of list) spoolMeshes[s].push({m, spin: M.parts[name].spin});
+}
+
+/* nozzle: wrap each swinging flap in a pivot at its hinge line */
+const nz = M.nozzle;
+function pivot(name, hx, hz){
+  const list = meshes.get(name) || [];
+  const p = new THREE.Group();
+  p.position.set(hx * MM, hz * MM, 0);
+  gltf.scene.add(p);
+  for (const m of list) p.attach(m);
+  return p;
+}
+const flaps = {
+  divU: pivot(NOZZLE[0], nz.div_hinge[0], nz.div_hinge[1]),
+  divL: pivot(NOZZLE[1], nz.div_hinge[0], -nz.div_hinge[1]),
+  extU: pivot(NOZZLE[2], nz.ext_hinge[0], nz.ext_hinge[1]),
+  extL: pivot(NOZZLE[3], nz.ext_hinge[0], -nz.ext_hinge[1]),
+};
+function setVector(deg){
+  // both divergent flaps swing the same way about the throat hinges; each
+  // external flap turns about its front hinge to follow its flap's edge
+  const a = THREE.MathUtils.degToRad(deg);
+  flaps.divU.rotation.z = a; flaps.divL.rotation.z = a;
+  for (const [sgn, pv] of [[1, flaps.extU], [-1, flaps.extL]]) {
+    const hx = nz.div_hinge[0], hz = sgn * nz.div_hinge[1];
+    const tx = nz.div_te[0] - hx, tz = sgn * nz.div_te[1] - hz;
+    const nx = hx + tx * Math.cos(a) - tz * Math.sin(a);
+    const nzz = hz + tx * Math.sin(a) + tz * Math.cos(a);
+    const ex = nz.ext_hinge[0], ez = sgn * nz.ext_hinge[1];
+    pv.rotation.z = Math.atan2(nzz - ez, nx - ex) - Math.atan2(sgn * nz.div_te[1] - ez, nz.div_te[0] - ex);
+  }
+  plume.rotation.z = a;
+}
+
+/* ---------------- reheat plume: a rectangular jet ---------------- */
+const plume = new THREE.Group();
+plume.position.set(nz.div_te[0] * MM, 0, 0);
+{
+  const c = document.createElement('canvas'); c.width = 256; c.height = 64;
+  const g = c.getContext('2d');
+  const grad = g.createLinearGradient(0, 0, 256, 0);
+  grad.addColorStop(0, 'rgba(255,190,120,0.95)'); grad.addColorStop(0.25, 'rgba(255,120,60,0.6)');
+  grad.addColorStop(1, 'rgba(120,60,255,0)');
+  g.fillStyle = grad; g.fillRect(0, 0, 256, 64);
+  const v = g.createLinearGradient(0, 0, 0, 64);
+  v.addColorStop(0, 'rgba(0,0,0,1)'); v.addColorStop(0.5, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,1)');
+  g.globalCompositeOperation = 'destination-out'; g.fillStyle = v; g.fillRect(0, 0, 256, 64);
+  const tex = new THREE.CanvasTexture(c);
+  const L = 2.6, H = nz.exit_h * MM * 0.9, W = nz.width * MM * 0.95;
+  for (const [w, h, rot] of [[L, H, 0], [L, W, Math.PI / 2]]) {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h),
+      new THREE.MeshBasicMaterial({map: tex, transparent: true, blending: THREE.AdditiveBlending,
+                                   depthWrite: false, side: THREE.DoubleSide}));
+    m.position.x = w / 2; m.rotation.x = rot; plume.add(m);
+  }
+  plume.visible = false; scene.add(plume);
+}
+
+/* ---------------- airflow particles ---------------- */
+const flow = M.flow;
+const lerpTable = (t, x, col) => {
+  if (x <= t[0][0]) return t[0][col];
+  for (let i = 0; i < t.length - 1; i++)
+    if (x <= t[i + 1][0]) { const f = (x - t[i][0]) / ((t[i + 1][0] - t[i][0]) || 1);
+      return t[i][col] + (t[i + 1][col] - t[i][col]) * f; }
+  return t[t.length - 1][col];
+};
+const RAMP = [[15, 0x5C8CA6], [250, 0x8FA7A8], [600, 0xC6A15B], [1100, 0xD9663B], [1800, 0xF2D0A8]];
+function tempColor(tc, out){
+  let i = 0; while (i < RAMP.length - 2 && tc > RAMP[i + 1][0]) i++;
+  const [t0, c0] = RAMP[i], [t1, c1] = RAMP[i + 1];
+  const f = Math.min(1, Math.max(0, (tc - t0) / (t1 - t0)));
+  return out.set(c0).lerp(new THREE.Color(c1), f);
+}
+const streams = [
+  {path: flow.core, n: 1400, temps: () => (state.reheat ? flow.t_core_ab : flow.t_core_dry), speed: 1.0},
+  {path: flow.bypass, n: 420, temp: flow.t_bypass, speed: 0.8},
+  {path: flow.third, n: 360, temp: flow.t_third, speed: 0.6},
+];
+const pts = [];
+for (const s of streams) for (let i = 0; i < s.n; i++)
+  pts.push({s, x: s.path[0][0] + Math.random() * (s.path[s.path.length - 1][0] - s.path[0][0]),
+            f: Math.random(),
+            // a thin fan either side of the section plane, on the kept half
+            a: (Math.random() < 0.5 ? 1 : -1) * (Math.PI / 2 - Math.random() * 0.45)});
+const pGeo = new THREE.BufferGeometry();
+const pPos = new Float32Array(pts.length * 3), pCol = new Float32Array(pts.length * 3);
+pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+pGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3));
+const pMat = new THREE.PointsMaterial({size: 0.012, vertexColors: true, transparent: true, opacity: 0.9, depthWrite: false});
+const particles = new THREE.Points(pGeo, pMat);
+particles.frustumCulled = false;
+scene.add(particles);
+const tmpC = new THREE.Color();
+function updateParticles(dt, speed){
+  for (let i = 0; i < pts.length; i++) {
+    const p = pts[i], P = p.s.path;
+    const x0 = P[0][0], x1 = P[P.length - 1][0];
+    p.x += dt * speed * p.s.speed * 900;
+    if (p.x > x1) { p.x = x0; p.f = Math.random(); }
+    const r = lerpTable(P, p.x, 1) + (lerpTable(P, p.x, 2) - lerpTable(P, p.x, 1)) * (0.08 + 0.84 * p.f);
+    // engine (x, y, z) -> scene (x, z, -y); keep to the half the cutaway opens
+    const y = r * Math.cos(p.a), z = r * Math.sin(p.a);
+    pPos[3 * i] = p.x * MM; pPos[3 * i + 1] = z * MM; pPos[3 * i + 2] = -y * MM;
+    const tc = p.s.temps ? lerpTable(p.s.temps(), p.x, 1) : p.s.temp;
+    tempColor(state.n1 < 0.02 ? 15 : 15 + (tc - 15) * Math.min(1, state.n2), tmpC);
+    pCol[3 * i] = tmpC.r; pCol[3 * i + 1] = tmpC.g; pCol[3 * i + 2] = tmpC.b;
+  }
+  pGeo.attributes.position.needsUpdate = true; pGeo.attributes.color.needsUpdate = true;
+}
+
+/* ---------------- throttle ---------------- */
+const SET = {off: {n1: 0, n2: 0, ab: false}, idle: {n1: 0.22, n2: 0.62, ab: false},
+             mil: {n1: 1, n2: 1, ab: false}, max: {n1: 1, n2: 1, ab: true}};
+const state = {n1: 0, n2: 0, reheat: false, target: SET.off, cut: false, air: true};
+for (const b of document.querySelectorAll('.seg button')) b.addEventListener('click', () => {
+  for (const o of document.querySelectorAll('.seg button')) o.setAttribute('aria-pressed', o === b);
+  state.target = SET[b.dataset.t];
+});
+$('vector').addEventListener('input', (e) => { $('vecval').textContent = `${e.target.value}°`; setVector(+e.target.value); });
+const toggle = (id, fn) => $(id).addEventListener('click', () => {
+  const on = $(id).getAttribute('aria-pressed') !== 'true';
+  $(id).setAttribute('aria-pressed', on); fn(on);
+});
+const ACCESSORY = '09 Accessories';
+toggle('cut', (on) => {
+  state.cut = on; cutPlane.constant = on ? 0 : 50;
+  for (const [name, list] of meshes)
+    if (M.parts[name].m === ACCESSORY || name === 'fuel_nozzles' || name === 'igniters')
+      for (const m of list) m.visible = !on;
+});
+cutPlane.constant = 50;
+toggle('air', (on) => { state.air = on; particles.visible = on; });
+
+/* ---------------- flowpath strip ---------------- */
+const svg = $('flow');
+const xs0 = Math.min(...M.modules.map(m => m.x0)), xs1 = Math.max(...M.modules.map(m => m.x1));
+const STN = [['2', 0], ['13', 408], ['21', 678], ['3', 1340], ['4', 1690], ['41', 1808], ['5', 2008], ['6', 2200], ['9', nz.div_te[0]]];
+let hoverSpan = null;
+function drawStrip(){
+  const W = svg.clientWidth || innerWidth, H = svg.clientHeight || 130;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const pad = 24, top = 18, bot = H - 26;
+  const sx = (x) => pad + (x - xs0) / (xs1 - xs0) * (W - 2 * pad);
+  const rmax = 480, sy = (r) => bot - r / rmax * (bot - top);
+  const band = (P) => {
+    const up = P.map(p => `${sx(p[0])},${sy(p[2])}`), dn = P.slice().reverse().map(p => `${sx(p[0])},${sy(p[1])}`);
+    return up.concat(dn).join(' ');
+  };
+  const temps = state.reheat ? flow.t_core_ab : flow.t_core_dry;
+  const k = Math.min(1, state.n2);
+  const stops = temps.map(([x, t]) => {
+    const c = tempColor(state.n1 < 0.02 ? 15 : 15 + (t - 15) * k, new THREE.Color());
+    return `<stop offset="${((x - xs0) / (xs1 - xs0)).toFixed(4)}" stop-color="#${c.getHexString()}"/>`;
+  }).join('');
+  const cb = tempColor(state.n1 < 0.02 ? 15 : 15 + (flow.t_bypass - 15) * k, new THREE.Color()).getHexString();
+  const c3 = tempColor(state.n1 < 0.02 ? 15 : 15 + (flow.t_third - 15) * k, new THREE.Color()).getHexString();
+  let s = `<defs><linearGradient id="gc" x1="${sx(xs0)}" x2="${sx(xs1)}" y1="0" y2="0" gradientUnits="userSpaceOnUse">${stops}</linearGradient></defs>`;
+  s += `<rect x="${pad}" y="${top}" width="${W - 2 * pad}" height="${bot - top}" fill="none"/>`;
+  if (hoverSpan) s += `<rect class="span" x="${sx(hoverSpan[0])}" y="${top - 6}" width="${Math.max(2, sx(hoverSpan[1]) - sx(hoverSpan[0]))}" height="${bot - top + 6}"/>`;
+  s += `<polygon points="${band(flow.third)}" fill="#${c3}" opacity=".85"/>`;
+  s += `<polygon points="${band(flow.bypass)}" fill="#${cb}" opacity=".85"/>`;
+  s += `<polygon points="${band(flow.core)}" fill="url(#gc)"/>`;
+  s += `<line class="tick" x1="${pad}" x2="${W - pad}" y1="${bot}" y2="${bot}"/>`;
+  for (const [n, x] of STN) {
+    s += `<line class="tick" x1="${sx(x)}" x2="${sx(x)}" y1="${bot}" y2="${bot + 5}"/>`;
+    s += `<text class="stn" x="${sx(x)}" y="${bot + 18}" text-anchor="middle">${n}</text>`;
+  }
+  s += `<text class="caption" x="${pad}" y="${top - 5}">Flowpath and gas temperature, engine axis at the bottom edge. Numbers are gas-path stations.</text>`;
+  svg.innerHTML = s;
+}
+addEventListener('resize', drawStrip);
+
+/* ---------------- hover probe ---------------- */
+const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
+let lastHover = null;
+const MOD = Object.fromEntries(M.modules.map(m => [m.key, m]));
+renderer.domElement.addEventListener('pointermove', (e) => {
+  const r = renderer.domElement.getBoundingClientRect();
+  mouse.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(mouse, camera);
+  const hits = ray.intersectObjects(gltf.scene.children, true).filter(h => h.object.visible &&
+    !(state.cut && h.object.material.clippingPlanes && h.point.z > 0));
+  const name = hits.length ? hits[0].object.userData.part || partOf(hits[0].object) : null;
+  if (name === lastHover) return;
+  lastHover = name;
+  const pr = $('probe');
+  if (!name) { pr.classList.remove('on'); hoverSpan = null; drawStrip(); return; }
+  const info = M.parts[name], mod = MOD[info.m];
+  $('p-name').textContent = name.replaceAll('_', ' ');
+  const spool = info.spool ? `Turns with the ${info.spool.toUpperCase()} spool, ${info.spin > 0 ? 'clockwise' : 'anticlockwise'} seen from behind. ` : '';
+  $('p-body').textContent = `${mod ? mod.label : info.m}. ${info.mat.replace('_', ' ')}. ` +
+    `${spool}From ${Math.round(info.x0)} to ${Math.round(info.x1)} mm along the axis.`;
+  pr.style.setProperty('--probe', mod ? mod.color : 'var(--muted)');
+  pr.classList.add('on');
+  hoverSpan = [info.x0, info.x1]; drawStrip();
+});
+
+/* ---------------- loop ---------------- */
+$('loading').classList.add('gone');
+drawStrip();
+setVector(0);
+const clock = new THREE.Clock();
+let stripT = 0;
+renderer.setAnimationLoop(() => {
+  const dt = Math.min(0.05, clock.getDelta());
+  const t = state.target;
+  // the core leads the fan on the way up and lags it on the way down
+  const rate = (cur, tgt, up, dn) => cur + (tgt - cur) * Math.min(1, dt * (tgt > cur ? up : dn));
+  state.n2 = rate(state.n2, t.n2, 1.4, 0.7);
+  state.n1 = rate(state.n1, t.n1, 0.9, 0.6);
+  const wasRe = state.reheat;
+  state.reheat = t.ab && state.n1 > 0.95;
+  if (!reduced) {
+    for (const {m, spin} of spoolMeshes.lp) m.rotation.x += spin * dt * state.n1 * 38;
+    for (const {m, spin} of spoolMeshes.hp) m.rotation.x += spin * dt * state.n2 * 52;
+  }
+  plume.visible = state.reheat;
+  if (plume.visible) for (const c of plume.children) c.material.opacity = 0.75 + 0.25 * Math.random();
+  particles.visible = state.air && state.n1 > 0.02;
+  if (particles.visible) updateParticles(reduced ? 0 : dt, 0.25 + state.n1);
+  const thr = state.reheat ? F.thrust_ab_kn : F.thrust_dry_kn * Math.pow(state.n1, 2.4);
+  $('g-n1').textContent = Math.round(state.n1 * 100);
+  $('g-n2').textContent = Math.round(state.n2 * 100);
+  $('g-thr').textContent = thr.toFixed(1);
+  $('g-t4').textContent = Math.round(15 + (F.t4_k - 273 - 15) * Math.pow(state.n2, 2));
+  stripT += dt;
+  if (stripT > 0.25 || wasRe !== state.reheat) { stripT = 0; drawStrip(); }
+  controls.update();
+  renderer.render(scene, camera);
+});
+</script>
+</body>
+</html>

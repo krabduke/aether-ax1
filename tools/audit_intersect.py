@@ -110,6 +110,15 @@ EXPECTED = [
     ("mount_aft_lug", "case_outer_aft"),
     # the heat exchanger's coolant lines come out through the outer case
     ("coolant_lines", "tms_hx"), ("coolant_lines", "case_outer_aft"),
+    # the orthogrid's ribs are machined out of the case they stiffen
+    ("case_ribs", "case_outer_"),
+    # the mode valve's actuators stand on lugs let into the case, and their
+    # rods pass into it through a boss
+    ("mode_valve_actuators", "case_outer_fwd"),
+    # the hydraulic pump is on a gearbox pad; its lines screw into the pump
+    # and into each nozzle actuator's cap end
+    ("hydraulic_pump", "gearbox"), ("hydraulic_lines", "hydraulic_pump"),
+    ("hydraulic_lines", "nozzle_actuators"),
     # the nozzle: hinge pins run through the flaps into the sidewalls and seat
     # on the transition's lip; the actuators' lugs are welded to the sidewalls
     ("nozzle_hinges", "nozzle_"),

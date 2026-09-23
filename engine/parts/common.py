@@ -210,3 +210,28 @@ def radial_pin(x, r0, r1, rad, clock_deg, seg=12):
 def polar(x, r, clock_deg):
     a = math.radians(clock_deg)
     return (x, r * math.cos(a), r * math.sin(a))
+
+
+def strip(x0, x1, r_fn, h, w, clock_deg, tables=(), embed=1.0, step=40.0):
+    """A rectangular-section rib lying along x on a surface of revolution:
+    from `embed` inside r_fn(x) to h above it, w wide, at a clock angle.
+    Closed, with square ends."""
+    xs = knots(x0, x1, *tables, step=step)
+    a = math.radians(clock_deg)
+    ca, sa = math.cos(a), math.sin(a)
+    verts = []
+    for x in xs:
+        r0, r1 = r_fn(x) - embed, r_fn(x) + h
+        for (r, t) in ((r0, -w / 2), (r1, -w / 2), (r1, w / 2), (r0, w / 2)):
+            verts.append((x, r * ca - t * sa, r * sa + t * ca))
+    n = len(xs)
+    faces = []
+    for i in range(n - 1):
+        b0, b1 = 4 * i, 4 * (i + 1)
+        for k in range(4):
+            k2 = (k + 1) % 4
+            faces.append((b0 + k, b1 + k, b1 + k2, b0 + k2))
+    faces.append((0, 1, 2, 3))
+    b = 4 * (n - 1)
+    faces.append((b + 3, b + 2, b + 1, b))
+    return _orient_out(verts, faces)

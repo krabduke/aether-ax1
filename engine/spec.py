@@ -375,7 +375,7 @@ INLET = {"x0": -190.0, "x1": -8.0, "wall": 8.0}
 # guide vane row in this engine -- the first thing the air meets is the fan
 # -- so the nose is a turning spinner and not a static centre-body, and it
 # sheds ice by spinning rather than by being heated.
-SPINNER = {"x_nose": -168.0, "x_base": -8.0, "wall": 4.0}
+SPINNER = {"x_nose": -236.0, "x_base": -8.0, "wall": 4.0}
 
 # Fan frame: eight struts from the inner hub ring out through the splitter and
 # the third stream to the outer case. It carries bearings 1, 2 and 3 and the
@@ -537,6 +537,19 @@ MOUNTS = {"x_fwd": 490.0, "trunnion_r": 36.0, "trunnion_len": 56.0,
 # stream here. Twelve plate-fin segments filling the duct.
 TMS_HX = {"x0": 1480.0, "x1": 1760.0, "n": 12, "gap_deg": 3.0}
 
+# Orthogrid on the outer cases: circumferential rings and axial stringers
+# standing on the skin -- how a thin case is made stiff against buckling and
+# the pressure of the third stream. Each run stops short of anything bolted
+# through or on to the case: (x0, x1) gaps to leave.
+CASE_RIBS = {
+    "h": 6.0, "w": 8.0, "n_stringers": 16, "phase_deg": 11.25,
+    "rings": (700.0, 1100.0, 1620.0, 2050.0, 2500.0, 2720.0),
+    "x0": 446.0, "x1": 2836.0,
+    "gaps": ((1344.0, 1376.0),     # the mid flange
+             (1380.0, 1422.0),     # fuel manifold and nozzle flanges
+             (2322.0, 2358.0)),    # reheat manifold
+}
+
 # Mode valve: petals round the third stream's entrance that set how much air
 # it takes -- open at cruise, closed down at max thrust.
 MODE_VALVE = {"x_hinge": 620.0, "n": 24, "len": 70.0, "t": 5.0,
@@ -578,7 +591,10 @@ MATERIAL_MAP = {
     "brg": "steel",
     "sump": "steel",
     "case": "casing",
+    "case_outer_aft": "inconel",
+    "case_ribs": "casing",
     "flange": "casing",
+    "flange_outer_aft": "inconel",
     "inlet": "casing",
     "splitter": "titanium",
     "core_cowl": "titanium",
@@ -592,11 +608,13 @@ MATERIAL_MAP = {
     "flameholder": "cmc",
     "nozzle": "cmc",
     "nozzle_sidewall": "casing",
-    "nozzle_shroud": "casing",
-    "nozzle_ext": "casing",
+    "nozzle_shroud": "inconel",
+    "nozzle_ext": "inconel",
     "nozzle_actuator": "steel",
     "nozzle_hinge": "steel",
     "mode_valve": "titanium",
+    "mode_valve_actuators": "steel",
+    "hydraulic": "steel",
     "tms_hx": "copper",
     "coolant": "copper",
     "gearbox": "casing",
@@ -617,12 +635,13 @@ DEFAULT_MATERIAL = "casing"
 # procedural roughness used in the renders, so the viewer reapplies this table
 # by material name -- it ships in viewer/parts.json.
 PALETTE = {
-    "titanium":   ((0.340, 0.350, 0.372), 1.00, 0.24),
+    "titanium":   ((0.380, 0.390, 0.410), 1.00, 0.30),
     "nickel":     ((0.470, 0.460, 0.440), 1.00, 0.30),
     "nickel_hot": ((0.330, 0.240, 0.180), 1.00, 0.46),
     "steel":      ((0.520, 0.530, 0.550), 1.00, 0.16),
-    "casing":     ((0.190, 0.200, 0.215), 1.00, 0.44),
-    "cmc":        ((0.260, 0.240, 0.215), 0.00, 0.70),
+    "casing":     ((0.300, 0.310, 0.325), 1.00, 0.42),
+    "inconel":    ((0.300, 0.265, 0.230), 1.00, 0.40),
+    "cmc":        ((0.130, 0.120, 0.110), 0.00, 0.62),
     "composite":  ((0.050, 0.055, 0.062), 0.00, 0.42),
     "copper":     ((0.600, 0.330, 0.200), 1.00, 0.32),
     "rubber":     ((0.050, 0.050, 0.055), 0.00, 0.85),

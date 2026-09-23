@@ -12,6 +12,11 @@ F110-GE-129 and is kept at [Krabduke/f110-turbofan](https://github.com/Krabduke/
 
 ![hero](renders/01_hero.png)
 
+| | |
+|---|---|
+| ![cutaway](renders/03_cutaway.png) | ![nozzle](renders/02_rear_quarter.png) |
+| ![turbine](renders/c3_combustor_turbine.png) | ![exploded](renders/04_exploded.png) |
+
 ## The design
 
 | | |
@@ -65,7 +70,7 @@ area — and fails the build if any is out of band.
 | 2D nozzle | Round-to-rectangular transition, shroud, sidewalls, convergent and divergent flaps with stiffening ribs, external flaps, sawtooth trailing edges, hinge pins, four actuators |
 | Spools | LP and HP shafts, five bearings (inner race, outer race, a full ring of balls or rollers) in two sumps hung from the fan frame and the mid-turbine frame |
 | Third stream | Mode valve (24 petals), 12-segment plate-fin heat exchanger, coolant lines to the aircraft |
-| Externals | Accessory gearbox with ribs, tower shaft off a bevel on the HP shaft, two generators, fuel pump and metering unit, oil tank and lines to both sumps, fuel lines to both manifolds, two FADEC channels on stand-offs with their looms, forward trunnions and an aft thrust lug |
+| Externals | Orthogrid stiffening on the outer cases, accessory gearbox with ribs, tower shaft off a bevel on the HP shaft, two generators, fuel pump and metering unit, oil tank and lines to both sumps, fuel lines to both manifolds, two FADEC channels on stand-offs with their looms, forward trunnions, an aft thrust lug, mode-valve actuators, and a hydraulic pump feeding the four nozzle actuators |
 
 ## Build
 
@@ -81,6 +86,32 @@ make web        # decimated, Draco-compressed GLB for the viewer
 make viewer     # serve the viewer on http://localhost:8791/viewer/
 ```
 
+## The viewer
+
+```
+make web        # build/aether_web.glb, Draco-compressed (committed)
+make viewer     # http://localhost:8791/viewer/
+```
+
+A three.js page built around the engine's own flowpath. Along the bottom is
+the real meridional annulus, drawn from `spec.py`, filled with the gas
+temperature at the current throttle and numbered with the standard gas-path
+stations; hovering any part names it and lights its axial span there.
+
+- **Throttle** Off / Idle / Military / Max reheat: the two spools spool up at
+  their own rates and turn opposite ways; N1, N2, thrust and turbine inlet
+  temperature read out live, and reheat lights a rectangular plume.
+- **Pitch vector** ±20°: the divergent flaps swing about the throat hinges and
+  the external flaps follow their trailing edges — the hinge lines come from
+  the geometry, through the manifest.
+- **Cutaway** peels the static shells on the viewer's side, as in the renders.
+- **Airflow** particles ride the core, bypass and third-stream annuli,
+  coloured by total temperature from the cycle.
+
+Nothing engineering lives in the HTML: spools, hinge points, palette,
+flowpath and temperatures all come from `viewer/parts.json`, which is
+generated from the build and checked against it by `audit_manifest`.
+
 ## The gates
 
 `make verify` runs ten checks, and all of them pass:
@@ -92,7 +123,7 @@ make viewer     # serve the viewer on http://localhost:8791/viewer/
 | `audit_geometry` | no part too crude to be what it is named |
 | `audit_structure` | attached, mirrored, distinct, singletons, named shapes |
 | `audit_intersect` | exact BVH interference: every overlap is a declared joint (a blade root in its disc, a vane in its case, a fuel nozzle through the cases it passes). **KNOWN defects: none** |
-| `audit_support` | every closed piece — each of 2,258, every blade and bolt — touches something. **DETACHED: none** |
+| `audit_support` | every closed piece — each of 2,343, every blade and bolt — touches something. **DETACHED: none** |
 | `audit_joints` | one assembly, and 50 declared circuits joined link by link: each spool through its bearings and sumps to the frames and mounts, fuel from pump to swirler, oil from tank to both sumps, the nozzle's hinges and actuators |
 | `audit_rotor` | nothing that turns comes within 0.5 mm of anything that does not turn with it — the check that found the fan running 3.2 mm clear instead of 1.6 |
 | `audit_manifest` | the viewer's manifest matches the build |

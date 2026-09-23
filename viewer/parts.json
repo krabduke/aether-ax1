@@ -1,0 +1,1496 @@
+{
+ "engine": "Aether AX-1",
+ "tagline": "adaptive-cycle three-stream reheated turbofan with a 2D vectoring nozzle",
+ "figures": {
+  "thrust_dry_kn": 90.5,
+  "thrust_ab_kn": 134.9,
+  "airflow_kg_s": 112.0,
+  "opr": 36.6,
+  "fpr": 3.8,
+  "bpr": 0.626,
+  "bpr_total": 0.806,
+  "t4_k": 2050.0,
+  "sfc_dry": 21.4,
+  "sfc_ab": 42.3,
+  "mass_kg": 1420.0,
+  "tw": 9.69,
+  "stages": "2F-1CDFS-6HPC-1HPT-1LPT",
+  "airfoils": 1186,
+  "length_mm": 3752.0
+ },
+ "stations": {
+  "2": [
+   15.0,
+   100.0
+  ],
+  "13": [
+   169.0,
+   379.0
+  ],
+  "21": [
+   208.0,
+   493.0
+  ],
+  "3": [
+   632.0,
+   3648.0
+  ],
+  "4": [
+   1777.0,
+   3484.0
+  ],
+  "41": [
+   1298.0,
+   1046.0
+  ],
+  "5": [
+   969.0,
+   481.0
+  ],
+  "6": [
+   705.0,
+   471.0
+  ]
+ },
+ "palette": {
+  "titanium": {
+   "rgb": [
+    0.34,
+    0.35,
+    0.372
+   ],
+   "metal": 1.0,
+   "rough": 0.24
+  },
+  "nickel": {
+   "rgb": [
+    0.47,
+    0.46,
+    0.44
+   ],
+   "metal": 1.0,
+   "rough": 0.3
+  },
+  "nickel_hot": {
+   "rgb": [
+    0.33,
+    0.24,
+    0.18
+   ],
+   "metal": 1.0,
+   "rough": 0.46
+  },
+  "steel": {
+   "rgb": [
+    0.52,
+    0.53,
+    0.55
+   ],
+   "metal": 1.0,
+   "rough": 0.16
+  },
+  "casing": {
+   "rgb": [
+    0.19,
+    0.2,
+    0.215
+   ],
+   "metal": 1.0,
+   "rough": 0.44
+  },
+  "cmc": {
+   "rgb": [
+    0.26,
+    0.24,
+    0.215
+   ],
+   "metal": 0.0,
+   "rough": 0.7
+  },
+  "composite": {
+   "rgb": [
+    0.05,
+    0.055,
+    0.062
+   ],
+   "metal": 0.0,
+   "rough": 0.42
+  },
+  "copper": {
+   "rgb": [
+    0.6,
+    0.33,
+    0.2
+   ],
+   "metal": 1.0,
+   "rough": 0.32
+  },
+  "rubber": {
+   "rgb": [
+    0.05,
+    0.05,
+    0.055
+   ],
+   "metal": 0.0,
+   "rough": 0.85
+  }
+ },
+ "flow": {
+  "core": [
+   [
+    -8.0,
+    128.0,
+    437.0
+   ],
+   [
+    0.0,
+    131.0,
+    437.0
+   ],
+   [
+    135.0,
+    196.0,
+    431.0
+   ],
+   [
+    157.0,
+    204.0,
+    429.0
+   ],
+   [
+    221.0,
+    222.0,
+    426.0
+   ],
+   [
+    243.0,
+    230.0,
+    424.0
+   ],
+   [
+    328.0,
+    262.0,
+    417.0
+   ],
+   [
+    348.0,
+    272.0,
+    414.0
+   ],
+   [
+    408.0,
+    292.0,
+    406.0
+   ],
+   [
+    425.0,
+    294.0,
+    405.0
+   ],
+   [
+    555.0,
+    294.0,
+    384.0
+   ],
+   [
+    614.0,
+    298.0,
+    381.0
+   ],
+   [
+    634.0,
+    300.0,
+    380.0
+   ],
+   [
+    678.0,
+    302.0,
+    377.0
+   ],
+   [
+    695.0,
+    302.0,
+    376.0
+   ],
+   [
+    740.0,
+    280.0,
+    330.0
+   ],
+   [
+    780.0,
+    268.0,
+    320.0
+   ],
+   [
+    832.0,
+    270.0,
+    318.0
+   ],
+   [
+    1100.0,
+    288.0,
+    312.0
+   ],
+   [
+    1340.0,
+    295.0,
+    309.0
+   ],
+   [
+    1390.0,
+    295.0,
+    309.0
+   ],
+   [
+    1690.0,
+    262.0,
+    326.0
+   ],
+   [
+    1745.0,
+    262.0,
+    328.0
+   ],
+   [
+    1760.0,
+    262.0,
+    329.0
+   ],
+   [
+    1808.0,
+    260.0,
+    333.0
+   ],
+   [
+    1830.0,
+    259.0,
+    336.0
+   ],
+   [
+    1930.0,
+    252.0,
+    356.0
+   ],
+   [
+    1950.0,
+    250.0,
+    358.0
+   ],
+   [
+    2008.0,
+    248.0,
+    366.0
+   ],
+   [
+    2020.0,
+    247.0,
+    367.0
+   ],
+   [
+    2200.0,
+    150.0,
+    408.0
+   ],
+   [
+    2850.0,
+    40.0,
+    408.0
+   ],
+   [
+    3310.0,
+    10.0,
+    188.9
+   ],
+   [
+    3560.0,
+    10.0,
+    245.9
+   ]
+  ],
+  "bypass": [
+   [
+    695.0,
+    349.0,
+    376.0
+   ],
+   [
+    780.0,
+    344.0,
+    382.0
+   ],
+   [
+    1360.0,
+    344.0,
+    384.0
+   ],
+   [
+    1410.0,
+    382.0,
+    418.0
+   ],
+   [
+    2020.0,
+    382.0,
+    420.0
+   ]
+  ],
+  "third": [
+   [
+    425.0,
+    384.0,
+    405.0
+   ],
+   [
+    490.0,
+    392.0,
+    418.0
+   ],
+   [
+    610.0,
+    402.0,
+    440.0
+   ],
+   [
+    1360.0,
+    402.0,
+    440.0
+   ],
+   [
+    1410.0,
+    426.0,
+    460.0
+   ],
+   [
+    2020.0,
+    426.0,
+    460.0
+   ],
+   [
+    2200.0,
+    434.0,
+    464.0
+   ],
+   [
+    2850.0,
+    434.0,
+    464.0
+   ]
+  ],
+  "t_core_dry": [
+   [
+    0.0,
+    15.0
+   ],
+   [
+    408.0,
+    169.0
+   ],
+   [
+    678.0,
+    208.0
+   ],
+   [
+    1340.0,
+    632.0
+   ],
+   [
+    1440.0,
+    632.0
+   ],
+   [
+    1690.0,
+    1777.0
+   ],
+   [
+    1808.0,
+    1298.0
+   ],
+   [
+    2008.0,
+    969.0
+   ],
+   [
+    2200.0,
+    705.0
+   ],
+   [
+    3560.0,
+    705.0
+   ]
+  ],
+  "t_core_ab": [
+   [
+    0.0,
+    15.0
+   ],
+   [
+    408.0,
+    169.0
+   ],
+   [
+    678.0,
+    208.0
+   ],
+   [
+    1340.0,
+    632.0
+   ],
+   [
+    1440.0,
+    632.0
+   ],
+   [
+    1690.0,
+    1777.0
+   ],
+   [
+    1808.0,
+    1298.0
+   ],
+   [
+    2008.0,
+    969.0
+   ],
+   [
+    2200.0,
+    705.0
+   ],
+   [
+    2440.0,
+    1291.0
+   ],
+   [
+    2850.0,
+    1877.0
+   ],
+   [
+    3560.0,
+    1812.0
+   ]
+  ],
+  "t_bypass": 208.0,
+  "t_third": 200.0
+ },
+ "nozzle": {
+  "div_hinge": [
+   3310.0,
+   196.9
+  ],
+  "div_te": [
+   3560.0,
+   253.9
+  ],
+  "ext_hinge": [
+   3100.0,
+   376.0
+  ],
+  "vector_deg": 20.0,
+  "throat_h": 393.9,
+  "exit_h": 507.8,
+  "width": 720.0
+ },
+ "modules": [
+  {
+   "key": "01 Fan",
+   "label": "Fan",
+   "color": "#8FA8B3",
+   "kind": "cold",
+   "x0": -168.0,
+   "x1": 425.0,
+   "parts": 6,
+   "faces": 72520
+  },
+  {
+   "key": "02 Compressor",
+   "label": "Compressor",
+   "color": "#A3AAB0",
+   "kind": "cold",
+   "x0": 546.0,
+   "x1": 1407.0,
+   "parts": 17,
+   "faces": 317478
+  },
+  {
+   "key": "03 Combustor",
+   "label": "Combustor",
+   "color": "#C9763F",
+   "kind": "hot",
+   "x0": 1346.0,
+   "x1": 1686.0,
+   "parts": 10,
+   "faces": 47632
+  },
+  {
+   "key": "04 Turbines",
+   "label": "Turbines",
+   "color": "#B8562E",
+   "kind": "hot",
+   "x0": 1686.0,
+   "x1": 2012.0,
+   "parts": 6,
+   "faces": 105740
+  },
+  {
+   "key": "05 Augmentor",
+   "label": "Augmentor",
+   "color": "#D0843F",
+   "kind": "hot",
+   "x0": 2016.0,
+   "x1": 2850.0,
+   "parts": 6,
+   "faces": 40099
+  },
+  {
+   "key": "06 Nozzle",
+   "label": "2D nozzle",
+   "color": "#9C7A63",
+   "kind": "hot",
+   "x0": 2850.0,
+   "x1": 3561.6,
+   "parts": 11,
+   "faces": 5992
+  },
+  {
+   "key": "07 Frames and casings",
+   "label": "Frames & casings",
+   "color": "#6E7A7E",
+   "kind": "struct",
+   "x0": -190.0,
+   "x1": 2864.0,
+   "parts": 20,
+   "faces": 134216
+  },
+  {
+   "key": "08 Spools and bearings",
+   "label": "Spools & bearings",
+   "color": "#858A86",
+   "kind": "struct",
+   "x0": 10.0,
+   "x1": 2012.0,
+   "parts": 9,
+   "faces": 27824
+  },
+  {
+   "key": "09 Accessories",
+   "label": "Accessories",
+   "color": "#7C8470",
+   "kind": "struct",
+   "x0": 328.0,
+   "x1": 2343.2,
+   "parts": 16,
+   "faces": 8298
+  }
+ ],
+ "parts": {
+  "ab_fuel_manifold": {
+   "m": "05 Augmentor",
+   "mat": "steel",
+   "x0": 2331.0,
+   "x1": 2349.0,
+   "f": 2112,
+   "spool": null,
+   "spin": null
+  },
+  "augmentor_case": {
+   "m": "05 Augmentor",
+   "mat": "cmc",
+   "x0": 2020.0,
+   "x1": 2850.0,
+   "f": 5760,
+   "spool": null,
+   "spin": null
+  },
+  "augmentor_liner": {
+   "m": "05 Augmentor",
+   "mat": "cmc",
+   "x0": 2200.0,
+   "x1": 2850.0,
+   "f": 14243,
+   "spool": null,
+   "spin": null
+  },
+  "blades_hpc_r1": {
+   "m": "02 Compressor",
+   "mat": "titanium",
+   "x0": 831.5,
+   "x1": 880.0,
+   "f": 12312,
+   "spool": "hp",
+   "spin": -1.0
+  },
+  "blades_hpc_r2": {
+   "m": "02 Compressor",
+   "mat": "titanium",
+   "x0": 953.6,
+   "x1": 996.0,
+   "f": 14364,
+   "spool": "hp",
+   "spin": -1.0
+  },
+  "blades_hpc_r3": {
+   "m": "02 Compressor",
+   "mat": "titanium",
+   "x0": 1063.7,
+   "x1": 1100.0,
+   "f": 16416,
+   "spool": "hp",
+   "spin": -1.0
+  },
+  "blades_hpc_r4": {
+   "m": "02 Compressor",
+   "mat": "nickel",
+   "x0": 1160.7,
+   "x1": 1192.0,
+   "f": 18468,
+   "spool": "hp",
+   "spin": -1.0
+  },
+  "blades_hpc_r5": {
+   "m": "02 Compressor",
+   "mat": "nickel",
+   "x0": 1244.8,
+   "x1": 1270.0,
+   "f": 21888,
+   "spool": "hp",
+   "spin": -1.0
+  },
+  "blades_hpc_r6": {
+   "m": "02 Compressor",
+   "mat": "nickel",
+   "x0": 1317.8,
+   "x1": 1338.0,
+   "f": 25992,
+   "spool": "hp",
+   "spin": -1.0
+  },
+  "blades_hpt_r": {
+   "m": "04 Turbines",
+   "mat": "nickel_hot",
+   "x0": 1760.0,
+   "x1": 1808.0,
+   "f": 38360,
+   "spool": "hp",
+   "spin": -1.0
+  },
+  "blades_lpt_r": {
+   "m": "04 Turbines",
+   "mat": "nickel_hot",
+   "x0": 1947.4,
+   "x1": 2008.0,
+   "f": 15732,
+   "spool": "lp",
+   "spin": 1.0
+  },
+  "brg_1_lp_roller": {
+   "m": "08 Spools and bearings",
+   "mat": "steel",
+   "x0": 219.0,
+   "x1": 241.0,
+   "f": 2180,
+   "spool": null,
+   "spin": null
+  },
+  "brg_2_lp_ball": {
+   "m": "08 Spools and bearings",
+   "mat": "steel",
+   "x0": 442.8,
+   "x1": 467.2,
+   "f": 3440,
+   "spool": null,
+   "spin": null
+  },
+  "brg_3_hp_ball": {
+   "m": "08 Spools and bearings",
+   "mat": "steel",
+   "x0": 515.8,
+   "x1": 544.2,
+   "f": 4448,
+   "spool": null,
+   "spin": null
+  },
+  "brg_4_hp_roller": {
+   "m": "08 Spools and bearings",
+   "mat": "steel",
+   "x0": 1834.0,
+   "x1": 1856.0,
+   "f": 2660,
+   "spool": null,
+   "spin": null
+  },
+  "brg_5_lp_roller": {
+   "m": "08 Spools and bearings",
+   "mat": "steel",
+   "x0": 1894.0,
+   "x1": 1916.0,
+   "f": 2240,
+   "spool": null,
+   "spin": null
+  },
+  "case_combustor": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": 1340.0,
+   "x1": 1686.0,
+   "f": 14720,
+   "spool": null,
+   "spin": null
+  },
+  "case_fan": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": -8.0,
+   "x1": 425.0,
+   "f": 9600,
+   "spool": null,
+   "spin": null
+  },
+  "case_hpc": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": 780.0,
+   "x1": 1340.0,
+   "f": 9600,
+   "spool": null,
+   "spin": null
+  },
+  "case_outer_aft": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": 1360.0,
+   "x1": 2850.0,
+   "f": 13120,
+   "spool": null,
+   "spin": null
+  },
+  "case_outer_fwd": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": 425.0,
+   "x1": 1360.0,
+   "f": 8320,
+   "spool": null,
+   "spin": null
+  },
+  "case_turbine": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": 1686.0,
+   "x1": 2020.0,
+   "f": 13440,
+   "spool": null,
+   "spin": null
+  },
+  "cdfs_blisk": {
+   "m": "02 Compressor",
+   "mat": "titanium",
+   "x0": 546.0,
+   "x1": 646.1,
+   "f": 16472,
+   "spool": "hp",
+   "spin": -1.0
+  },
+  "combustor_dome": {
+   "m": "03 Combustor",
+   "mat": "nickel_hot",
+   "x0": 1430.0,
+   "x1": 1440.0,
+   "f": 1192,
+   "spool": null,
+   "spin": null
+  },
+  "combustor_inner_case": {
+   "m": "03 Combustor",
+   "mat": "nickel",
+   "x0": 1346.0,
+   "x1": 1686.0,
+   "f": 1920,
+   "spool": null,
+   "spin": null
+  },
+  "combustor_liner_inner": {
+   "m": "03 Combustor",
+   "mat": "cmc",
+   "x0": 1430.0,
+   "x1": 1686.0,
+   "f": 5952,
+   "spool": null,
+   "spin": null
+  },
+  "combustor_liner_outer": {
+   "m": "03 Combustor",
+   "mat": "cmc",
+   "x0": 1430.0,
+   "x1": 1686.0,
+   "f": 5944,
+   "spool": null,
+   "spin": null
+  },
+  "combustor_mount_pins": {
+   "m": "03 Combustor",
+   "mat": "casing",
+   "x0": 1458.0,
+   "x1": 1470.0,
+   "f": 504,
+   "spool": null,
+   "spin": null
+  },
+  "containment_wrap": {
+   "m": "07 Frames and casings",
+   "mat": "composite",
+   "x0": 8.0,
+   "x1": 338.0,
+   "f": 7040,
+   "spool": null,
+   "spin": null
+  },
+  "coolant_lines": {
+   "m": "09 Accessories",
+   "mat": "copper",
+   "x0": 1366.0,
+   "x1": 1720.0,
+   "f": 700,
+   "spool": null,
+   "spin": null
+  },
+  "core_cowl": {
+   "m": "07 Frames and casings",
+   "mat": "titanium",
+   "x0": 780.0,
+   "x1": 1340.0,
+   "f": 4800,
+   "spool": null,
+   "spin": null
+  },
+  "core_splitter": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": 695.0,
+   "x1": 780.0,
+   "f": 3200,
+   "spool": null,
+   "spin": null
+  },
+  "diffuser": {
+   "m": "03 Combustor",
+   "mat": "nickel",
+   "x0": 1350.0,
+   "x1": 1378.0,
+   "f": 18540,
+   "spool": null,
+   "spin": null
+  },
+  "fadec_a": {
+   "m": "09 Accessories",
+   "mat": "composite",
+   "x0": 920.0,
+   "x1": 1260.0,
+   "f": 258,
+   "spool": null,
+   "spin": null
+  },
+  "fadec_b": {
+   "m": "09 Accessories",
+   "mat": "composite",
+   "x0": 920.0,
+   "x1": 1260.0,
+   "f": 258,
+   "spool": null,
+   "spin": null
+  },
+  "fan_blisk_1": {
+   "m": "01 Fan",
+   "mat": "titanium",
+   "x0": -8.0,
+   "x1": 144.5,
+   "f": 11276,
+   "spool": "lp",
+   "spin": 1.0
+  },
+  "fan_blisk_2": {
+   "m": "01 Fan",
+   "mat": "titanium",
+   "x0": 233.5,
+   "x1": 336.5,
+   "f": 14260,
+   "spool": "lp",
+   "spin": 1.0
+  },
+  "fan_drum": {
+   "m": "01 Fan",
+   "mat": "titanium",
+   "x0": 144.5,
+   "x1": 233.5,
+   "f": 3520,
+   "spool": "lp",
+   "spin": 1.0
+  },
+  "fan_frame_hub": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": 425.0,
+   "x1": 542.0,
+   "f": 1920,
+   "spool": null,
+   "spin": null
+  },
+  "fan_frame_struts": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": 440.0,
+   "x1": 540.0,
+   "f": 1456,
+   "spool": null,
+   "spin": null
+  },
+  "flameholder_vanes": {
+   "m": "05 Augmentor",
+   "mat": "cmc",
+   "x0": 2290.0,
+   "x1": 2440.0,
+   "f": 3872,
+   "spool": null,
+   "spin": null
+  },
+  "flange_fan_aft": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": 417.0,
+   "x1": 439.0,
+   "f": 2440,
+   "spool": null,
+   "spin": null
+  },
+  "flange_inlet": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": -16.0,
+   "x1": 6.0,
+   "f": 2440,
+   "spool": null,
+   "spin": null
+  },
+  "flange_outer_aft": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": 2842.0,
+   "x1": 2864.0,
+   "f": 2640,
+   "spool": null,
+   "spin": null
+  },
+  "flange_outer_mid": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": 1352.0,
+   "x1": 1374.0,
+   "f": 2640,
+   "spool": null,
+   "spin": null
+  },
+  "fuel_lines": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 761.0,
+   "x1": 2343.2,
+   "f": 1012,
+   "spool": null,
+   "spin": null
+  },
+  "fuel_manifold": {
+   "m": "03 Combustor",
+   "mat": "steel",
+   "x0": 1390.0,
+   "x1": 1410.0,
+   "f": 2240,
+   "spool": null,
+   "spin": null
+  },
+  "fuel_metering_unit": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 700.0,
+   "x1": 860.0,
+   "f": 162,
+   "spool": null,
+   "spin": null
+  },
+  "fuel_nozzles": {
+   "m": "03 Combustor",
+   "mat": "steel",
+   "x0": 1380.0,
+   "x1": 1422.0,
+   "f": 5796,
+   "spool": null,
+   "spin": null
+  },
+  "fuel_pump": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 328.0,
+   "x1": 386.0,
+   "f": 128,
+   "spool": null,
+   "spin": null
+  },
+  "gearbox": {
+   "m": "09 Accessories",
+   "mat": "casing",
+   "x0": 380.0,
+   "x1": 880.0,
+   "f": 1452,
+   "spool": null,
+   "spin": null
+  },
+  "gearbox_mounts": {
+   "m": "09 Accessories",
+   "mat": "casing",
+   "x0": 387.0,
+   "x1": 848.0,
+   "f": 56,
+   "spool": null,
+   "spin": null
+  },
+  "generator_l": {
+   "m": "09 Accessories",
+   "mat": "casing",
+   "x0": 600.0,
+   "x1": 820.0,
+   "f": 1440,
+   "spool": null,
+   "spin": null
+  },
+  "generator_r": {
+   "m": "09 Accessories",
+   "mat": "casing",
+   "x0": 600.0,
+   "x1": 820.0,
+   "f": 1440,
+   "spool": null,
+   "spin": null
+  },
+  "harnesses": {
+   "m": "09 Accessories",
+   "mat": "rubber",
+   "x0": 861.2,
+   "x1": 936.9,
+   "f": 340,
+   "spool": null,
+   "spin": null
+  },
+  "hp_front_drum": {
+   "m": "02 Compressor",
+   "mat": "titanium",
+   "x0": 622.3,
+   "x1": 824.8,
+   "f": 960,
+   "spool": "hp",
+   "spin": -1.0
+  },
+  "hpc_drum": {
+   "m": "02 Compressor",
+   "mat": "titanium",
+   "x0": 824.8,
+   "x1": 1407.0,
+   "f": 18240,
+   "spool": "hp",
+   "spin": -1.0
+  },
+  "hpt_disc": {
+   "m": "04 Turbines",
+   "mat": "nickel",
+   "x0": 1722.6,
+   "x1": 1815.2,
+   "f": 3840,
+   "spool": "hp",
+   "spin": -1.0
+  },
+  "igniters": {
+   "m": "03 Combustor",
+   "mat": "steel",
+   "x0": 1449.0,
+   "x1": 1475.0,
+   "f": 72,
+   "spool": null,
+   "spin": null
+  },
+  "inlet_case": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": -190.0,
+   "x1": -8.0,
+   "f": 1600,
+   "spool": null,
+   "spin": null
+  },
+  "intermediate_case": {
+   "m": "07 Frames and casings",
+   "mat": "titanium",
+   "x0": 425.0,
+   "x1": 2020.0,
+   "f": 28800,
+   "spool": null,
+   "spin": null
+  },
+  "lpt_disc": {
+   "m": "04 Turbines",
+   "mat": "nickel",
+   "x0": 1941.5,
+   "x1": 2012.0,
+   "f": 4000,
+   "spool": "lp",
+   "spin": 1.0
+  },
+  "mixer": {
+   "m": "05 Augmentor",
+   "mat": "nickel_hot",
+   "x0": 2020.0,
+   "x1": 2200.0,
+   "f": 8832,
+   "spool": null,
+   "spin": null
+  },
+  "mode_valve": {
+   "m": "07 Frames and casings",
+   "mat": "titanium",
+   "x0": 618.0,
+   "x1": 687.9,
+   "f": 2352,
+   "spool": null,
+   "spin": null
+  },
+  "mount_aft_lug": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 2205.0,
+   "x1": 2295.0,
+   "f": 36,
+   "spool": null,
+   "spin": null
+  },
+  "mount_trunnions": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 446.0,
+   "x1": 534.0,
+   "f": 120,
+   "spool": null,
+   "spin": null
+  },
+  "nozzle_actuators": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 3118.0,
+   "x1": 3342.0,
+   "f": 176,
+   "spool": null,
+   "spin": null
+  },
+  "nozzle_conv_flap_lower": {
+   "m": "06 Nozzle",
+   "mat": "cmc",
+   "x0": 3100.0,
+   "x1": 3312.2,
+   "f": 42,
+   "spool": null,
+   "spin": null
+  },
+  "nozzle_conv_flap_upper": {
+   "m": "06 Nozzle",
+   "mat": "cmc",
+   "x0": 3100.0,
+   "x1": 3312.2,
+   "f": 42,
+   "spool": null,
+   "spin": null
+  },
+  "nozzle_div_flap_lower": {
+   "m": "06 Nozzle",
+   "mat": "cmc",
+   "x0": 3310.0,
+   "x1": 3560.0,
+   "f": 86,
+   "spool": null,
+   "spin": null
+  },
+  "nozzle_div_flap_upper": {
+   "m": "06 Nozzle",
+   "mat": "cmc",
+   "x0": 3310.0,
+   "x1": 3560.0,
+   "f": 86,
+   "spool": null,
+   "spin": null
+  },
+  "nozzle_ext_flap_lower": {
+   "m": "06 Nozzle",
+   "mat": "casing",
+   "x0": 3100.0,
+   "x1": 3561.6,
+   "f": 50,
+   "spool": null,
+   "spin": null
+  },
+  "nozzle_ext_flap_upper": {
+   "m": "06 Nozzle",
+   "mat": "casing",
+   "x0": 3100.0,
+   "x1": 3561.6,
+   "f": 50,
+   "spool": null,
+   "spin": null
+  },
+  "nozzle_hinges": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 3084.0,
+   "x1": 3326.0,
+   "f": 72,
+   "spool": null,
+   "spin": null
+  },
+  "nozzle_shroud": {
+   "m": "06 Nozzle",
+   "mat": "casing",
+   "x0": 2850.0,
+   "x1": 3100.0,
+   "f": 2880,
+   "spool": null,
+   "spin": null
+  },
+  "nozzle_sidewalls": {
+   "m": "06 Nozzle",
+   "mat": "casing",
+   "x0": 3100.0,
+   "x1": 3560.0,
+   "f": 12,
+   "spool": null,
+   "spin": null
+  },
+  "nozzle_transition": {
+   "m": "06 Nozzle",
+   "mat": "cmc",
+   "x0": 2850.0,
+   "x1": 3100.0,
+   "f": 2496,
+   "spool": null,
+   "spin": null
+  },
+  "oil_lines": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 449.0,
+   "x1": 1870.9,
+   "f": 382,
+   "spool": null,
+   "spin": null
+  },
+  "oil_tank": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 876.0,
+   "x1": 1060.0,
+   "f": 396,
+   "spool": null,
+   "spin": null
+  },
+  "service_struts": {
+   "m": "07 Frames and casings",
+   "mat": "casing",
+   "x0": 1835.0,
+   "x1": 1925.0,
+   "f": 728,
+   "spool": null,
+   "spin": null
+  },
+  "shaft_hp": {
+   "m": "08 Spools and bearings",
+   "mat": "steel",
+   "x0": 470.0,
+   "x1": 1858.0,
+   "f": 3256,
+   "spool": "hp",
+   "spin": -1.0
+  },
+  "shaft_lp": {
+   "m": "08 Spools and bearings",
+   "mat": "steel",
+   "x0": 10.0,
+   "x1": 2012.0,
+   "f": 3520,
+   "spool": "lp",
+   "spin": 1.0
+  },
+  "spinner": {
+   "m": "01 Fan",
+   "mat": "titanium",
+   "x0": -168.0,
+   "x1": -8.0,
+   "f": 4960,
+   "spool": "lp",
+   "spin": 1.0
+  },
+  "sump_front": {
+   "m": "08 Spools and bearings",
+   "mat": "steel",
+   "x0": 219.0,
+   "x1": 542.0,
+   "f": 4160,
+   "spool": null,
+   "spin": null
+  },
+  "sump_rear": {
+   "m": "08 Spools and bearings",
+   "mat": "steel",
+   "x0": 1834.0,
+   "x1": 1916.0,
+   "f": 1920,
+   "spool": null,
+   "spin": null
+  },
+  "swirlers": {
+   "m": "03 Combustor",
+   "mat": "nickel_hot",
+   "x0": 1422.0,
+   "x1": 1448.0,
+   "f": 5472,
+   "spool": null,
+   "spin": null
+  },
+  "tailcone": {
+   "m": "05 Augmentor",
+   "mat": "cmc",
+   "x0": 2016.0,
+   "x1": 2560.0,
+   "f": 5280,
+   "spool": null,
+   "spin": null
+  },
+  "tms_hx": {
+   "m": "07 Frames and casings",
+   "mat": "copper",
+   "x0": 1474.0,
+   "x1": 1760.0,
+   "f": 3360,
+   "spool": null,
+   "spin": null
+  },
+  "towershaft": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 468.0,
+   "x1": 512.0,
+   "f": 118,
+   "spool": null,
+   "spin": null
+  },
+  "vanes_cdfs": {
+   "m": "02 Compressor",
+   "mat": "titanium",
+   "x0": 627.4,
+   "x1": 695.0,
+   "f": 23400,
+   "spool": null,
+   "spin": null
+  },
+  "vanes_fan_s1": {
+   "m": "01 Fan",
+   "mat": "titanium",
+   "x0": 147.5,
+   "x1": 230.5,
+   "f": 17200,
+   "spool": null,
+   "spin": null
+  },
+  "vanes_fan_s2": {
+   "m": "01 Fan",
+   "mat": "titanium",
+   "x0": 339.5,
+   "x1": 425.0,
+   "f": 21304,
+   "spool": null,
+   "spin": null
+  },
+  "vanes_hpc_igv": {
+   "m": "02 Compressor",
+   "mat": "nickel",
+   "x0": 695.0,
+   "x1": 819.1,
+   "f": 20808,
+   "spool": null,
+   "spin": null
+  },
+  "vanes_hpc_s1": {
+   "m": "02 Compressor",
+   "mat": "nickel",
+   "x0": 889.7,
+   "x1": 944.3,
+   "f": 20388,
+   "spool": null,
+   "spin": null
+  },
+  "vanes_hpc_s2": {
+   "m": "02 Compressor",
+   "mat": "nickel",
+   "x0": 1005.3,
+   "x1": 1054.7,
+   "f": 22120,
+   "spool": null,
+   "spin": null
+  },
+  "vanes_hpc_s3": {
+   "m": "02 Compressor",
+   "mat": "nickel",
+   "x0": 1108.9,
+   "x1": 1153.0,
+   "f": 24172,
+   "spool": null,
+   "spin": null
+  },
+  "vanes_hpc_s4": {
+   "m": "02 Compressor",
+   "mat": "nickel",
+   "x0": 1199.5,
+   "x1": 1238.0,
+   "f": 26588,
+   "spool": null,
+   "spin": null
+  },
+  "vanes_hpc_s5": {
+   "m": "02 Compressor",
+   "mat": "nickel",
+   "x0": 1278.4,
+   "x1": 1309.6,
+   "f": 31376,
+   "spool": null,
+   "spin": null
+  },
+  "vanes_hpt_ngv": {
+   "m": "04 Turbines",
+   "mat": "cmc",
+   "x0": 1686.0,
+   "x1": 1751.0,
+   "f": 30016,
+   "spool": null,
+   "spin": null
+  },
+  "vanes_mtf": {
+   "m": "04 Turbines",
+   "mat": "nickel_hot",
+   "x0": 1820.5,
+   "x1": 1938.5,
+   "f": 13792,
+   "spool": null,
+   "spin": null
+  },
+  "vsv_actuation": {
+   "m": "02 Compressor",
+   "mat": "steel",
+   "x0": 788.6,
+   "x1": 1031.2,
+   "f": 3514,
+   "spool": null,
+   "spin": null
+  }
+ }
+}

@@ -1,0 +1,102 @@
+name,collection,module,material,verts,faces,x_min_mm,x_max_mm,y_min_mm,y_max_mm,z_min_mm,z_max_mm,r_max_mm,spool,spin
+ab_fuel_manifold,05 Augmentor,augmentor,steel,2240,2112,2331.0,2349.0,-491.0,491.0,-491.0,491.0,491.0,,
+augmentor_case,05 Augmentor,augmentor,cmc,5760,5760,2020.0,2850.0,-434.0,434.0,-434.0,434.0,434.0,,
+augmentor_liner,05 Augmentor,augmentor,cmc,24917,14243,2200.0,2850.0,-428.0,428.0,-428.0,428.0,428.0,,
+blades_hpc_r1,02 Compressor,compressor,titanium,13464,12312,831.5,880.0,-316.8,316.8,-316.8,316.8,317.0,hp,-1.0
+blades_hpc_r2,02 Compressor,compressor,titanium,15708,14364,953.6,996.0,-314.1,314.1,-314.3,314.3,314.3,hp,-1.0
+blades_hpc_r3,02 Compressor,compressor,titanium,17952,16416,1063.7,1100.0,-311.6,311.6,-311.6,311.6,311.8,hp,-1.0
+blades_hpc_r4,02 Compressor,compressor,nickel,20196,18468,1160.7,1192.0,-310.2,310.2,-310.2,310.2,310.2,hp,-1.0
+blades_hpc_r5,02 Compressor,compressor,nickel,23936,21888,1244.8,1270.0,-309.1,309.1,-309.1,309.1,309.2,hp,-1.0
+blades_hpc_r6,02 Compressor,compressor,nickel,28424,25992,1317.8,1338.0,-308.2,308.2,-308.2,308.2,308.3,hp,-1.0
+blades_hpt_r,04 Turbines,turbine,nickel_hot,66248,38360,1760.0,1808.0,-331.7,331.7,-331.7,331.7,332.0,hp,-1.0
+blades_lpt_r,04 Turbines,turbine,nickel_hot,17204,15732,1947.4,2008.0,-364.6,364.6,-364.9,364.9,365.0,lp,1.0
+brg_1_lp_roller,08 Spools and bearings,spools,steel,2030,2180,219.0,241.0,-100.0,100.0,-100.0,100.0,100.0,,
+brg_2_lp_ball,08 Spools and bearings,spools,steel,3290,3440,442.8,467.2,-100.0,100.0,-100.0,100.0,100.0,,
+brg_3_hp_ball,08 Spools and bearings,spools,steel,4228,4448,515.8,544.2,-158.0,158.0,-158.0,158.0,158.0,,
+brg_4_hp_roller,08 Spools and bearings,spools,steel,2430,2660,1834.0,1856.0,-156.0,156.0,-156.0,156.0,156.0,,
+brg_5_lp_roller,08 Spools and bearings,spools,steel,2080,2240,1894.0,1916.0,-98.0,98.0,-98.0,98.0,98.0,,
+case_combustor,07 Frames and casings,combustor,casing,14720,14720,1340.0,1686.0,-382.0,382.0,-382.0,382.0,382.0,,
+case_fan,07 Frames and casings,fan,casing,9600,9600,-8.0,425.0,-446.0,446.0,-446.0,446.0,446.0,,
+case_hpc,07 Frames and casings,compressor,casing,9600,9600,780.0,1340.0,-327.0,327.0,-327.0,327.0,327.0,,
+case_outer_aft,07 Frames and casings,frames,casing,13120,13120,1360.0,2850.0,-470.0,470.0,-470.0,470.0,470.0,,
+case_outer_fwd,07 Frames and casings,frames,casing,8320,8320,425.0,1360.0,-446.0,446.0,-446.0,446.0,446.0,,
+case_turbine,07 Frames and casings,turbine,casing,13440,13440,1686.0,2020.0,-382.0,382.0,-382.0,382.0,382.0,,
+cdfs_blisk,02 Compressor,compressor,titanium,17624,16472,546.0,646.1,-381.8,381.8,-381.8,381.8,382.4,hp,-1.0
+combustor_dome,03 Combustor,combustor,nickel_hot,1816,1192,1430.0,1440.0,-345.8,345.8,-345.8,345.8,345.9,,
+combustor_inner_case,03 Combustor,combustor,nickel,1920,1920,1346.0,1686.0,-295.0,295.0,-295.0,295.0,295.0,,
+combustor_liner_inner,03 Combustor,combustor,cmc,6664,5952,1430.0,1686.0,-262.0,262.0,-262.0,262.0,262.0,,
+combustor_liner_outer,03 Combustor,combustor,cmc,6648,5944,1430.0,1686.0,-350.0,350.0,-350.0,350.0,350.0,,
+combustor_mount_pins,03 Combustor,combustor,casing,864,504,1458.0,1470.0,-375.0,375.0,-370.3,370.3,375.0,,
+containment_wrap,07 Frames and casings,fan,composite,7040,7040,8.0,338.0,-458.6,458.6,-458.6,458.6,458.6,,
+coolant_lines,09 Accessories,accessories,copper,732,700,1366.0,1720.0,105.9,153.6,428.3,518.4,536.0,,
+core_cowl,07 Frames and casings,frames,titanium,4800,4800,780.0,1340.0,-344.0,344.0,-344.0,344.0,344.0,,
+core_splitter,07 Frames and casings,frames,casing,3200,3200,695.0,780.0,-349.0,349.0,-349.0,349.0,349.0,,
+diffuser,03 Combustor,combustor,nickel,21420,18540,1350.0,1378.0,-311.0,311.0,-310.9,310.9,311.0,,
+fadec_a,09 Accessories,accessories,composite,336,258,920.0,1260.0,338.6,477.1,-340.2,-177.0,521.0,,
+fadec_b,09 Accessories,accessories,composite,336,258,920.0,1260.0,-477.1,-338.6,-340.2,-177.0,521.0,,
+fan_blisk_1,01 Fan,fan,titanium,11852,11276,-8.0,144.5,-433.1,433.1,-434.3,434.3,434.3,lp,1.0
+fan_blisk_2,01 Fan,fan,titanium,15220,14260,233.5,336.5,-420.4,420.4,-421.5,421.5,421.5,lp,1.0
+fan_drum,01 Fan,fan,titanium,3520,3520,144.5,233.5,-218.5,218.5,-218.5,218.5,218.5,lp,1.0
+fan_frame_hub,07 Frames and casings,frames,casing,1920,1920,425.0,542.0,-294.0,294.0,-294.0,294.0,294.0,,
+fan_frame_struts,07 Frames and casings,frames,casing,1680,1456,440.0,540.0,-429.2,429.2,-429.2,429.2,429.2,,
+flameholder_vanes,05 Augmentor,augmentor,cmc,4320,3872,2290.0,2440.0,-420.0,420.0,-420.0,420.0,420.0,,
+flange_fan_aft,07 Frames and casings,frames,casing,2152,2440,417.0,439.0,-440.0,440.0,-440.0,440.0,440.0,,
+flange_inlet,07 Frames and casings,frames,casing,2152,2440,-16.0,6.0,-478.0,478.0,-478.0,478.0,478.0,,
+flange_outer_aft,07 Frames and casings,frames,casing,2320,2640,2842.0,2864.0,-492.0,492.0,-492.0,492.0,492.0,,
+flange_outer_mid,07 Frames and casings,frames,casing,2320,2640,1352.0,1374.0,-482.0,482.0,-482.0,482.0,482.0,,
+fuel_lines,09 Accessories,accessories,steel,1044,1012,761.0,2343.2,-217.1,-37.4,-646.2,-440.2,672.6,,
+fuel_manifold,03 Combustor,combustor,steel,2240,2240,1390.0,1410.0,-484.7,484.7,-484.7,484.7,484.7,,
+fuel_metering_unit,09 Accessories,accessories,steel,192,162,700.0,860.0,-70.0,70.0,-628.0,-568.0,628.5,,
+fuel_nozzles,03 Combustor,combustor,steel,6048,5796,1380.0,1422.0,-473.3,473.3,-479.0,479.0,479.1,,
+fuel_pump,09 Accessories,accessories,steel,128,128,328.0,386.0,-40.0,40.0,-568.0,-488.0,568.0,,
+gearbox,09 Accessories,accessories,casing,1728,1452,380.0,880.0,-119.0,119.0,-576.0,-448.0,579.7,,
+gearbox_mounts,09 Accessories,accessories,casing,96,56,387.0,848.0,-78.0,78.0,-458.0,-405.7,464.6,,
+generator_l,09 Accessories,accessories,casing,1440,1440,600.0,820.0,105.0,239.0,-579.0,-445.0,607.1,,
+generator_r,09 Accessories,accessories,casing,1440,1440,600.0,820.0,-239.0,-105.0,-579.0,-445.0,607.1,,
+harnesses,09 Accessories,accessories,rubber,364,340,861.2,936.9,-420.4,420.4,-489.0,-256.5,586.9,,
+hp_front_drum,02 Compressor,compressor,titanium,960,960,622.3,824.8,-282.0,282.0,-282.0,282.0,282.0,hp,-1.0
+hpc_drum,02 Compressor,compressor,titanium,18240,18240,824.8,1407.0,-295.0,295.0,-295.0,295.0,295.0,hp,-1.0
+hpt_disc,04 Turbines,turbine,nickel,3840,3840,1722.6,1815.2,-262.0,262.0,-262.0,262.0,262.0,hp,-1.0
+igniters,03 Combustor,combustor,steel,128,72,1449.0,1475.0,-433.0,433.0,166.3,255.3,496.0,,
+inlet_case,07 Frames and casings,fan,casing,1600,1600,-190.0,-8.0,-446.0,446.0,-446.0,446.0,446.0,,
+intermediate_case,07 Frames and casings,frames,titanium,28800,28800,425.0,2020.0,-426.0,426.0,-426.0,426.0,426.0,,
+lpt_disc,04 Turbines,turbine,nickel,4000,4000,1941.5,2012.0,-250.8,250.8,-250.8,250.8,250.9,lp,1.0
+mixer,05 Augmentor,augmentor,nickel_hot,8832,8832,2020.0,2200.0,-414.5,414.5,-414.5,414.5,414.5,,
+mode_valve,07 Frames and casings,frames,titanium,2400,2352,618.0,687.9,-423.8,423.8,-423.8,423.8,423.8,,
+mount_aft_lug,09 Accessories,accessories,steel,56,36,2205.0,2295.0,-35.0,35.0,468.0,524.0,524.7,,
+mount_trunnions,09 Accessories,accessories,steel,224,120,446.0,534.0,-480.0,480.0,-44.0,44.0,481.3,,
+nozzle_actuators,06 Nozzle,nozzle,steel,288,176,3118.0,3342.0,-435.8,435.8,-240.5,240.5,488.6,,
+nozzle_conv_flap_lower,06 Nozzle,nozzle,cmc,56,42,3100.0,3312.2,-360.0,360.0,-336.2,-196.9,491.7,,
+nozzle_conv_flap_upper,06 Nozzle,nozzle,cmc,56,42,3100.0,3312.2,-360.0,360.0,196.9,336.2,491.7,,
+nozzle_div_flap_lower,06 Nozzle,nozzle,cmc,100,86,3310.0,3560.0,-360.0,360.0,-275.4,-196.9,444.0,,
+nozzle_div_flap_upper,06 Nozzle,nozzle,cmc,100,86,3310.0,3560.0,-360.0,360.0,196.9,275.4,444.0,,
+nozzle_ext_flap_lower,06 Nozzle,nozzle,casing,52,50,3100.0,3561.6,-384.0,384.0,-375.8,-276.5,537.3,,
+nozzle_ext_flap_upper,06 Nozzle,nozzle,casing,52,50,3100.0,3561.6,-384.0,384.0,276.5,375.8,537.3,,
+nozzle_hinges,06 Nozzle,nozzle,steel,128,72,3084.0,3326.0,-380.0,380.0,-337.0,337.0,507.9,,
+nozzle_shroud,06 Nozzle,nozzle,casing,2880,2880,2850.0,3100.0,-469.9,469.9,-469.9,469.9,505.5,,
+nozzle_sidewalls,06 Nozzle,nozzle,casing,16,12,3100.0,3560.0,-384.0,384.0,-368.0,368.0,531.9,,
+nozzle_transition,06 Nozzle,nozzle,cmc,2496,2496,2850.0,3100.0,-426.0,426.0,-426.0,426.0,459.5,,
+oil_lines,09 Accessories,accessories,steel,414,382,449.0,1870.9,-6.0,6.0,-517.9,-107.0,517.9,,
+oil_tank,09 Accessories,accessories,steel,362,396,876.0,1060.0,-56.0,56.0,-568.0,-456.0,568.0,,
+service_struts,07 Frames and casings,frames,casing,840,728,1835.0,1925.0,-462.0,462.0,-462.0,462.0,462.0,,
+shaft_hp,08 Spools and bearings,spools,steel,3328,3256,470.0,1858.0,-151.0,151.0,-151.0,151.0,151.0,hp,-1.0
+shaft_lp,08 Spools and bearings,spools,steel,3520,3520,10.0,2012.0,-62.0,62.0,-62.0,62.0,62.0,lp,1.0
+spinner,01 Fan,fan,titanium,4802,4960,-168.0,-8.0,-128.0,128.0,-128.0,128.0,128.0,lp,1.0
+sump_front,08 Spools and bearings,spools,steel,4160,4160,219.0,542.0,-286.0,286.0,-286.0,286.0,286.0,,
+sump_rear,08 Spools and bearings,spools,steel,1920,1920,1834.0,1916.0,-251.8,251.8,-251.8,251.8,251.8,,
+swirlers,03 Combustor,combustor,nickel_hot,5760,5472,1422.0,1448.0,-320.5,320.5,-325.0,325.0,325.0,,
+tailcone,05 Augmentor,augmentor,cmc,5122,5280,2016.0,2560.0,-247.0,247.0,-247.0,247.0,247.0,,
+tms_hx,07 Frames and casings,frames,copper,3552,3360,1474.0,1760.0,-459.6,459.6,-459.6,459.6,459.8,,
+towershaft,09 Accessories,accessories,steel,136,118,468.0,512.0,-22.0,22.0,-502.0,-142.0,502.2,,
+vanes_cdfs,02 Compressor,compressor,titanium,25320,23400,627.4,695.0,-382.0,382.0,-382.0,382.0,382.0,,
+vanes_fan_s1,01 Fan,fan,titanium,18480,17200,147.5,230.5,-430.1,430.1,-430.1,430.1,431.0,,
+vanes_fan_s2,01 Fan,fan,titanium,22968,21304,339.5,425.0,-415.3,415.3,-415.3,415.3,416.0,,
+vanes_hpc_igv,02 Compressor,compressor,nickel,22216,20808,695.0,819.1,-322.0,322.0,-322.0,322.0,322.0,,
+vanes_hpc_s1,02 Compressor,compressor,nickel,22116,20388,889.7,944.3,-318.5,318.5,-318.3,318.3,318.6,,
+vanes_hpc_s2,02 Compressor,compressor,nickel,24040,22120,1005.3,1054.7,-316.0,316.0,-316.0,316.0,316.0,,
+vanes_hpc_s3,02 Compressor,compressor,nickel,26284,24172,1108.9,1153.0,-313.8,313.8,-313.6,313.6,313.8,,
+vanes_hpc_s4,02 Compressor,compressor,nickel,28956,26588,1199.5,1238.0,-312.7,312.7,-312.6,312.6,312.7,,
+vanes_hpc_s5,02 Compressor,compressor,nickel,34192,31376,1278.4,1309.6,-311.7,311.7,-311.7,311.7,311.7,,
+vanes_hpt_ngv,04 Turbines,turbine,cmc,46504,30016,1686.0,1751.0,-329.2,329.2,-329.2,329.2,330.0,,
+vanes_mtf,04 Turbines,turbine,nickel_hot,14304,13792,1820.5,1938.5,-358.0,358.0,-358.0,358.0,358.0,,
+vsv_actuation,02 Compressor,compressor,steel,4472,3514,788.6,1031.2,-336.0,336.0,-336.0,336.0,336.0,,

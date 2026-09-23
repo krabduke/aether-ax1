@@ -1,0 +1,139 @@
+# Aether AX-1 — an adaptive-cycle fighter engine, designed from scratch
+
+An original three-stream, reheated turbofan with a two-dimensional thrust-
+vectoring nozzle, sized to power the twin-engine [Nyx](https://github.com/Krabduke/nyx-jet)
+agile fighter. It is not a model of any production engine: the cycle, the
+flowpath, every blade row and every part are designed here, and the whole
+engine is generated procedurally in Blender from one specification file.
+
+This is **version 2** of the engine project. Version 1 modelled the GE
+F110-GE-129 and is kept at [Krabduke/f110-turbofan](https://github.com/Krabduke/f110-turbofan)
+(tag `v1`).
+
+![hero](renders/01_hero.png)
+
+## The design
+
+| | |
+|---|---|
+| Architecture | 2-stage blisk fan · 1-stage core-driven fan stage (CDFS) · 6-stage HP compressor · CMC annular combustor · 1-stage HP turbine · 1-stage LP turbine, counter-rotating · lobed mixer · integrated-vane augmentor · 2D C-D vectoring nozzle |
+| Airflow | 112 kg/s at sea-level static |
+| Thrust | **90.5 kN dry, 134.9 kN with reheat** (from the cycle, not typed in) |
+| Pressure ratios | fan 3.8, CDFS 1.3, HPC 7.4 — **overall 36.6** |
+| Turbine inlet | 2,050 K |
+| Bypass ratio | 0.63 second stream (solved for a balanced mixer), 0.81 with the third stream |
+| SFC | 21.4 mg/N·s dry, 42.3 reheat |
+| Mass (estimated) | 1,420 kg — reheat thrust-to-weight 9.7 |
+| Size | 3.75 m long, 0.99 m over the flanges |
+| Aerofoils | 1,186, every one individually lofted |
+| Vectoring | ±20° in pitch |
+
+**Why these choices.** The engine exists to make an airframe turn hard, which
+asks for a lot of thrust in a small, light package — so a hot, high-pressure
+core behind a compact two-stage fan. An agile fighter spends most of its life
+at part throttle, which is where a fixed low-bypass engine wastes fuel — so it
+is an **adaptive cycle**: a core-driven fan stage on the HP spool and a third
+stream behind a mode valve let the bypass ratio move without moving the fan.
+The third stream also carries a **heat exchanger** that sinks the aircraft's
+sensor and avionics heat load, and the HP spool drives two generators. The
+exhaust ends in a **2D nozzle** that vectors ±20° in pitch, which is what
+controls the aircraft past the stall.
+
+**How the numbers hang together.** `engine/cycle.py` is a textbook
+preliminary-design cycle (two-gas constant properties, polytropic efficiencies,
+lumped cooling air). It does not take the bypass ratio as an input: a
+mixed-flow turbofan only works if the core and bypass reach the mixer at the
+same total pressure, so the cycle **solves** for the bypass ratio that does
+that. Thrust, SFC, the nozzle throat area and its exit/throat ratio all come
+out of it. `engine/spec.py` then draws a flowpath to carry those flows, and
+`engine/verify.py` recomputes the axial Mach number the drawn annulus implies
+at fifteen stations from the cycle's own mass flows and total conditions, the
+solidity of every blade row, the axial gap between every pair of rows measured
+off the lofted aerofoils, and the nozzle throat against the cycle's choked
+area — and fails the build if any is out of band.
+
+## What's modelled
+
+| Module | Contents |
+|---|---|
+| Fan | Rotating spinner (no inlet guide vanes), two swept blisks — 18 wide-chord blades then 30 — stators, the inter-stage drum, fan case and aramid containment wrap |
+| Frames and walls | Three concentric walls for three streams: outer case, intermediate case (its nose is the third-stream splitter), core cowl (its nose is the core splitter). Fan frame with eight struts, a fat king strut for the tower shaft, flanges with bolt rings |
+| Compressor | CDFS blisk on the HP spool with a variable stator; swan neck; variable inlet guide vane; six-stage HP compressor on a drum with a disc under every rotor; variable-vane unison rings and spindles |
+| Combustor | Exit guide vanes, combustor case and inner case, single-skin SiC/SiC CMC liners with real dilution holes, dome with 18 swirlers seated in real holes, liner mount pins, 18 fuel nozzles off a manifold, two igniters |
+| Turbines | HP nozzle and HP rotor with real film-cooling holes (showerhead and pressure-side rows, in every aerofoil), HP disc, mid-turbine frame of 16 structural vanes, counter-rotating LP rotor and disc |
+| Augmentor | 16-lobe mixer, tail cone, augmentor case, CMC screech liner with 1,200 real damping holes, 16 radial flameholder vanes, reheat fuel manifold with a feed into every vane |
+| 2D nozzle | Round-to-rectangular transition, shroud, sidewalls, convergent and divergent flaps with stiffening ribs, external flaps, sawtooth trailing edges, hinge pins, four actuators |
+| Spools | LP and HP shafts, five bearings (inner race, outer race, a full ring of balls or rollers) in two sumps hung from the fan frame and the mid-turbine frame |
+| Third stream | Mode valve (24 petals), 12-segment plate-fin heat exchanger, coolant lines to the aircraft |
+| Externals | Accessory gearbox with ribs, tower shaft off a bevel on the HP shaft, two generators, fuel pump and metering unit, oil tank and lines to both sumps, fuel lines to both manifolds, two FADEC channels on stand-offs with their looms, forward trunnions and an aft thrust lug |
+
+## Build
+
+Requires Blender (`brew install --cask blender`) and Python 3 with numpy.
+
+```
+make cycle      # print the thermodynamic design point
+make build      # generate geometry, assemble build/aether.blend, write parts.csv
+make verify     # every gate below  <- the definition of done
+make render     # hero, rear quarter, cutaway, exploded
+make closeups   # detail shots used to inspect the model
+make web        # decimated, Draco-compressed GLB for the viewer
+make viewer     # serve the viewer on http://localhost:8791/viewer/
+```
+
+## The gates
+
+`make verify` runs ten checks, and all of them pass:
+
+| Gate | What it enforces |
+|---|---|
+| `engine/verify.py` | the cycle closes (turbine work = compressor work, balanced mixer); Mach number at every station; solidity of every row; axial gaps off the real aerofoils; tip radii; nozzle throat = the cycle's choked area; spool membership and counter-rotation — 120 checks |
+| `audit_watertight` | every part is a closed surface |
+| `audit_geometry` | no part too crude to be what it is named |
+| `audit_structure` | attached, mirrored, distinct, singletons, named shapes |
+| `audit_intersect` | exact BVH interference: every overlap is a declared joint (a blade root in its disc, a vane in its case, a fuel nozzle through the cases it passes). **KNOWN defects: none** |
+| `audit_support` | every closed piece — each of 2,258, every blade and bolt — touches something. **DETACHED: none** |
+| `audit_joints` | one assembly, and 50 declared circuits joined link by link: each spool through its bearings and sumps to the frames and mounts, fuel from pump to swirler, oil from tank to both sumps, the nozzle's hinges and actuators |
+| `audit_rotor` | nothing that turns comes within 0.5 mm of anything that does not turn with it — the check that found the fan running 3.2 mm clear instead of 1.6 |
+| `audit_manifest` | the viewer's manifest matches the build |
+| `validate_viewer` | the viewer's JavaScript parses and loads |
+
+The interference and support tools (`tools/_interfere.py`, `tools/_joints.py`)
+are shared byte-for-byte with the other model repos.
+
+## Layout
+
+```
+engine/
+  cycle.py      the thermodynamic design point; spec.py takes its figures from here
+  spec.py       every dimension. No other file holds a literal dimension
+  blades.py     aerofoil sections and lofting between two surfaces of revolution
+  mesh.py       pure-Python primitives: revolves, pipes with filleted bends, rings
+  parts/        one module per assembly, all consuming spec.py
+  assemble.py   the Blender stage: meshes, booleans, materials, parts.csv
+  verify.py     measures the build against the design
+  render.py     lighting, cameras, the sectioned cutaway, close-ups
+  export.py     GLB / decimated web GLB / per-part STL
+tools/          the audit gates and the viewer manifest
+viewer/         three.js viewer
+```
+
+`engine/` up to and including `parts/` is pure Python with no `bpy`, so the
+geometry can be built and audited without Blender (the exact interference
+checks run inside Blender for its BVH).
+
+## Honesty
+
+The cycle is real preliminary-design thermodynamics and self-consistent, but it
+is a single design point at sea level with constant gas properties — not an
+engine deck, and there is no off-design or installed performance. Stage
+loadings, blade counts, chords and twists follow standard practice and are
+checked against bands; they are not the result of a blade-by-blade
+aerodynamic design. The mass is an estimate from component fractions. Blade
+sections are NACA-family shapes, not custom transonic or turbine profiles.
+This is a detailed, consistent, checked **mesh model** of a plausible engine,
+not a certified design.
+
+## License
+
+MIT — see [LICENSE](LICENSE).

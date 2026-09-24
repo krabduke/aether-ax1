@@ -67,6 +67,7 @@ hydraulic_pump,09 Accessories,accessories,steel,128,128,430.0,520.0,-38.0,38.0,-
 igniters,03 Combustor,combustor,steel,128,72,1449.0,1475.0,-433.0,433.0,166.3,255.3,496.0,,
 inlet_case,07 Frames and casings,fan,casing,1600,1600,-190.0,-8.0,-446.0,446.0,-446.0,446.0,446.0,,
 intermediate_case,07 Frames and casings,frames,titanium,28800,28800,425.0,2020.0,-426.0,426.0,-426.0,426.0,426.0,,
+line_clamps,09 Accessories,accessories,steel,2304,1296,571.4,2631.5,-360.9,360.9,-505.1,-307.6,529.6,,
 lpt_disc,04 Turbines,turbine,nickel,4000,4000,1941.5,2012.0,-250.8,250.8,-250.8,250.8,250.9,lp,1.0
 mixer,05 Augmentor,augmentor,nickel_hot,8832,8832,2020.0,2200.0,-414.5,414.5,-414.5,414.5,414.5,,
 mode_valve,07 Frames and casings,frames,titanium,2400,2352,618.0,687.9,-423.8,423.8,-423.8,423.8,423.8,,

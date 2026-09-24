@@ -1009,8 +1009,8 @@
    "kind": "struct",
    "x0": 328.0,
    "x1": 2833.8,
-   "parts": 19,
-   "faces": 14098
+   "parts": 20,
+   "faces": 15394
   }
  ],
  "parts": {
@@ -1623,6 +1623,15 @@
    "x0": 425.0,
    "x1": 2020.0,
    "f": 28800,
+   "spool": null,
+   "spin": null
+  },
+  "line_clamps": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 571.4,
+   "x1": 2631.5,
+   "f": 1296,
    "spool": null,
    "spin": null
   },

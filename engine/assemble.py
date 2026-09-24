@@ -217,6 +217,12 @@ def main():
                         n_ok += 1
                     recalc_normals(obj)
             mat = material_for(name)
+            # A boolean leaves the cutter's (empty) material slot on the
+            # part, and every face points at it -- so every part with a hole
+            # cut in it rendered in Blender's default white. One slot, ours.
+            obj.data.materials.clear()
+            for poly in obj.data.polygons:
+                poly.material_index = 0
             obj.data.materials.append(mats[mat])
             n_sharp += shade_smooth(obj)
             co = [tuple(v.co) for v in obj.data.vertices]

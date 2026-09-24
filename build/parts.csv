@@ -58,7 +58,7 @@ harnesses,09 Accessories,accessories,rubber,168,144,861.1,936.9,-418.6,418.6,-48
 hp_front_drum,02 Compressor,compressor,titanium,960,960,622.3,824.8,-282.0,282.0,-282.0,282.0,282.0,hp,-1.0
 hpc_drum,02 Compressor,compressor,titanium,18240,18240,824.8,1407.0,-295.0,295.0,-295.0,295.0,295.0,hp,-1.0
 hpt_disc,04 Turbines,turbine,nickel,3840,3840,1722.6,1815.2,-262.0,262.0,-262.0,262.0,262.0,hp,-1.0
-hydraulic_lines,09 Accessories,accessories,steel,2160,2120,464.0,3145.8,-446.0,446.0,-628.3,197.6,656.9,,
+hydraulic_lines,09 Accessories,accessories,steel,4896,4856,464.0,3145.9,-445.8,445.8,-627.7,197.7,654.8,,
 hydraulic_pump,09 Accessories,accessories,steel,128,128,430.0,520.0,-38.0,38.0,-642.0,-566.0,642.0,,
 igniters,03 Combustor,combustor,steel,128,72,1449.0,1475.0,-433.0,433.0,166.3,255.3,496.0,,
 inlet_case,07 Frames and casings,fan,casing,1600,1600,-190.0,-8.0,-446.0,446.0,-446.0,446.0,446.0,,

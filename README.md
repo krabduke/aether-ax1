@@ -1,7 +1,7 @@
 # Aether AX-1 — an adaptive-cycle fighter engine, designed from scratch
 
-An original three-stream, reheated turbofan with a two-dimensional thrust-
-vectoring nozzle, sized to power the twin-engine [Nyx](https://github.com/Krabduke/nyx-jet)
+An original three-stream, reheated turbofan with a three-bearing swivel
+nozzle that folds the jet 95 degrees down, sized to power the twin-engine [Nyx](https://github.com/Krabduke/nyx-jet)
 agile fighter. It is not a model of any production engine: the cycle, the
 flowpath, every blade row and every part are designed here, and the whole
 engine is generated procedurally in Blender from one specification file.
@@ -14,24 +14,24 @@ F110-GE-129 and is kept at [Krabduke/f110-turbofan](https://github.com/Krabduke/
 
 | | |
 |---|---|
-| ![cutaway](renders/03_cutaway.png) | ![nozzle](renders/02_rear_quarter.png) |
+| ![cutaway](renders/03_cutaway.png) | ![hover](renders/05_hover.png) |
 | ![turbine](renders/c3_combustor_turbine.png) | ![exploded](renders/04_exploded.png) |
 
 ## The design
 
 | | |
 |---|---|
-| Architecture | 2-stage blisk fan · 1-stage core-driven fan stage (CDFS) · 6-stage HP compressor · CMC annular combustor · 1-stage HP turbine · 1-stage LP turbine, counter-rotating · lobed mixer · integrated-vane augmentor · 2D C-D vectoring nozzle |
+| Architecture | 2-stage blisk fan · 1-stage core-driven fan stage (CDFS) · 6-stage HP compressor · CMC annular combustor · 1-stage HP turbine · 1-stage LP turbine, counter-rotating · lobed mixer · three-zone augmentor · three-bearing swivel duct · axisymmetric C-D nozzle |
 | Airflow | 112 kg/s at sea-level static |
 | Thrust | **90.5 kN dry, 134.9 kN with reheat** (from the cycle, not typed in) |
 | Pressure ratios | fan 3.8, CDFS 1.3, HPC 7.4 — **overall 36.6** |
 | Turbine inlet | 2,050 K |
 | Bypass ratio | 0.63 second stream (solved for a balanced mixer), 0.81 with the third stream |
 | SFC | 21.4 mg/N·s dry, 42.3 reheat |
-| Mass (estimated) | 1,420 kg — reheat thrust-to-weight 9.7 |
-| Size | 3.75 m long, 0.99 m over the flanges |
+| Mass (estimated) | 1,590 kg with the swivel — reheat thrust-to-weight 8.7 |
+| Size | 4.74 m long, 1.02 m over the swivel's bearings |
 | Aerofoils | 1,186, every one individually lofted |
-| Vectoring | ±20° in pitch |
+| Vectoring | 0–95° down and ±12° of yaw, anywhere in a 95° cone |
 
 **Why these choices.** The engine exists to make an airframe turn hard, which
 asks for a lot of thrust in a small, light package — so a hot, high-pressure
@@ -41,8 +41,14 @@ is an **adaptive cycle**: a core-driven fan stage on the HP spool and a third
 stream behind a mode valve let the bypass ratio move without moving the fan.
 The third stream also carries a **heat exchanger** that sinks the aircraft's
 sensor and avionics heat load, and the HP spool drives two generators. The
-exhaust ends in a **2D nozzle** that vectors ±20° in pitch, which is what
-controls the aircraft past the stall.
+exhaust ends in a **three-bearing swivel duct**: three round ducts on three
+bearings, the second and third cut obliquely at 23.75° and leaning opposite
+ways. Turning the middle duct half a turn one way and the aft duct half a
+turn the other folds the jet through 4 × 23.75 = 95°, straight down and a
+little forward, for a vertical landing; the front bearing steers the plane
+the fold happens in, so the same three motors also vector the jet in pitch
+and yaw anywhere inside that cone. On the end is a round convergent-divergent
+nozzle whose throat and exit are the cycle's at max reheat.
 
 **How the numbers hang together.** `engine/cycle.py` is a textbook
 preliminary-design cycle (two-gas constant properties, polytropic efficiencies,
@@ -66,11 +72,12 @@ area — and fails the build if any is out of band.
 | Compressor | CDFS blisk on the HP spool with a variable stator; swan neck; variable inlet guide vane; six-stage HP compressor on a drum with a disc under every rotor; variable-vane unison rings and spindles |
 | Combustor | Exit guide vanes, combustor case and inner case, single-skin SiC/SiC CMC liners with real dilution holes, dome with 18 swirlers seated in real holes, liner mount pins, 18 fuel nozzles off a manifold, two igniters |
 | Turbines | HP nozzle and HP rotor with real film-cooling holes (showerhead and pressure-side rows, in every aerofoil), HP disc, mid-turbine frame of 16 structural vanes, counter-rotating LP rotor and disc |
-| Augmentor | 16-lobe mixer, tail cone, augmentor case, CMC screech liner with 1,200 real damping holes, 16 radial flameholder vanes, reheat fuel manifold with a feed into every vane |
-| 2D nozzle | Round-to-rectangular transition, shroud, sidewalls, convergent and divergent flaps with stiffening ribs, external flaps, sawtooth trailing edges, hinge pins, four actuators |
+| Augmentor | 16-lobe mixer, tail cone, augmentor case, CMC screech liner with 1,200 real damping holes, 16 radial flameholder vanes, three staged reheat zones — zone 1 sprays from inside the vanes, zones 2 and 3 from 32 radial spraybars with orifices ahead of them — each off its own manifold through a reheat fuel control with three zone valves, a V-section pilot gutter behind the vanes, and a reheat igniter |
+| Swivel duct | Fixed ring on the outer case, three double-walled ducts (structural shell outside a cooling liner on hangers, the third stream between), three bearings each a flange pair round a race with a 150-tooth ring gear, three hydraulic motors with pinions in mesh, and a rotary union carrying pressure across the bearings |
+| C-D nozzle | Static ring, 16 convergent flaps and 16 seals, 16 divergent flaps and seals, each flap with a backbone, 16 serrated external flaps on compression links, hinge knuckles at the static ring and the throat, a unison ring on links to every convergent flap, and four actuators turning it through bellcranks |
 | Spools | LP and HP shafts, five bearings (inner race, outer race, a full ring of balls or rollers) in two sumps hung from the fan frame and the mid-turbine frame |
 | Third stream | Mode valve (24 petals), 12-segment plate-fin heat exchanger, coolant lines to the aircraft |
-| Externals | Orthogrid stiffening on the outer cases, accessory gearbox with ribs, tower shaft off a bevel on the HP shaft, two generators, fuel pump and metering unit, oil tank and lines to both sumps, fuel lines to both manifolds, two FADEC channels on stand-offs with their looms, forward trunnions, an aft thrust lug, mode-valve actuators, and a hydraulic pump feeding the four nozzle actuators |
+| Externals | Orthogrid stiffening on the outer cases, accessory gearbox with ribs, tower shaft off a bevel on the HP shaft, two generators, fuel pump and metering unit, oil tank and lines to both sumps, fuel lines to both manifolds, two FADEC channels on stand-offs with their looms, forward trunnions, an aft thrust lug, mode-valve actuators, and a hydraulic pump feeding the swivel's motors |
 
 ## Build
 
@@ -100,10 +107,11 @@ stations; hovering any part names it and lights its axial span there.
 
 - **Throttle** Off / Idle / Military / Max reheat: the two spools spool up at
   their own rates and turn opposite ways; N1, N2, thrust and turbine inlet
-  temperature read out live, and reheat lights a rectangular plume.
-- **Pitch vector** ±20°: the divergent flaps swing about the throat hinges and
-  the external flaps follow their trailing edges — the hinge lines come from
-  the geometry, through the manifest.
+  temperature read out live, and reheat lights a round plume off the nozzle.
+- **Nozzle down** 0–95° and **Nozzle yaw** ±12°: the three swivel bearings
+  turn at a motor's pace to point the jet — the middle and aft ducts fold it
+  off the axis, the front bearing puts the fold where it is asked for. The
+  bearing centres and axes come from the geometry, through the manifest.
 - **Cutaway** peels the static shells on the viewer's side, as in the renders.
 - **Airflow** particles ride the core, bypass and third-stream annuli,
   coloured by total temperature from the cycle.
@@ -118,13 +126,13 @@ generated from the build and checked against it by `audit_manifest`.
 
 | Gate | What it enforces |
 |---|---|
-| `engine/verify.py` | the cycle closes (turbine work = compressor work, balanced mixer); Mach number at every station; solidity of every row; axial gaps off the real aerofoils; tip radii; nozzle throat = the cycle's choked area; spool membership and counter-rotation — 120 checks |
+| `engine/verify.py` | the cycle closes (turbine work = compressor work, balanced mixer); Mach number at every station; solidity of every row; axial gaps off the real aerofoils; tip radii; nozzle throat = the cycle's choked area; the swivel folds 95° and its bearing schedule points the jet within 0.05° anywhere in its range; spool membership and counter-rotation — 120 checks |
 | `audit_watertight` | every part is a closed surface |
 | `audit_geometry` | no part too crude to be what it is named |
 | `audit_structure` | attached, mirrored, distinct, singletons, named shapes |
 | `audit_intersect` | exact BVH interference: every overlap is a declared joint (a blade root in its disc, a vane in its case, a fuel nozzle through the cases it passes). **KNOWN defects: none** |
 | `audit_support` | every closed piece — each of 2,343, every blade and bolt — touches something. **DETACHED: none** |
-| `audit_joints` | one assembly, and 50 declared circuits joined link by link: each spool through its bearings and sumps to the frames and mounts, fuel from pump to swirler, oil from tank to both sumps, the nozzle's hinges and actuators |
+| `audit_joints` | one assembly, and 50 declared circuits joined link by link: each spool through its bearings and sumps to the frames and mounts, fuel from pump to swirler, oil from tank to both sumps, reheat fuel through the zone valves to every spraybar, the swivel's ducts bearing to bearing with each motor in mesh, the nozzle's hinges, links and actuators |
 | `audit_rotor` | nothing that turns comes within 0.5 mm of anything that does not turn with it — the check that found the fan running 3.2 mm clear instead of 1.6 |
 | `audit_manifest` | the viewer's manifest matches the build |
 | `validate_viewer` | the viewer's JavaScript parses and loads |

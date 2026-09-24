@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aether AX-1</title>
-<meta name="description" content="Interactive model of the Aether AX-1 adaptive-cycle turbofan with a 2D thrust-vectoring nozzle.">
+<meta name="description" content="Interactive model of the Aether AX-1 adaptive-cycle turbofan with a three-bearing swivel nozzle that folds the jet 95 degrees down.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231B2025'/%3E%3Cpath d='M3 11h14l6-3v16l-6-3H3z' fill='%23C6A15B'/%3E%3Crect x='23' y='10' width='6' height='12' fill='%23D9663B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,8 +65,8 @@
     border-radius:3px; padding:6px 13px; cursor:pointer;
   }
   .toggle[aria-pressed="true"]{border-color:var(--ink)}
-  #vector{width:200px; accent-color:var(--warm)}
-  #vecval{min-width:3.5em; display:inline-block}
+  #swivel, #yaw{width:170px; accent-color:var(--warm)}
+  .val{min-width:3.5em; display:inline-block}
   #gauges{display:flex; gap:22px; margin-left:auto; font-size:14px; pointer-events:none}
   #gauges b{display:block; font-size:24px; font-weight:600; line-height:1.05}
   #gauges span{color:var(--muted)}
@@ -112,7 +112,7 @@
 
 <header id="title">
   <h1>Aether AX-1</h1>
-  <p id="tagline">Adaptive-cycle turbofan with a two-dimensional vectoring nozzle</p>
+  <p id="tagline">Adaptive-cycle turbofan with a three-bearing swivel nozzle</p>
 </header>
 
 <dl id="figures" aria-label="Design point, sea-level static"></dl>
@@ -128,8 +128,12 @@
     </div>
   </div>
   <div class="group">
-    <label for="vector">Pitch vector <span id="vecval">0°</span></label>
-    <input id="vector" type="range" min="-20" max="20" step="1" value="0">
+    <label for="swivel">Nozzle down <span class="val" id="swval">0°</span></label>
+    <input id="swivel" type="range" min="0" max="95" step="1" value="0">
+  </div>
+  <div class="group">
+    <label for="yaw">Nozzle yaw <span class="val" id="yawval">0°</span></label>
+    <input id="yaw" type="range" min="-12" max="12" step="1" value="0">
   </div>
   <div class="group">
     <span>View</span>
@@ -169,14 +173,14 @@ import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 /* Part names this page drives. The validator checks every one resolves. */
 const named = (...n) => n;
 const matching = (...n) => n;
-const NOZZLE = named('nozzle_div_flap_upper', 'nozzle_div_flap_lower',
-                     'nozzle_ext_flap_upper', 'nozzle_ext_flap_lower');
+const NOZZLE = named('swivel_duct_fwd', 'swivel_duct_mid', 'swivel_duct_aft',
+                     'nozzle_div_flaps');
 // static shells the cutaway peels on the viewer's side
 const SHELLS = matching('case_', 'inlet_case', 'containment', 'flange_',
   'intermediate_case', 'core_cowl', 'core_splitter', 'fan_frame_hub',
   'service_struts', 'tms_hx', 'mode_valve', 'combustor_liner_',
   'combustor_inner_case', 'combustor_dome', 'augmentor_', 'mixer',
-  'nozzle_transition', 'nozzle_shroud', 'fuel_manifold', 'ab_fuel_manifold',
+  'swivel_fixed_ring', 'swivel_duct_', 'nozzle_static_ring', 'fuel_manifold', 'ab_fuel_manifold',
   'vsv_actuation', 'sump_', 'tailcone');
 
 const MM = 0.001;
@@ -274,41 +278,54 @@ for (const [name, list] of meshes) {
   if (s) for (const m of list) spoolMeshes[s].push({m, spin: M.parts[name].spin});
 }
 
-/* nozzle: wrap each swinging flap in a pivot at its hinge line */
+/* nozzle: three bearings in a row, each carrying everything behind it.
+   Engine (x, y, z) is scene (x, z, -y), a proper rotation, so an angle
+   about an engine axis is the same angle about its scene image. */
 const nz = M.nozzle;
-function pivot(name, hx, hz){
-  const list = meshes.get(name) || [];
-  const p = new THREE.Group();
-  p.position.set(hx * MM, hz * MM, 0);
-  gltf.scene.add(p);
-  for (const m of list) p.attach(m);
-  return p;
-}
-const flaps = {
-  divU: pivot(NOZZLE[0], nz.div_hinge[0], nz.div_hinge[1]),
-  divL: pivot(NOZZLE[1], nz.div_hinge[0], -nz.div_hinge[1]),
-  extU: pivot(NOZZLE[2], nz.ext_hinge[0], nz.ext_hinge[1]),
-  extL: pivot(NOZZLE[3], nz.ext_hinge[0], -nz.ext_hinge[1]),
-};
-function setVector(deg){
-  // both divergent flaps swing the same way about the throat hinges; each
-  // external flap turns about its front hinge to follow its flap's edge
-  const a = THREE.MathUtils.degToRad(deg);
-  flaps.divU.rotation.z = a; flaps.divL.rotation.z = a;
-  for (const [sgn, pv] of [[1, flaps.extU], [-1, flaps.extL]]) {
-    const hx = nz.div_hinge[0], hz = sgn * nz.div_hinge[1];
-    const tx = nz.div_te[0] - hx, tz = sgn * nz.div_te[1] - hz;
-    const nx = hx + tx * Math.cos(a) - tz * Math.sin(a);
-    const nzz = hz + tx * Math.sin(a) + tz * Math.cos(a);
-    const ex = nz.ext_hinge[0], ez = sgn * nz.ext_hinge[1];
-    pv.rotation.z = Math.atan2(nzz - ez, nx - ex) - Math.atan2(sgn * nz.div_te[1] - ez, nz.div_te[0] - ex);
+const toScene = (v) => new THREE.Vector3(v[0], v[2], -v[1]);
+const bearings = [];
+{
+  let parent = gltf.scene, pc = new THREE.Vector3();
+  for (const b of nz.bearings) {
+    const c = toScene(b.c).multiplyScalar(MM);
+    const g = new THREE.Group();
+    parent.add(g);
+    g.position.copy(c).sub(pc);
+    g.updateMatrixWorld(true);
+    g.userData.axis = toScene(b.n).normalize();
+    for (const name of b.parts) for (const m of (meshes.get(name) || [])) g.attach(m);
+    bearings.push(g);
+    parent = g; pc = c;
   }
-  plume.rotation.z = a;
+}
+const rotAbout = (k, a, v) => v.clone().applyAxisAngle(new THREE.Vector3(...k).normalize(), a);
+function foldDir(psi){
+  // the middle duct turned psi, the aft duct -psi, in the engine's frame
+  return rotAbout(nz.bearings[1].n, psi, rotAbout(nz.bearings[2].n, -psi, new THREE.Vector3(1, 0, 0)));
+}
+function pose(pitch, yaw){
+  // bearing angles that point the jet `pitch` down and tilt it `yaw` aside
+  const p = THREE.MathUtils.degToRad(pitch), y = THREE.MathUtils.degToRad(yaw);
+  const t = new THREE.Vector3(Math.cos(p) * Math.cos(y), Math.sin(y), -Math.sin(p) * Math.cos(y));
+  const want = THREE.MathUtils.radToDeg(Math.acos(THREE.MathUtils.clamp(t.x, -1, 1)));
+  if (want < 1e-4) return [0, 0, 0];
+  const T = nz.fold_table;
+  let i = 0; while (i < T.length - 2 && T[i + 1][1] < want) i++;
+  const f = (want - T[i][1]) / ((T[i + 1][1] - T[i][1]) || 1);
+  const psi = THREE.MathUtils.degToRad(T[i][0] + (T[i + 1][0] - T[i][0]) * THREE.MathUtils.clamp(f, 0, 1));
+  const d = foldDir(psi);
+  let phi = Math.atan2(t.z, t.y) - Math.atan2(d.z, d.y);
+  phi = Math.atan2(Math.sin(phi), Math.cos(phi));
+  return [phi, psi, -psi];
+}
+const swivel = {pitch: 0, yaw: 0, tp: 0, ty: 0};
+function applySwivel(){
+  const a = pose(swivel.pitch, swivel.yaw);
+  bearings.forEach((g, k) => g.quaternion.setFromAxisAngle(g.userData.axis, a[k]));
 }
 
-/* ---------------- reheat plume: a rectangular jet ---------------- */
+/* ---------------- reheat plume: a round jet off the nozzle exit ---------------- */
 const plume = new THREE.Group();
-plume.position.set(nz.div_te[0] * MM, 0, 0);
 {
   const c = document.createElement('canvas'); c.width = 256; c.height = 64;
   const g = c.getContext('2d');
@@ -320,14 +337,17 @@ plume.position.set(nz.div_te[0] * MM, 0, 0);
   v.addColorStop(0, 'rgba(0,0,0,1)'); v.addColorStop(0.5, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,1)');
   g.globalCompositeOperation = 'destination-out'; g.fillStyle = v; g.fillRect(0, 0, 256, 64);
   const tex = new THREE.CanvasTexture(c);
-  const L = 2.6, H = nz.exit_h * MM * 0.9, W = nz.width * MM * 0.95;
-  for (const [w, h, rot] of [[L, H, 0], [L, W, Math.PI / 2]]) {
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h),
+  const L = 2.6, H = 2 * nz.exit_r * MM * 0.92;
+  for (const rot of [0, Math.PI / 3, 2 * Math.PI / 3]) {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(L, H),
       new THREE.MeshBasicMaterial({map: tex, transparent: true, blending: THREE.AdditiveBlending,
                                    depthWrite: false, side: THREE.DoubleSide}));
-    m.position.x = w / 2; m.rotation.x = rot; plume.add(m);
+    m.position.x = L / 2; m.rotation.x = rot; plume.add(m);
   }
+  plume.position.set(nz.exit_x * MM, 0, 0);
   plume.visible = false; scene.add(plume);
+  plume.updateMatrixWorld(true);
+  bearings[2].attach(plume);
 }
 
 /* ---------------- airflow particles ---------------- */
@@ -369,7 +389,10 @@ const tmpC = new THREE.Color();
 function updateParticles(dt, speed){
   for (let i = 0; i < pts.length; i++) {
     const p = pts[i], P = p.s.path;
-    const x0 = P[0][0], x1 = P[P.length - 1][0];
+    // swivelled, the duct no longer runs along the axis: stop the air at
+    // the front bearing rather than draw it through the duct's walls
+    const bent = swivel.pitch > 0.5 || Math.abs(swivel.yaw) > 0.5;
+    const x0 = P[0][0], x1 = bent ? Math.min(P[P.length - 1][0], nz.bearings[0].c[0]) : P[P.length - 1][0];
     p.x += dt * speed * p.s.speed * 900;
     if (p.x > x1) { p.x = x0; p.f = Math.random(); }
     const r = lerpTable(P, p.x, 1) + (lerpTable(P, p.x, 2) - lerpTable(P, p.x, 1)) * (0.08 + 0.84 * p.f);
@@ -391,7 +414,8 @@ for (const b of document.querySelectorAll('.seg button')) b.addEventListener('cl
   for (const o of document.querySelectorAll('.seg button')) o.setAttribute('aria-pressed', o === b);
   state.target = SET[b.dataset.t];
 });
-$('vector').addEventListener('input', (e) => { $('vecval').textContent = `${e.target.value}°`; setVector(+e.target.value); });
+$('swivel').addEventListener('input', (e) => { $('swval').textContent = `${e.target.value}°`; swivel.tp = +e.target.value; });
+$('yaw').addEventListener('input', (e) => { $('yawval').textContent = `${e.target.value}°`; swivel.ty = +e.target.value; });
 const toggle = (id, fn) => $(id).addEventListener('click', () => {
   const on = $(id).getAttribute('aria-pressed') !== 'true';
   $(id).setAttribute('aria-pressed', on); fn(on);
@@ -409,7 +433,7 @@ toggle('air', (on) => { state.air = on; particles.visible = on; });
 /* ---------------- flowpath strip ---------------- */
 const svg = $('flow');
 const xs0 = Math.min(...M.modules.map(m => m.x0)), xs1 = Math.max(...M.modules.map(m => m.x1));
-const STN = [['2', 0], ['13', 408], ['21', 678], ['3', 1340], ['4', 1690], ['41', 1808], ['5', 2008], ['6', 2200], ['9', nz.div_te[0]]];
+const STN = [['2', 0], ['13', 408], ['21', 678], ['3', 1340], ['4', 1690], ['41', 1808], ['5', 2008], ['6', 2200], ['8', nz.throat_x], ['9', nz.exit_x]];
 let hoverSpan = null;
 function drawStrip(){
   const W = svg.clientWidth || innerWidth, H = svg.clientHeight || 130;
@@ -473,7 +497,7 @@ renderer.domElement.addEventListener('pointermove', (e) => {
 /* ---------------- loop ---------------- */
 $('loading').classList.add('gone');
 drawStrip();
-setVector(0);
+applySwivel();
 const clock = new THREE.Clock();
 let stripT = 0;
 renderer.setAnimationLoop(() => {
@@ -488,6 +512,13 @@ renderer.setAnimationLoop(() => {
   if (!reduced) {
     for (const {m, spin} of spoolMeshes.lp) m.rotation.x += spin * dt * state.n1 * 38;
     for (const {m, spin} of spoolMeshes.hp) m.rotation.x += spin * dt * state.n2 * 52;
+  }
+  // the bearings turn at a hydraulic motor's pace, not a slider's
+  if (swivel.pitch !== swivel.tp || swivel.yaw !== swivel.ty) {
+    const step = (cur, tgt, v) => Math.abs(tgt - cur) < v * dt ? tgt : cur + Math.sign(tgt - cur) * v * dt;
+    swivel.pitch = reduced ? swivel.tp : step(swivel.pitch, swivel.tp, 30);
+    swivel.yaw = reduced ? swivel.ty : step(swivel.yaw, swivel.ty, 12);
+    applySwivel();
   }
   plume.visible = state.reheat;
   if (plume.visible) for (const c of plume.children) c.material.opacity = 0.75 + 0.25 * Math.random();

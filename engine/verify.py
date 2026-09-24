@@ -175,20 +175,18 @@ def main():
     f = lambda n, k: float(parts[n][k])
     x0 = min(float(r["x_min_mm"]) for r in parts.values())
     x1 = max(float(r["x_max_mm"]) for r in parts.values())
-    c.band("overall length, mm", x1 - x0, 3600.0, 3900.0, "{:.0f}")
-    # The round part of the engine, flanges included, and the rectangular
-    # nozzle box separately: a circle round a rectangle's corners is not a
-    # diameter anything has to fit through.
+    # the engine plus a metre of swivel duct
+    c.band("overall length, mm", x1 - x0, 4600.0, 4850.0, "{:.0f}")
+    # The round part of the engine, flanges included; the swivel's motors
+    # and the nozzle actuators are externals, like the gearbox
     body = [r for r in parts.values()
-            if r["collection"] not in ("09 Accessories", "06 Nozzle")]
+            if r["collection"] != "09 Accessories"
+            and not r["name"].startswith(("swivel_drive_", "nozzle_actuators",
+                                          "swivel_rotary_union", "ab_fuel_control",
+                                          "ab_igniter"))]
     rmax = max(float(r["r_max_mm"]) for r in body)
-    c.band("maximum diameter without externals, mm", 2 * rmax, 900.0, 1020.0,
+    c.band("maximum diameter without externals, mm", 2 * rmax, 900.0, 1040.0,
            "{:.0f}")
-    noz = [r for r in parts.values() if r["collection"] == "06 Nozzle"]
-    nw = max(float(r["y_max_mm"]) for r in noz) - min(float(r["y_min_mm"]) for r in noz)
-    nh = max(float(r["z_max_mm"]) for r in noz) - min(float(r["z_min_mm"]) for r in noz)
-    c.band("nozzle box width, mm", nw, 700.0, 2 * rmax, "{:.0f}")
-    c.band("nozzle box height, mm", nh, 600.0, 2 * rmax, "{:.0f}")
     for row in spec.all_rows():
         key = (f"fan_blisk_{row.name[-1]}" if row.name.startswith("fan_r")
                else "cdfs_blisk" if row.name == "cdfs_r"
@@ -201,15 +199,33 @@ def main():
                f(key, "r_max_mm") - want, -1.5, 0.3, "{:+.2f}")
     import importlib
     nz = importlib.import_module("parts.nozzle")
-    a8 = 2.0 * nz.H_THROAT * spec.NOZZLE["width"] * 1e-6
+    a8 = math.pi * nz.R8 ** 2 * 1e-6
     c.band("nozzle throat area / cycle's choked area at max reheat",
            a8 / cy["a8_wet"], 0.99, 1.01, "{:.4f}")
-    a9 = 2.0 * nz.H_EXIT * spec.NOZZLE["width"] * 1e-6
+    a9 = math.pi * nz.R9 ** 2 * 1e-6
     c.band("nozzle exit / throat area vs full expansion",
            (a9 / a8) / cy["a9_a8_wet"], 0.99, 1.01, "{:.4f}")
-    c.band("nozzle built throat height, mm",
-           f("nozzle_div_flap_upper", "z_min_mm") * 2.0, 2 * nz.H_THROAT - 2.0,
-           2 * nz.H_THROAT + 2.0, "{:.1f}")
+    # the seals are on the gas line, so the built throat is the smallest
+    # radius any convergent seal reaches
+    sv, _ = nz._flap_set(nz.X_S1, nz.X8, spec.NOZZLE["conv_t"], 12.0, 10.0)[1]
+    c.band("nozzle built throat radius (convergent seals), mm",
+           min(math.hypot(p[1], p[2]) for p in sv), nz.R8 - 2.0, nz.R8 + 2.0,
+           "{:.1f}")
+    c.band("swivel: full travel folds the jet, degrees", nz.max_fold_deg(),
+           90.0, 100.0, "{:.1f}")
+    worst = 0.0
+    for pitch in range(0, 96, 5):
+        for yaw in (-12, 0, 12):
+            ang = nz.swivel_pose(pitch, yaw)
+            d = nz._rot((1.0, 0.0, 0.0), ang[0], nz.fold(ang[1]))
+            t = (math.cos(math.radians(pitch)) * math.cos(math.radians(yaw)),
+                 math.sin(math.radians(yaw)),
+                 -math.sin(math.radians(pitch)) * math.cos(math.radians(yaw)))
+            worst = max(worst, math.degrees(math.acos(max(-1.0, min(1.0,
+                        sum(d[i] * t[i] for i in range(3)))))))
+    c.band("swivel: the bearing schedule points the jet where asked, worst "
+           "error over 0-95 down and 12 either side, degrees", worst, 0.0, 0.05,
+           "{:.4f}")
     # the core splitter divides the CDFS exit in the cycle's ratio
     xs = spec.SPLITTER2_X
     h, t = spec.annulus(spec.CDFS_PATH, xs)

@@ -1,6 +1,6 @@
 {
  "engine": "Aether AX-1",
- "tagline": "adaptive-cycle three-stream reheated turbofan with a 2D vectoring nozzle",
+ "tagline": "adaptive-cycle three-stream reheated turbofan with a three-bearing swivel nozzle",
  "figures": {
   "thrust_dry_kn": 90.5,
   "thrust_ab_kn": 134.9,
@@ -12,11 +12,11 @@
   "t4_k": 2050.0,
   "sfc_dry": 21.4,
   "sfc_ab": 42.3,
-  "mass_kg": 1420.0,
-  "tw": 9.69,
+  "mass_kg": 1590.0,
+  "tw": 8.65,
   "stages": "2F-1CDFS-6HPC-1HPT-1LPT",
   "airfoils": 1186,
-  "length_mm": 3798.0
+  "length_mm": 4736.0
  },
  "stations": {
   "2": [
@@ -307,14 +307,19 @@
     408.0
    ],
    [
-    3310.0,
-    10.0,
-    188.9
+    4100.0,
+    30.0,
+    408.0
    ],
    [
-    3560.0,
+    4280.0,
     10.0,
-    245.9
+    292.4
+   ],
+   [
+    4500.0,
+    10.0,
+    333.1
    ]
   ],
   "bypass": [
@@ -424,7 +429,7 @@
     705.0
    ],
    [
-    3560.0,
+    4500.0,
     705.0
    ]
   ],
@@ -474,7 +479,7 @@
     1877.0
    ],
    [
-    3560.0,
+    4500.0,
     1812.0
    ]
   ],
@@ -482,22 +487,439 @@
   "t_third": 200.0
  },
  "nozzle": {
-  "div_hinge": [
-   3310.0,
-   196.9
+  "bearings": [
+   {
+    "c": [
+     2880.0,
+     0.0,
+     0.0
+    ],
+    "n": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "parts": [
+     "swivel_duct_fwd",
+     "swivel_bearing_1",
+     "swivel_drive_2"
+    ]
+   },
+   {
+    "c": [
+     3180.0,
+     0.0,
+     0.0
+    ],
+    "n": [
+     0.915311,
+     0.402747,
+     0.0
+    ],
+    "parts": [
+     "swivel_duct_mid",
+     "swivel_bearing_2",
+     "swivel_drive_3"
+    ]
+   },
+   {
+    "c": [
+     3700.0,
+     0.0,
+     0.0
+    ],
+    "n": [
+     0.915311,
+     -0.402747,
+     0.0
+    ],
+    "parts": [
+     "swivel_duct_aft",
+     "swivel_bearing_3",
+     "nozzle_static_ring",
+     "nozzle_conv_flaps",
+     "nozzle_conv_seals",
+     "nozzle_div_flaps",
+     "nozzle_div_seals",
+     "nozzle_ext_flaps",
+     "nozzle_hinges",
+     "nozzle_div_links",
+     "nozzle_unison_ring",
+     "nozzle_actuators"
+    ]
+   }
   ],
-  "div_te": [
-   3560.0,
-   253.9
+  "fold_table": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    2.0,
+    1.611
+   ],
+   [
+    4.0,
+    3.221
+   ],
+   [
+    6.0,
+    4.831
+   ],
+   [
+    8.0,
+    6.44
+   ],
+   [
+    10.0,
+    8.046
+   ],
+   [
+    12.0,
+    9.651
+   ],
+   [
+    14.0,
+    11.253
+   ],
+   [
+    16.0,
+    12.853
+   ],
+   [
+    18.0,
+    14.449
+   ],
+   [
+    20.0,
+    16.041
+   ],
+   [
+    22.0,
+    17.63
+   ],
+   [
+    24.0,
+    19.213
+   ],
+   [
+    26.0,
+    20.792
+   ],
+   [
+    28.0,
+    22.366
+   ],
+   [
+    30.0,
+    23.933
+   ],
+   [
+    32.0,
+    25.495
+   ],
+   [
+    34.0,
+    27.049
+   ],
+   [
+    36.0,
+    28.597
+   ],
+   [
+    38.0,
+    30.138
+   ],
+   [
+    40.0,
+    31.67
+   ],
+   [
+    42.0,
+    33.194
+   ],
+   [
+    44.0,
+    34.71
+   ],
+   [
+    46.0,
+    36.216
+   ],
+   [
+    48.0,
+    37.713
+   ],
+   [
+    50.0,
+    39.2
+   ],
+   [
+    52.0,
+    40.676
+   ],
+   [
+    54.0,
+    42.142
+   ],
+   [
+    56.0,
+    43.596
+   ],
+   [
+    58.0,
+    45.039
+   ],
+   [
+    60.0,
+    46.469
+   ],
+   [
+    62.0,
+    47.887
+   ],
+   [
+    64.0,
+    49.292
+   ],
+   [
+    66.0,
+    50.684
+   ],
+   [
+    68.0,
+    52.062
+   ],
+   [
+    70.0,
+    53.425
+   ],
+   [
+    72.0,
+    54.774
+   ],
+   [
+    74.0,
+    56.108
+   ],
+   [
+    76.0,
+    57.426
+   ],
+   [
+    78.0,
+    58.729
+   ],
+   [
+    80.0,
+    60.015
+   ],
+   [
+    82.0,
+    61.284
+   ],
+   [
+    84.0,
+    62.536
+   ],
+   [
+    86.0,
+    63.77
+   ],
+   [
+    88.0,
+    64.986
+   ],
+   [
+    90.0,
+    66.184
+   ],
+   [
+    92.0,
+    67.363
+   ],
+   [
+    94.0,
+    68.522
+   ],
+   [
+    96.0,
+    69.662
+   ],
+   [
+    98.0,
+    70.782
+   ],
+   [
+    100.0,
+    71.881
+   ],
+   [
+    102.0,
+    72.959
+   ],
+   [
+    104.0,
+    74.015
+   ],
+   [
+    106.0,
+    75.05
+   ],
+   [
+    108.0,
+    76.063
+   ],
+   [
+    110.0,
+    77.053
+   ],
+   [
+    112.0,
+    78.021
+   ],
+   [
+    114.0,
+    78.965
+   ],
+   [
+    116.0,
+    79.885
+   ],
+   [
+    118.0,
+    80.781
+   ],
+   [
+    120.0,
+    81.653
+   ],
+   [
+    122.0,
+    82.5
+   ],
+   [
+    124.0,
+    83.322
+   ],
+   [
+    126.0,
+    84.118
+   ],
+   [
+    128.0,
+    84.889
+   ],
+   [
+    130.0,
+    85.633
+   ],
+   [
+    132.0,
+    86.351
+   ],
+   [
+    134.0,
+    87.043
+   ],
+   [
+    136.0,
+    87.707
+   ],
+   [
+    138.0,
+    88.344
+   ],
+   [
+    140.0,
+    88.953
+   ],
+   [
+    142.0,
+    89.534
+   ],
+   [
+    144.0,
+    90.087
+   ],
+   [
+    146.0,
+    90.612
+   ],
+   [
+    148.0,
+    91.108
+   ],
+   [
+    150.0,
+    91.575
+   ],
+   [
+    152.0,
+    92.013
+   ],
+   [
+    154.0,
+    92.422
+   ],
+   [
+    156.0,
+    92.801
+   ],
+   [
+    158.0,
+    93.15
+   ],
+   [
+    160.0,
+    93.47
+   ],
+   [
+    162.0,
+    93.76
+   ],
+   [
+    164.0,
+    94.02
+   ],
+   [
+    166.0,
+    94.249
+   ],
+   [
+    168.0,
+    94.448
+   ],
+   [
+    170.0,
+    94.616
+   ],
+   [
+    172.0,
+    94.754
+   ],
+   [
+    174.0,
+    94.862
+   ],
+   [
+    176.0,
+    94.939
+   ],
+   [
+    178.0,
+    94.985
+   ],
+   [
+    180.0,
+    95.0
+   ]
   ],
-  "ext_hinge": [
-   3100.0,
-   376.0
-  ],
-  "vector_deg": 20.0,
-  "throat_h": 393.9,
-  "exit_h": 507.8,
-  "width": 720.0
+  "max_fold_deg": 95.0,
+  "exit_x": 4500.0,
+  "exit_r": 341.1,
+  "throat_x": 4280.0,
+  "throat_r": 300.4
  },
  "modules": [
   {
@@ -547,18 +969,18 @@
    "kind": "hot",
    "x0": 2016.0,
    "x1": 2850.0,
-   "parts": 6,
-   "faces": 40099
+   "parts": 10,
+   "faces": 48183
   },
   {
    "key": "06 Nozzle",
-   "label": "2D nozzle",
+   "label": "Swivel nozzle",
    "color": "#9C7A63",
    "kind": "hot",
-   "x0": 2850.0,
-   "x1": 3561.6,
-   "parts": 11,
-   "faces": 5992
+   "x0": 2756.0,
+   "x1": 4500.0,
+   "parts": 21,
+   "faces": 84132
   },
   {
    "key": "07 Frames and casings",
@@ -568,7 +990,7 @@
    "x0": -190.0,
    "x1": 2864.0,
    "parts": 21,
-   "faces": 142024
+   "faces": 141992
   },
   {
    "key": "08 Spools and bearings",
@@ -586,18 +1008,54 @@
    "color": "#7C8470",
    "kind": "struct",
    "x0": 328.0,
-   "x1": 3145.9,
+   "x1": 2833.8,
    "parts": 19,
-   "faces": 13618
+   "faces": 14098
   }
  ],
  "parts": {
+  "ab_fuel_control": {
+   "m": "05 Augmentor",
+   "mat": "steel",
+   "x0": 2080.0,
+   "x1": 2346.0,
+   "f": 734,
+   "spool": null,
+   "spin": null
+  },
   "ab_fuel_manifold": {
    "m": "05 Augmentor",
    "mat": "steel",
-   "x0": 2331.0,
+   "x0": 2241.0,
    "x1": 2349.0,
-   "f": 2112,
+   "f": 5952,
+   "spool": null,
+   "spin": null
+  },
+  "ab_igniter": {
+   "m": "05 Augmentor",
+   "mat": "casing",
+   "x0": 2445.0,
+   "x1": 2479.0,
+   "f": 54,
+   "spool": null,
+   "spin": null
+  },
+  "ab_pilot_gutter": {
+   "m": "05 Augmentor",
+   "mat": "casing",
+   "x0": 2436.0,
+   "x1": 2472.0,
+   "f": 960,
+   "spool": null,
+   "spin": null
+  },
+  "ab_spraybars": {
+   "m": "05 Augmentor",
+   "mat": "casing",
+   "x0": 2244.0,
+   "x1": 2294.0,
+   "f": 2496,
    "spool": null,
    "spin": null
   },
@@ -786,7 +1244,7 @@
    "mat": "casing",
    "x0": 446.0,
    "x1": 2836.0,
-   "f": 7808,
+   "f": 7776,
    "spool": null,
    "spin": null
   },
@@ -1010,8 +1468,8 @@
    "m": "09 Accessories",
    "mat": "steel",
    "x0": 761.0,
-   "x1": 2343.2,
-   "f": 1012,
+   "x1": 2079.0,
+   "f": 1048,
    "spool": null,
    "spin": null
   },
@@ -1127,8 +1585,8 @@
    "m": "09 Accessories",
    "mat": "steel",
    "x0": 464.0,
-   "x1": 3145.9,
-   "f": 4856,
+   "x1": 2833.8,
+   "f": 5300,
    "spool": null,
    "spin": null
   },
@@ -1207,8 +1665,8 @@
   "mount_aft_lug": {
    "m": "09 Accessories",
    "mat": "steel",
-   "x0": 2205.0,
-   "x1": 2295.0,
+   "x0": 2105.0,
+   "x1": 2195.0,
    "f": 36,
    "spool": null,
    "spin": null
@@ -1225,99 +1683,90 @@
   "nozzle_actuators": {
    "m": "06 Nozzle",
    "mat": "steel",
-   "x0": 3118.0,
-   "x1": 3342.0,
-   "f": 176,
+   "x0": 3926.0,
+   "x1": 4126.0,
+   "f": 408,
    "spool": null,
    "spin": null
   },
-  "nozzle_conv_flap_lower": {
+  "nozzle_conv_flaps": {
    "m": "06 Nozzle",
    "mat": "cmc",
-   "x0": 3100.0,
-   "x1": 3312.2,
-   "f": 42,
+   "x0": 4100.0,
+   "x1": 4280.0,
+   "f": 3072,
    "spool": null,
    "spin": null
   },
-  "nozzle_conv_flap_upper": {
+  "nozzle_conv_seals": {
    "m": "06 Nozzle",
    "mat": "cmc",
-   "x0": 3100.0,
-   "x1": 3312.2,
-   "f": 42,
+   "x0": 4101.0,
+   "x1": 4280.0,
+   "f": 2432,
    "spool": null,
    "spin": null
   },
-  "nozzle_div_flap_lower": {
+  "nozzle_div_flaps": {
    "m": "06 Nozzle",
    "mat": "cmc",
-   "x0": 3310.0,
-   "x1": 3560.0,
-   "f": 86,
+   "x0": 4280.0,
+   "x1": 4500.0,
+   "f": 3072,
    "spool": null,
    "spin": null
   },
-  "nozzle_div_flap_upper": {
+  "nozzle_div_links": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 4350.0,
+   "x1": 4410.0,
+   "f": 672,
+   "spool": null,
+   "spin": null
+  },
+  "nozzle_div_seals": {
    "m": "06 Nozzle",
    "mat": "cmc",
-   "x0": 3310.0,
-   "x1": 3560.0,
-   "f": 86,
+   "x0": 4281.0,
+   "x1": 4500.0,
+   "f": 2432,
    "spool": null,
    "spin": null
   },
-  "nozzle_ext_flap_lower": {
+  "nozzle_ext_flaps": {
    "m": "06 Nozzle",
    "mat": "inconel",
-   "x0": 3100.0,
-   "x1": 3561.6,
-   "f": 50,
-   "spool": null,
-   "spin": null
-  },
-  "nozzle_ext_flap_upper": {
-   "m": "06 Nozzle",
-   "mat": "inconel",
-   "x0": 3100.0,
-   "x1": 3561.6,
-   "f": 50,
+   "x0": 4100.0,
+   "x1": 4500.0,
+   "f": 4288,
    "spool": null,
    "spin": null
   },
   "nozzle_hinges": {
    "m": "06 Nozzle",
    "mat": "steel",
-   "x0": 3084.0,
-   "x1": 3326.0,
-   "f": 72,
+   "x0": 4090.0,
+   "x1": 4290.0,
+   "f": 768,
    "spool": null,
    "spin": null
   },
-  "nozzle_shroud": {
+  "nozzle_static_ring": {
    "m": "06 Nozzle",
    "mat": "inconel",
-   "x0": 2850.0,
-   "x1": 3100.0,
-   "f": 2880,
+   "x0": 4000.0,
+   "x1": 4100.0,
+   "f": 4816,
    "spool": null,
    "spin": null
   },
-  "nozzle_sidewalls": {
+  "nozzle_unison_ring": {
    "m": "06 Nozzle",
-   "mat": "casing",
-   "x0": 3100.0,
-   "x1": 3560.0,
-   "f": 12,
-   "spool": null,
-   "spin": null
-  },
-  "nozzle_transition": {
-   "m": "06 Nozzle",
-   "mat": "cmc",
-   "x0": 2850.0,
-   "x1": 3100.0,
-   "f": 2496,
+   "mat": "inconel",
+   "x0": 4118.0,
+   "x1": 4134.0,
+   "f": 864,
    "spool": null,
    "spin": null
   },
@@ -1399,6 +1848,105 @@
    "x0": 1422.0,
    "x1": 1448.0,
    "f": 5472,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_bearing_1": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 2868.0,
+   "x1": 2892.0,
+   "f": 1540,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_bearing_2": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 2965.4,
+   "x1": 3394.6,
+   "f": 1540,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_bearing_3": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 3485.4,
+   "x1": 3914.6,
+   "f": 1540,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_drive_1": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 2756.0,
+   "x1": 2891.0,
+   "f": 358,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_drive_2": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 3251.9,
+   "x1": 3416.0,
+   "f": 358,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_drive_3": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 3771.9,
+   "x1": 3936.0,
+   "f": 358,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_duct_aft": {
+   "m": "06 Nozzle",
+   "mat": "inconel",
+   "x0": 3502.7,
+   "x1": 4000.0,
+   "f": 14752,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_duct_fwd": {
+   "m": "06 Nozzle",
+   "mat": "inconel",
+   "x0": 2880.0,
+   "x1": 3377.3,
+   "f": 14752,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_duct_mid": {
+   "m": "06 Nozzle",
+   "mat": "inconel",
+   "x0": 2982.7,
+   "x1": 3897.3,
+   "f": 14752,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_fixed_ring": {
+   "m": "06 Nozzle",
+   "mat": "inconel",
+   "x0": 2850.0,
+   "x1": 2880.0,
+   "f": 11312,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_rotary_union": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 2770.0,
+   "x1": 2836.0,
+   "f": 46,
    "spool": null,
    "spin": null
   },

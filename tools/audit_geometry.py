@@ -17,7 +17,6 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # A part may be simple only if it really is simple.
 EXEMPT = {
-    "nozzle_sidewalls": "two flat plates, which is what a 2D nozzle's sides are",
     "mount_aft_lug": "a clevis: two plates, a base and a pin",
 }
 

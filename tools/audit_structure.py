@@ -32,7 +32,7 @@ CFG = {
         "tower shaft": (("towershaft",), 1),
         "mode valve": (("mode_valve",), 1),
         "third-stream heat exchanger": (("tms_hx",), 1),
-        "nozzle transition": (("nozzle_transition",), 1),
+        "swivel fixed ring": (("swivel_fixed_ring",), 1),
         "bearings": (("brg_*",), 5),
         "FADEC channels": (("fadec_*",), 2),
         "generators": (("generator_*",), 2),

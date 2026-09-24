@@ -18,7 +18,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 OUT = os.path.join(ROOT, "renders")
 
-X_MID = 1.685       # engine centre, metres
+X_MID = 2.245       # engine centre, metres: inlet to nozzle exit
 SPAN = 3.75
 
 
@@ -143,8 +143,9 @@ def shoot(name):
 SECTION = ("case_", "inlet_case", "containment", "flange_", "intermediate_case",
            "core_cowl", "core_splitter", "fan_frame_hub", "service_struts",
            "tms_hx", "mode_valve", "combustor_liner_", "combustor_inner_case",
-           "combustor_dome", "augmentor_", "mixer", "nozzle_transition",
-           "nozzle_shroud", "fuel_manifold", "ab_fuel_manifold",
+           "combustor_dome", "augmentor_", "mixer", "swivel_fixed_ring",
+           "swivel_duct_", "nozzle_static_ring", "fuel_manifold",
+           "ab_fuel_manifold",
            "vsv_actuation", "sump_", "tailcone")
 
 
@@ -183,15 +184,15 @@ def section(x0=-1.0, x1=5.0, hide_externals=True):
 
 def mode_hero(samples):
     reset(); setup_render(samples); setup_world(); setup_lights()
-    area_light("face", (X_MID - 7.5, -3.0, 0.8), (0, 0, 0), 600, 3.0)
-    setup_camera((X_MID - 6.6, -6.0, 2.3), (X_MID - 0.35, 0, -0.05), lens=58)
+    area_light("face", (X_MID - 8.6, -3.4, 0.9), (0, 0, 0), 700, 3.0)
+    setup_camera((X_MID - 7.9, -7.2, 2.7), (X_MID - 0.35, 0, -0.05), lens=58)
     shoot("01_hero")
 
 
 def mode_rear(samples):
     reset(); setup_render(samples); setup_world(); setup_lights()
     area_light("tail", (X_MID + 6.0, -2.5, 2.0), (X_MID + 1.8, 0, 0), 700, 3.0)
-    setup_camera((X_MID + 5.6, -4.6, 1.9), (X_MID + 0.7, 0, -0.05), lens=55)
+    setup_camera((X_MID + 6.4, -5.3, 2.1), (X_MID + 0.8, 0, -0.05), lens=55)
     shoot("02_rear_quarter")
 
 
@@ -200,7 +201,7 @@ def mode_cutaway(samples):
     section()
     area_light("bore", (X_MID - 0.2, -3.8, 1.2), (X_MID, 0, 0), 500, 7.0)
     area_light("bore2", (X_MID + 1.0, -2.4, 2.8), (X_MID, 0, 0), 250, 5.0)
-    setup_camera((X_MID - 1.6, -7.4, 2.4), (X_MID + 0.05, 0, -0.05), lens=52)
+    setup_camera((X_MID - 1.8, -9.0, 2.8), (X_MID + 0.05, 0, -0.05), lens=52)
     shoot("03_cutaway")
 
 
@@ -219,7 +220,7 @@ def mode_exploded(samples):
         for o in (col.objects if col else ()):
             o.location.x += dx
             o.location.z += dz
-    setup_camera((X_MID - 3.8, -12.6, 3.0), (X_MID + 0.55, 0, -0.1), lens=46)
+    setup_camera((X_MID - 4.2, -14.6, 3.4), (X_MID + 0.7, 0, -0.1), lens=46)
     shoot("04_exploded")
 
 
@@ -228,7 +229,8 @@ CLOSEUPS = {
     "c1_fan_face": ((-2.6, -1.0, 0.45), (0.0, 0.0, 0.0), 45, False),
     "c2_compressor": ((0.9, -1.55, 0.55), (0.95, 0.0, 0.05), 38, True),
     "c3_combustor_turbine": ((1.65, -1.25, 0.45), (1.72, 0.0, 0.08), 40, True),
-    "c4_nozzle": ((4.6, -1.6, 0.9), (3.35, 0.0, 0.0), 42, False),
+    "c4_nozzle": ((5.3, -1.7, 0.9), (4.15, 0.0, 0.0), 42, False),
+    "c7_swivel": ((3.4, -2.2, 0.7), (3.45, 0.0, 0.0), 40, False),
     "c5_gearbox": ((0.2, -1.6, -1.2), (0.65, 0.0, -0.45), 40, False),
     "c6_augmentor": ((2.4, -1.5, 0.5), (2.45, 0.0, 0.0), 38, True),
 }
@@ -246,8 +248,36 @@ def mode_closeup(name, samples):
     shoot(name)
 
 
+def pose_swivel(pitch_deg, yaw_deg=0.0):
+    """Turn the swivel's three bearings to point the jet pitch_deg down: each
+    group of parts is carried by every bearing in front of it."""
+    from mathutils import Matrix, Vector
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from parts import nozzle
+    angles = nozzle.swivel_pose(pitch_deg, yaw_deg)
+    fr = [nozzle.square(nozzle.N["x_brg1"]), nozzle.oblique(1), nozzle.oblique(2)]
+    chain = Matrix.Identity(4)
+    for k, key in enumerate(("fwd", "mid", "aft")):
+        c = Vector(fr[k][0]) * 0.001
+        R = Matrix.Rotation(angles[k], 4, Vector(fr[k][1]))
+        chain = chain @ Matrix.Translation(c) @ R @ Matrix.Translation(-c)
+        for name in nozzle.GROUPS[key]:
+            o = bpy.data.objects.get(name)
+            if o is not None:
+                o.matrix_world = chain @ o.matrix_world
+
+
+def mode_hover(samples):
+    """The nozzle folded straight down, as for a vertical landing."""
+    reset(); setup_render(samples); setup_world(); setup_lights()
+    pose_swivel(90.0)
+    area_light("tail", (X_MID + 5.0, -4.0, 1.5), (X_MID + 1.2, 0, -0.4), 700, 3.0)
+    setup_camera((X_MID + 4.2, -6.6, 1.2), (X_MID + 0.9, 0, -0.35), lens=50)
+    shoot("05_hover")
+
+
 MODES = {"hero": mode_hero, "rear": mode_rear, "cutaway": mode_cutaway,
-         "exploded": mode_exploded}
+         "exploded": mode_exploded, "hover": mode_hover}
 
 
 if __name__ == "__main__":
@@ -255,7 +285,7 @@ if __name__ == "__main__":
     mode = argv[0] if argv else "hero"
     samples = int(argv[1]) if len(argv) > 1 else 64
     if mode == "all":
-        for m in ("hero", "rear", "cutaway", "exploded"):
+        for m in ("hero", "rear", "cutaway", "exploded", "hover"):
             MODES[m](samples)
     elif mode == "closeups":
         for n in CLOSEUPS:

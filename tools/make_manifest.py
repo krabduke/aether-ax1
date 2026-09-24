@@ -28,7 +28,7 @@ MODULES = [
     ("03 Combustor", "Combustor", "#C9763F", "hot"),
     ("04 Turbines", "Turbines", "#B8562E", "hot"),
     ("05 Augmentor", "Augmentor", "#D0843F", "hot"),
-    ("06 Nozzle", "2D nozzle", "#9C7A63", "hot"),
+    ("06 Nozzle", "Swivel nozzle", "#9C7A63", "hot"),
     ("07 Frames and casings", "Frames & casings", "#6E7A7E", "struct"),
     ("08 Spools and bearings", "Spools & bearings", "#858A86", "struct"),
     ("09 Accessories", "Accessories", "#7C8470", "struct"),
@@ -51,8 +51,9 @@ def flow():
     A = spec.AUGMENTOR
     core += [(A["x_mixer1"], 150.0, A["liner_r"] - 10.0),
              (A["x_liner1"], 40.0, A["liner_r"] - 10.0),
-             (spec.NOZZLE["x_throat"], 10.0, nozzle.H_THROAT - 8.0),
-             (spec.NOZZLE["x_exit"], 10.0, nozzle.H_EXIT - 8.0)]
+             (spec.NOZZLE["x_static1"], 30.0, nozzle.R_IN - 10.0),
+             (spec.NOZZLE["x_throat"], 10.0, nozzle.R8 - 8.0),
+             (spec.NOZZLE["x_exit"], 10.0, nozzle.R9 - 8.0)]
     bypass = [(x, a, b) for (x, a, b) in spec.BYPASS_PATH]
     third = [(x, a, b) for (x, a, b) in spec.THIRD_PATH]
     S = spec
@@ -73,17 +74,28 @@ def flow():
 
 
 def nozzle_kinematics():
-    """Hinge points (x, z) in mm, in the engine's frame, for the viewer to
-    swing the flaps about. Upper flaps have z > 0; the lower ones mirror."""
-    L = nozzle.flap_lines()
-    _, _, b_sh = nozzle.shroud_outer()
+    """What the viewer needs to swivel the nozzle: each bearing's centre and
+    axis in the engine's frame (mm), which parts turn on it, and the fold
+    angle against the middle bearing's turn, to invert for a target."""
+    import math
+    fr1, fr2 = nozzle.oblique(1), nozzle.oblique(2)
+    table = [[r1(d, 2), r1(math.degrees(math.acos(max(-1.0, min(1.0,
+              nozzle.fold(math.radians(d))[0])))), 3)]
+             for d in range(0, 181, 2)]
     return {
-        "div_hinge": [r1(L["div"][0]), r1(L["div"][1])],
-        "div_te": [r1(L["div"][2]), r1(L["div"][3])],
-        "ext_hinge": [r1(spec.NOZZLE["x_trans1"]), r1(b_sh)],
-        "vector_deg": spec.VECTOR_DEG,
-        "throat_h": r1(2 * nozzle.H_THROAT), "exit_h": r1(2 * nozzle.H_EXIT),
-        "width": spec.NOZZLE["width"],
+        "bearings": [
+            {"c": [spec.NOZZLE["x_brg1"], 0.0, 0.0], "n": [1.0, 0.0, 0.0],
+             "parts": nozzle.GROUPS["fwd"]},
+            {"c": [r1(v, 3) for v in fr1[0]], "n": [r1(v, 6) for v in fr1[1]],
+             "parts": nozzle.GROUPS["mid"]},
+            {"c": [r1(v, 3) for v in fr2[0]], "n": [r1(v, 6) for v in fr2[1]],
+             "parts": nozzle.GROUPS["aft"]},
+        ],
+        "fold_table": table,
+        "max_fold_deg": r1(nozzle.max_fold_deg()),
+        "exit_x": r1(nozzle.X9), "exit_r": r1(nozzle.R9),
+        "throat_x": r1(nozzle.X8),
+        "throat_r": r1(nozzle.R8),
     }
 
 

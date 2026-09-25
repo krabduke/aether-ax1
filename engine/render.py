@@ -276,8 +276,50 @@ def mode_hover(samples):
     shoot("05_hover")
 
 
+def _tailpipe_camera():
+    setup_camera((X_MID + 3.75, -0.14, 0.09), (X_MID + 0.05, 0.0, 0.0), lens=55)
+
+
+def mode_tailpipe(samples):
+    """Up the tailpipe from behind with a lamp shone down it: the spray
+    rings, the gutter web, the tail cone, the corrugated liner."""
+    reset(); setup_render(samples, (1600, 1100)); setup_world(0.2); setup_lights(0.5)
+    area_light("lamp", (X_MID + 2.9, 0.12, -0.10), (X_MID + 0.1, 0, 0), 900, 0.35)
+    _tailpipe_camera()
+    shoot("06_tailpipe")
+
+
+GLOW = ("flameholder", "augmentor_liner", "tailcone", "ab_spray_rings",
+        "nozzle_conv_seals", "nozzle_div_seals")
+
+
+def mode_reheat(samples):
+    """The same view in reheat: the flameholder and the liner at heat, the
+    way an afterburner looks up its nozzle at night."""
+    reset(); setup_render(samples, (1600, 1100)); setup_world(0.05); setup_lights(0.15)
+    for o in bpy.data.objects:
+        if o.type != "MESH" or not o.name.startswith(GLOW):
+            continue
+        m = bpy.data.materials.new(o.name + "_hot")
+        m.use_nodes = True
+        nt = m.node_tree
+        bsdf = nt.nodes.get("Principled BSDF")
+        hot = o.name.startswith(("flameholder", "ab_spray_rings", "tailcone"))
+        # the gutters and spray rings white-yellow at the flame's roots, the
+        # liner and the nozzle a deep orange from the flame's radiation
+        col = (1.0, 0.55, 0.16, 1.0) if hot else (0.85, 0.22, 0.04, 1.0)
+        bsdf.inputs["Base Color"].default_value = (0.12, 0.05, 0.02, 1.0)
+        bsdf.inputs["Emission Color"].default_value = col
+        bsdf.inputs["Emission Strength"].default_value = 2.2 if hot else 0.6
+        o.data.materials.clear()
+        o.data.materials.append(m)
+    _tailpipe_camera()
+    shoot("07_reheat")
+
+
 MODES = {"hero": mode_hero, "rear": mode_rear, "cutaway": mode_cutaway,
-         "exploded": mode_exploded, "hover": mode_hover}
+         "exploded": mode_exploded, "hover": mode_hover,
+         "tailpipe": mode_tailpipe, "reheat": mode_reheat}
 
 
 if __name__ == "__main__":
@@ -285,7 +327,8 @@ if __name__ == "__main__":
     mode = argv[0] if argv else "hero"
     samples = int(argv[1]) if len(argv) > 1 else 64
     if mode == "all":
-        for m in ("hero", "rear", "cutaway", "exploded", "hover"):
+        for m in ("hero", "rear", "cutaway", "exploded", "hover", "tailpipe",
+                  "reheat"):
             MODES[m](samples)
     elif mode == "closeups":
         for n in CLOSEUPS:

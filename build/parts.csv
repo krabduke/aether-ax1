@@ -1,11 +1,11 @@
 name,collection,module,material,verts,faces,x_min_mm,x_max_mm,y_min_mm,y_max_mm,z_min_mm,z_max_mm,r_max_mm,spool,spin
 ab_fuel_control,05 Augmentor,augmentor,steel,808,734,2080.0,2346.0,-250.7,-130.7,-525.8,-412.8,549.4,,
 ab_fuel_manifold,05 Augmentor,augmentor,steel,6080,5952,2241.0,2349.0,-491.0,491.0,-491.0,491.0,491.0,,
-ab_igniter,05 Augmentor,augmentor,casing,96,54,2445.0,2479.0,114.1,270.5,204.4,457.6,522.1,,
-ab_pilot_gutter,05 Augmentor,augmentor,casing,960,960,2436.0,2472.0,-215.0,215.0,-215.0,215.0,215.0,,
-ab_spraybars,05 Augmentor,augmentor,casing,4096,2496,2244.0,2294.0,-475.9,475.9,-475.9,475.9,484.0,,
+ab_igniter,05 Augmentor,augmentor,steel,96,54,2445.0,2479.0,154.1,270.5,273.7,457.6,522.1,,
+ab_spray_rings,05 Augmentor,augmentor,inconel,8064,7200,2244.0,2350.0,-366.0,366.0,-366.0,366.0,366.0,,
+ab_spraybars,05 Augmentor,augmentor,inconel,4096,2496,2244.0,2294.0,-475.9,475.9,-475.9,475.9,484.0,,
 augmentor_case,05 Augmentor,augmentor,cmc,5760,5760,2020.0,2850.0,-434.0,434.0,-434.0,434.0,434.0,,
-augmentor_liner,05 Augmentor,augmentor,cmc,24917,14243,2200.0,2850.0,-428.0,428.0,-428.0,428.0,428.0,,
+augmentor_liner,05 Augmentor,augmentor,cmc,51707,36673,2200.0,2850.0,-428.0,428.0,-428.0,428.0,428.0,,
 blades_hpc_r1,02 Compressor,compressor,titanium,13464,12312,831.5,880.0,-316.8,316.8,-316.8,316.8,317.0,hp,-1.0
 blades_hpc_r2,02 Compressor,compressor,titanium,15708,14364,953.6,996.0,-314.1,314.1,-314.3,314.3,314.3,hp,-1.0
 blades_hpc_r3,02 Compressor,compressor,titanium,17952,16416,1063.7,1100.0,-311.6,311.6,-311.6,311.6,311.8,hp,-1.0
@@ -44,7 +44,7 @@ fan_blisk_2,01 Fan,fan,titanium,15220,14260,233.5,336.5,-420.4,420.4,-421.5,421.
 fan_drum,01 Fan,fan,titanium,3520,3520,144.5,233.5,-218.5,218.5,-218.5,218.5,218.5,lp,1.0
 fan_frame_hub,07 Frames and casings,frames,casing,1920,1920,425.0,542.0,-294.0,294.0,-294.0,294.0,294.0,,
 fan_frame_struts,07 Frames and casings,frames,casing,1680,1456,440.0,540.0,-429.2,429.2,-429.2,429.2,429.2,,
-flameholder_vanes,05 Augmentor,augmentor,cmc,4320,3872,2290.0,2440.0,-420.0,420.0,-420.0,420.0,420.0,,
+flameholder,05 Augmentor,augmentor,cmc,3136,3072,2399.3,2445.7,-422.0,422.0,-422.0,422.0,422.6,,
 flange_fan_aft,07 Frames and casings,frames,casing,2152,2440,417.0,439.0,-440.0,440.0,-440.0,440.0,440.0,,
 flange_inlet,07 Frames and casings,frames,casing,2152,2440,-16.0,6.0,-478.0,478.0,-478.0,478.0,478.0,,
 flange_outer_aft,07 Frames and casings,frames,inconel,2320,2640,2842.0,2864.0,-492.0,492.0,-492.0,492.0,492.0,,

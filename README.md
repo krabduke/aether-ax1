@@ -16,6 +16,7 @@ F110-GE-129 and is kept at [Krabduke/f110-turbofan](https://github.com/Krabduke/
 |---|---|
 | ![cutaway](renders/03_cutaway.png) | ![hover](renders/05_hover.png) |
 | ![turbine](renders/c3_combustor_turbine.png) | ![exploded](renders/04_exploded.png) |
+| ![up the tailpipe](renders/06_tailpipe.png) | ![in reheat](renders/07_reheat.png) |
 
 ## The design
 
@@ -72,7 +73,7 @@ area — and fails the build if any is out of band.
 | Compressor | CDFS blisk on the HP spool with a variable stator; swan neck; variable inlet guide vane; six-stage HP compressor on a drum with a disc under every rotor; variable-vane unison rings and spindles |
 | Combustor | Exit guide vanes, combustor case and inner case, single-skin SiC/SiC CMC liners with real dilution holes, dome with 18 swirlers seated in real holes, liner mount pins, 18 fuel nozzles off a manifold, two igniters |
 | Turbines | HP nozzle and HP rotor with real film-cooling holes (showerhead and pressure-side rows, in every aerofoil), HP disc, mid-turbine frame of 16 structural vanes, counter-rotating LP rotor and disc |
-| Augmentor | 16-lobe mixer, tail cone, augmentor case, CMC screech liner with 1,200 real damping holes, 16 radial flameholder vanes, three staged reheat zones — zone 1 sprays from inside the vanes, zones 2 and 3 from 32 radial spraybars with orifices ahead of them — each off its own manifold through a reheat fuel control with three zone valves, a V-section pilot gutter behind the vanes, and a reheat igniter |
+| Augmentor | 16-lobe mixer, tail cone, augmentor case, a corrugated CMC liner with 1,200 real screech-damping holes, and the flameholder you see looking up the nozzle: three concentric V-gutter rings tied by 16 radial V-gutters that also carry the tail cone. Three staged reheat zones spray from concentric spray rings with 144 orifices, zone 1 on feeds from its manifold, zones 2 and 3 on 32 radial spraybars, each off its own manifold through a reheat fuel control with three zone valves, and a reheat igniter in the middle gutter's wake |
 | Swivel duct | Fixed ring on the outer case, three double-walled ducts (structural shell outside a cooling liner on hangers, the third stream between), three bearings each a flange pair round a race with a 150-tooth ring gear, three hydraulic motors with pinions in mesh, and a rotary union carrying pressure across the bearings |
 | C-D nozzle | Static ring, 16 convergent flaps and 16 seals, 16 divergent flaps and seals, each flap with a backbone, 16 serrated external flaps on compression links, hinge knuckles at the static ring and the throat, a unison ring on links to every convergent flap, and four actuators turning it through bellcranks |
 | Spools | LP and HP shafts, five bearings (inner race, outer race, a full ring of balls or rollers) in two sumps hung from the fan frame and the mid-turbine frame |
@@ -107,7 +108,9 @@ stations; hovering any part names it and lights its axial span there.
 
 - **Throttle** Off / Idle / Military / Max reheat: the two spools spool up at
   their own rates and turn opposite ways; N1, N2, thrust and turbine inlet
-  temperature read out live, and reheat lights a round plume off the nozzle.
+  temperature read out live. Reheat lights the flame -- a tapering sheath
+  with a hot core and a train of shock diamonds, following the nozzle -- and
+  the gutters, spray rings, liner and tail cone glow at heat.
 - **Nozzle down** 0–95° and **Nozzle yaw** ±12°: the three swivel bearings
   turn at a motor's pace to point the jet — the middle and aft ducts fold it
   off the axis, the front bearing puts the fold where it is asked for. The

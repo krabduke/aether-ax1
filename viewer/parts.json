@@ -471,7 +471,7 @@
     705.0
    ],
    [
-    2440.0,
+    2445.0,
     1291.0
    ],
    [
@@ -970,7 +970,7 @@
    "x0": 2016.0,
    "x1": 2850.0,
    "parts": 10,
-   "faces": 48183
+   "faces": 76053
   },
   {
    "key": "06 Nozzle",
@@ -1034,25 +1034,25 @@
   },
   "ab_igniter": {
    "m": "05 Augmentor",
-   "mat": "casing",
+   "mat": "steel",
    "x0": 2445.0,
    "x1": 2479.0,
    "f": 54,
    "spool": null,
    "spin": null
   },
-  "ab_pilot_gutter": {
+  "ab_spray_rings": {
    "m": "05 Augmentor",
-   "mat": "casing",
-   "x0": 2436.0,
-   "x1": 2472.0,
-   "f": 960,
+   "mat": "inconel",
+   "x0": 2244.0,
+   "x1": 2350.0,
+   "f": 7200,
    "spool": null,
    "spin": null
   },
   "ab_spraybars": {
    "m": "05 Augmentor",
-   "mat": "casing",
+   "mat": "inconel",
    "x0": 2244.0,
    "x1": 2294.0,
    "f": 2496,
@@ -1073,7 +1073,7 @@
    "mat": "cmc",
    "x0": 2200.0,
    "x1": 2850.0,
-   "f": 14243,
+   "f": 36673,
    "spool": null,
    "spin": null
   },
@@ -1419,12 +1419,12 @@
    "spool": null,
    "spin": null
   },
-  "flameholder_vanes": {
+  "flameholder": {
    "m": "05 Augmentor",
    "mat": "cmc",
-   "x0": 2290.0,
-   "x1": 2440.0,
-   "f": 3872,
+   "x0": 2399.3,
+   "x1": 2445.7,
+   "f": 3072,
    "spool": null,
    "spin": null
   },

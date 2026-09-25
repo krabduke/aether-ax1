@@ -324,30 +324,70 @@ function applySwivel(){
   bearings.forEach((g, k) => g.quaternion.setFromAxisAngle(g.userData.axis, a[k]));
 }
 
-/* ---------------- reheat plume: a round jet off the nozzle exit ---------------- */
+/* ---------------- reheat: the flame, and the augmentor at heat ----------------
+   The plume is a tapering sheath of flame with a hotter core and a train of
+   shock diamonds, where the over-expanded jet re-compresses. It rides on the
+   aft swivel duct, so it points wherever the nozzle does. */
 const plume = new THREE.Group();
+const flicker = [];
 {
-  const c = document.createElement('canvas'); c.width = 256; c.height = 64;
-  const g = c.getContext('2d');
-  const grad = g.createLinearGradient(0, 0, 256, 0);
-  grad.addColorStop(0, 'rgba(255,190,120,0.95)'); grad.addColorStop(0.25, 'rgba(255,120,60,0.6)');
-  grad.addColorStop(1, 'rgba(120,60,255,0)');
-  g.fillStyle = grad; g.fillRect(0, 0, 256, 64);
-  const v = g.createLinearGradient(0, 0, 0, 64);
-  v.addColorStop(0, 'rgba(0,0,0,1)'); v.addColorStop(0.5, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,1)');
-  g.globalCompositeOperation = 'destination-out'; g.fillStyle = v; g.fillRect(0, 0, 256, 64);
-  const tex = new THREE.CanvasTexture(c);
-  const L = 2.6, H = 2 * nz.exit_r * MM * 0.92;
-  for (const rot of [0, Math.PI / 3, 2 * Math.PI / 3]) {
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(L, H),
-      new THREE.MeshBasicMaterial({map: tex, transparent: true, blending: THREE.AdditiveBlending,
-                                   depthWrite: false, side: THREE.DoubleSide}));
-    m.position.x = L / 2; m.rotation.x = rot; plume.add(m);
+  const ramp = (stops) => {
+    const c = document.createElement('canvas'); c.width = 8; c.height = 256;
+    const g = c.getContext('2d');
+    const grad = g.createLinearGradient(0, 256, 0, 0);
+    for (const [f, col] of stops) grad.addColorStop(f, col);
+    g.fillStyle = grad; g.fillRect(0, 0, 8, 256);
+    return new THREE.CanvasTexture(c);
+  };
+  const additive = (map, opacity) => new THREE.MeshBasicMaterial({map, transparent: true,
+    opacity, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide});
+  const R = nz.exit_r * MM;
+  // sheath: from the exit, necking in and then spreading as it mixes out
+  const sheathL = 3.2;
+  const sheath = new THREE.Mesh(new THREE.CylinderGeometry(R * 0.55, R * 0.94, sheathL, 48, 1, true),
+    additive(ramp([[0, 'rgba(255,170,90,0.85)'], [0.25, 'rgba(255,110,50,0.55)'],
+                   [0.6, 'rgba(180,70,120,0.25)'], [1, 'rgba(90,40,160,0)']]), 0.9));
+  sheath.rotation.z = -Math.PI / 2; sheath.position.x = sheathL / 2;
+  plume.add(sheath);
+  const core = new THREE.Mesh(new THREE.CylinderGeometry(R * 0.15, R * 0.62, 1.7, 40, 1, true),
+    additive(ramp([[0, 'rgba(255,245,215,1)'], [0.4, 'rgba(255,190,110,0.7)'],
+                   [1, 'rgba(255,120,60,0)']]), 1.0));
+  core.rotation.z = -Math.PI / 2; core.position.x = 0.85;
+  plume.add(core);
+  // shock diamonds: bright lozenges down the core, fading aft
+  const diamondTex = (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 64;
+    const g = c.getContext('2d');
+    const rg = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    rg.addColorStop(0, 'rgba(255,250,240,1)'); rg.addColorStop(0.35, 'rgba(255,200,170,0.7)');
+    rg.addColorStop(1, 'rgba(255,120,160,0)');
+    g.fillStyle = rg; g.fillRect(0, 0, 64, 64);
+    return new THREE.CanvasTexture(c);
+  })();
+  for (let k = 0; k < 6; k++) {
+    const d = new THREE.Mesh(new THREE.SphereGeometry(1, 24, 12),
+      additive(diamondTex, 0.55 * Math.pow(0.78, k)));
+    d.scale.set(R * 0.55, R * 0.42 * (1 - 0.08 * k), R * 0.42 * (1 - 0.08 * k));
+    d.position.x = 0.32 + k * 0.44;
+    d.userData.base = d.material.opacity;
+    plume.add(d); flicker.push(d);
   }
   plume.position.set(nz.exit_x * MM, 0, 0);
   plume.visible = false; scene.add(plume);
   plume.updateMatrixWorld(true);
   bearings[2].attach(plume);
+}
+// what glows in reheat: the gutters and the spray rings hottest, then the
+// tail cone, the liner and the nozzle's seals
+const GLOW_PARTS = named('flameholder', 'ab_spray_rings', 'tailcone',
+                         'augmentor_liner', 'nozzle_conv_seals', 'nozzle_div_seals');
+const GLOW = Object.fromEntries(GLOW_PARTS.map((n, i) => [n, [1.6, 1.2, 0.9, 0.55, 0.5, 0.4][i]]));
+function setGlow(on){
+  for (const [name, k] of Object.entries(GLOW))
+    for (const m of (meshes.get(name) || [])) {
+      m.material.emissive.setRGB(1.0, 0.42, 0.10);
+      m.material.emissiveIntensity = on ? k : 0;
+    }
 }
 
 /* ---------------- airflow particles ---------------- */
@@ -520,8 +560,13 @@ renderer.setAnimationLoop(() => {
     swivel.yaw = reduced ? swivel.ty : step(swivel.yaw, swivel.ty, 12);
     applySwivel();
   }
+  if (plume.visible !== state.reheat) setGlow(state.reheat);
   plume.visible = state.reheat;
-  if (plume.visible) for (const c of plume.children) c.material.opacity = 0.75 + 0.25 * Math.random();
+  if (plume.visible && !reduced) {
+    const f = 0.94 + 0.06 * Math.random();
+    plume.scale.set(1, f, f);
+    for (const d of flicker) d.material.opacity = d.userData.base * (0.8 + 0.4 * Math.random());
+  }
   particles.visible = state.air && state.n1 > 0.02;
   if (particles.visible) updateParticles(reduced ? 0 : dt, 0.25 + state.n1);
   const thr = state.reheat ? F.thrust_ab_kn : F.thrust_dry_kn * Math.pow(state.n1, 2.4);

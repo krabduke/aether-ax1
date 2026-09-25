@@ -143,6 +143,8 @@ CIRCUITS = [
      ["oil_tank", "oil_lines", "sump_front"]),
     ("and the scavenge from the rear sump",
      ["sump_rear", "oil_lines", "oil_tank"]),
+    ("fuel: the pump delivers to the metering unit",
+     ["gearbox", "fuel_pump", "fuel_lines", "fuel_metering_unit"]),
     ("the FADECs stand on the case and are wired to the gearbox",
      ["case_outer_fwd", "fadec_a", "harnesses", "gearbox"]),
     ("", ["case_outer_fwd", "fadec_b", "harnesses"]),

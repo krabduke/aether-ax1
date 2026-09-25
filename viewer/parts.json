@@ -1007,10 +1007,10 @@
    "label": "Accessories",
    "color": "#7C8470",
    "kind": "struct",
-   "x0": 328.0,
+   "x0": 282.0,
    "x1": 2833.8,
    "parts": 24,
-   "faces": 26792
+   "faces": 27718
   }
  ],
  "parts": {
@@ -1467,9 +1467,9 @@
   "fuel_lines": {
    "m": "09 Accessories",
    "mat": "steel",
-   "x0": 761.0,
+   "x0": 347.9,
    "x1": 2079.0,
-   "f": 1048,
+   "f": 1734,
    "spool": null,
    "spin": null
   },
@@ -1503,9 +1503,9 @@
   "fuel_pump": {
    "m": "09 Accessories",
    "mat": "steel",
-   "x0": 328.0,
+   "x0": 282.0,
    "x1": 386.0,
-   "f": 128,
+   "f": 368,
    "spool": null,
    "spin": null
   },

@@ -58,6 +58,7 @@ gearbox,09 Accessories,accessories,casing,1728,1452,380.0,880.0,-119.0,119.0,-57
 gearbox_mounts,09 Accessories,accessories,casing,96,56,387.0,848.0,-78.0,78.0,-458.0,-405.7,464.6,,
 generator_l,09 Accessories,accessories,casing,1440,1440,600.0,820.0,105.0,239.0,-579.0,-445.0,607.1,,
 generator_r,09 Accessories,accessories,casing,1440,1440,600.0,820.0,-239.0,-105.0,-579.0,-445.0,607.1,,
+harness_looms,09 Accessories,accessories,rubber,8088,7852,760.0,2680.0,-482.1,482.1,-265.0,473.5,514.1,,
 harnesses,09 Accessories,accessories,rubber,168,144,861.1,936.9,-418.6,418.6,-488.3,-253.5,496.1,,
 hp_front_drum,02 Compressor,compressor,titanium,960,960,622.3,824.8,-282.0,282.0,-282.0,282.0,282.0,hp,-1.0
 hpc_drum,02 Compressor,compressor,titanium,18240,18240,824.8,1407.0,-295.0,295.0,-295.0,295.0,295.0,hp,-1.0
@@ -67,7 +68,7 @@ hydraulic_pump,09 Accessories,accessories,steel,128,128,430.0,520.0,-38.0,38.0,-
 igniters,03 Combustor,combustor,steel,128,72,1449.0,1475.0,-433.0,433.0,166.3,255.3,496.0,,
 inlet_case,07 Frames and casings,fan,casing,1600,1600,-190.0,-8.0,-446.0,446.0,-446.0,446.0,446.0,,
 intermediate_case,07 Frames and casings,frames,titanium,28800,28800,425.0,2020.0,-426.0,426.0,-426.0,426.0,426.0,,
-line_clamps,09 Accessories,accessories,steel,2304,1296,571.4,2631.5,-360.9,360.9,-505.1,-307.6,529.6,,
+line_clamps,09 Accessories,accessories,steel,3072,1728,571.4,2640.9,-360.9,360.9,-505.1,463.6,529.6,,
 lpt_disc,04 Turbines,turbine,nickel,4000,4000,1941.5,2012.0,-250.8,250.8,-250.8,250.8,250.9,lp,1.0
 mixer,05 Augmentor,augmentor,nickel_hot,8832,8832,2020.0,2200.0,-414.5,414.5,-414.5,414.5,414.5,,
 mode_valve,07 Frames and casings,frames,titanium,2400,2352,618.0,687.9,-423.8,423.8,-423.8,423.8,423.8,,
@@ -86,6 +87,7 @@ nozzle_static_ring,06 Nozzle,nozzle,inconel,4520,4816,4000.0,4100.0,-490.0,490.0
 nozzle_unison_ring,06 Nozzle,nozzle,inconel,1024,864,4118.0,4134.0,-450.0,450.0,-450.0,450.0,450.0,,
 oil_lines,09 Accessories,accessories,steel,414,382,449.0,1870.9,-6.0,6.0,-517.9,-107.0,517.9,,
 oil_tank,09 Accessories,accessories,steel,362,396,876.0,1060.0,-56.0,56.0,-568.0,-456.0,568.0,,
+sensor_probes,09 Accessories,accessories,steel,1736,980,785.0,2635.0,-248.3,248.3,382.2,447.0,504.1,,
 service_struts,07 Frames and casings,frames,casing,840,728,1835.0,1925.0,-462.0,462.0,-462.0,462.0,462.0,,
 shaft_hp,08 Spools and bearings,spools,steel,3328,3256,470.0,1858.0,-151.0,151.0,-151.0,151.0,151.0,hp,-1.0
 shaft_lp,08 Spools and bearings,spools,steel,3520,3520,10.0,2012.0,-62.0,62.0,-62.0,62.0,62.0,lp,1.0

@@ -1009,8 +1009,8 @@
    "kind": "struct",
    "x0": 328.0,
    "x1": 2833.8,
-   "parts": 20,
-   "faces": 15394
+   "parts": 22,
+   "faces": 24658
   }
  ],
  "parts": {
@@ -1545,6 +1545,15 @@
    "spool": null,
    "spin": null
   },
+  "harness_looms": {
+   "m": "09 Accessories",
+   "mat": "rubber",
+   "x0": 760.0,
+   "x1": 2680.0,
+   "f": 7852,
+   "spool": null,
+   "spin": null
+  },
   "harnesses": {
    "m": "09 Accessories",
    "mat": "rubber",
@@ -1630,8 +1639,8 @@
    "m": "09 Accessories",
    "mat": "steel",
    "x0": 571.4,
-   "x1": 2631.5,
-   "f": 1296,
+   "x1": 2640.9,
+   "f": 1728,
    "spool": null,
    "spin": null
   },
@@ -1794,6 +1803,15 @@
    "x0": 876.0,
    "x1": 1060.0,
    "f": 396,
+   "spool": null,
+   "spin": null
+  },
+  "sensor_probes": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 785.0,
+   "x1": 2635.0,
+   "f": 980,
    "spool": null,
    "spin": null
   },

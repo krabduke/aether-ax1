@@ -78,7 +78,7 @@ area — and fails the build if any is out of band.
 | C-D nozzle | Static ring, 16 convergent flaps and 16 seals, 16 divergent flaps and seals, each flap with a backbone, 16 serrated external flaps on compression links, hinge knuckles at the static ring and the throat, a unison ring on links to every convergent flap, and four actuators turning it through bellcranks |
 | Spools | LP and HP shafts, five bearings (inner race, outer race, a full ring of balls or rollers) in two sumps hung from the fan frame and the mid-turbine frame |
 | Third stream | Mode valve (24 petals), 12-segment plate-fin heat exchanger, coolant lines to the aircraft |
-| Externals | Orthogrid stiffening on the outer cases, accessory gearbox with ribs, tower shaft off a bevel on the HP shaft, two generators, fuel pump and metering unit, oil tank and lines to both sumps, fuel lines to both manifolds, two FADEC channels on stand-offs with their looms, forward trunnions, an aft thrust lug, mode-valve actuators, and a hydraulic pump feeding the swivel's motors |
+| Externals | Orthogrid stiffening on the outer cases, accessory gearbox with ribs, tower shaft off a bevel on the HP shaft, two generators, fuel pump and metering unit, oil tank and lines to both sumps, fuel lines to both manifolds, two FADEC channels on stand-offs with their looms, each channel's own instrumentation loom along an upper flank to seven pressure, temperature and flame probes, forward trunnions, an aft thrust lug, mode-valve actuators, and a hydraulic pump feeding the swivel's motors |
 
 ## Build
 

@@ -1009,8 +1009,8 @@
    "kind": "struct",
    "x0": 328.0,
    "x1": 2833.8,
-   "parts": 22,
-   "faces": 24658
+   "parts": 24,
+   "faces": 26792
   }
  ],
  "parts": {
@@ -1548,8 +1548,8 @@
   "harness_looms": {
    "m": "09 Accessories",
    "mat": "rubber",
-   "x0": 760.0,
-   "x1": 2680.0,
+   "x0": 796.8,
+   "x1": 2662.3,
    "f": 7852,
    "spool": null,
    "spin": null
@@ -1614,6 +1614,24 @@
    "x0": 1449.0,
    "x1": 1475.0,
    "f": 72,
+   "spool": null,
+   "spin": null
+  },
+  "ignition_exciters": {
+   "m": "09 Accessories",
+   "mat": "casing",
+   "x0": 1140.0,
+   "x1": 2110.0,
+   "f": 774,
+   "spool": null,
+   "spin": null
+  },
+  "ignition_leads": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 1245.2,
+   "x1": 2466.9,
+   "f": 1360,
    "spool": null,
    "spin": null
   },

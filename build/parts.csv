@@ -58,7 +58,7 @@ gearbox,09 Accessories,accessories,casing,1728,1452,380.0,880.0,-119.0,119.0,-57
 gearbox_mounts,09 Accessories,accessories,casing,96,56,387.0,848.0,-78.0,78.0,-458.0,-405.7,464.6,,
 generator_l,09 Accessories,accessories,casing,1440,1440,600.0,820.0,105.0,239.0,-579.0,-445.0,607.1,,
 generator_r,09 Accessories,accessories,casing,1440,1440,600.0,820.0,-239.0,-105.0,-579.0,-445.0,607.1,,
-harness_looms,09 Accessories,accessories,rubber,8088,7852,760.0,2680.0,-482.1,482.1,-265.0,473.5,514.1,,
+harness_looms,09 Accessories,accessories,rubber,8088,7852,796.8,2662.3,-482.1,482.1,-265.0,473.5,514.1,,
 harnesses,09 Accessories,accessories,rubber,168,144,861.1,936.9,-418.6,418.6,-488.3,-253.5,496.1,,
 hp_front_drum,02 Compressor,compressor,titanium,960,960,622.3,824.8,-282.0,282.0,-282.0,282.0,282.0,hp,-1.0
 hpc_drum,02 Compressor,compressor,titanium,18240,18240,824.8,1407.0,-295.0,295.0,-295.0,295.0,295.0,hp,-1.0
@@ -66,6 +66,8 @@ hpt_disc,04 Turbines,turbine,nickel,3840,3840,1722.6,1815.2,-262.0,262.0,-262.0,
 hydraulic_lines,09 Accessories,accessories,steel,5340,5300,464.0,2833.8,-423.4,387.7,-627.7,-309.5,654.8,,
 hydraulic_pump,09 Accessories,accessories,steel,128,128,430.0,520.0,-38.0,38.0,-642.0,-566.0,642.0,,
 igniters,03 Combustor,combustor,steel,128,72,1449.0,1475.0,-433.0,433.0,166.3,255.3,496.0,,
+ignition_exciters,09 Accessories,accessories,casing,1008,774,1140.0,2110.0,-450.5,450.5,198.2,392.9,522.4,,
+ignition_leads,09 Accessories,accessories,steel,1434,1360,1245.2,2466.9,-448.6,448.6,230.8,472.6,545.8,,
 inlet_case,07 Frames and casings,fan,casing,1600,1600,-190.0,-8.0,-446.0,446.0,-446.0,446.0,446.0,,
 intermediate_case,07 Frames and casings,frames,titanium,28800,28800,425.0,2020.0,-426.0,426.0,-426.0,426.0,426.0,,
 line_clamps,09 Accessories,accessories,steel,3072,1728,571.4,2640.9,-360.9,360.9,-505.1,463.6,529.6,,

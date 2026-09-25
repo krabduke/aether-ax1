@@ -123,10 +123,14 @@ def reset():
             if m.name == "section":
                 o.modifiers.remove(m)
         o.hide_render = False
-        if "home" in o:
-            o.location = tuple(o["home"])
+        # the whole transform, not just the location: a posed swivel turns
+        # its parts, and a mode after it would pose them again on top
+        if "home_m" in o:
+            from mathutils import Matrix
+            h = list(o["home_m"])
+            o.matrix_world = Matrix([h[0:4], h[4:8], h[8:12], h[12:16]])
         else:
-            o["home"] = tuple(o.location)
+            o["home_m"] = [c for row in o.matrix_world for c in row]
 
 
 def shoot(name):

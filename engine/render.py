@@ -148,7 +148,8 @@ SECTION = ("case_", "inlet_case", "containment", "flange_", "intermediate_case",
            "core_cowl", "core_splitter", "fan_frame_hub", "service_struts",
            "tms_hx", "mode_valve", "combustor_liner_", "combustor_inner_case",
            "combustor_dome", "augmentor_", "mixer", "swivel_fixed_ring",
-           "swivel_duct_", "nozzle_static_ring", "fuel_manifold",
+           "swivel_duct_", "swivel_bearing_", "nozzle_static_ring",
+           "fuel_manifold",
            "ab_fuel_manifold",
            "vsv_actuation", "sump_", "tailcone")
 
@@ -171,7 +172,10 @@ def section(x0=-1.0, x1=5.0, hide_externals=True):
                 o.users_collection[0].name == "09 Accessories":
             o.hide_render = True
             continue
-        if hide_externals and o.name in ("fuel_nozzles", "igniters"):
+        # (and the swivel's motors, whose ring gears the cut takes away:
+        # they hung in the air in front of the section)
+        if hide_externals and (o.name in ("fuel_nozzles", "igniters")
+                               or o.name.startswith("swivel_drive_")):
             o.hide_render = True
             continue
         if not o.name.startswith(SECTION):

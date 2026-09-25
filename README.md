@@ -134,8 +134,8 @@ generated from the build and checked against it by `audit_manifest`.
 | `audit_geometry` | no part too crude to be what it is named |
 | `audit_structure` | attached, mirrored, distinct, singletons, named shapes |
 | `audit_intersect` | exact BVH interference: every overlap is a declared joint (a blade root in its disc, a vane in its case, a fuel nozzle through the cases it passes). **KNOWN defects: none** |
-| `audit_support` | every closed piece — each of 2,343, every blade and bolt — touches something. **DETACHED: none** |
-| `audit_joints` | one assembly, and 50 declared circuits joined link by link: each spool through its bearings and sumps to the frames and mounts, fuel from pump to swirler, oil from tank to both sumps, reheat fuel through the zone valves to every spraybar, the swivel's ducts bearing to bearing with each motor in mesh, the nozzle's hinges, links and actuators |
+| `audit_support` | every closed piece — each of 4,009, every blade and bolt — touches something. **DETACHED: none** |
+| `audit_joints` | one assembly, and 71 declared circuits joined link by link: each spool through its bearings and sumps to the frames and mounts, fuel from the aircraft's inlet through the pump and metering unit to every swirler, each FADEC channel through its loom to its probes, each igniter to its exciter, oil from tank to both sumps, reheat fuel through the zone valves to every spraybar, the swivel's ducts bearing to bearing with each motor in mesh, the nozzle's hinges, links and actuators |
 | `audit_rotor` | nothing that turns comes within 0.5 mm of anything that does not turn with it — the check that found the fan running 3.2 mm clear instead of 1.6 |
 | `audit_manifest` | the viewer's manifest matches the build |
 | `validate_viewer` | the viewer's JavaScript parses and loads |

@@ -502,7 +502,9 @@
     "parts": [
      "swivel_duct_fwd",
      "swivel_bearing_1",
-     "swivel_drive_2"
+     "swivel_drive_2",
+     "swivel_hyd_fwd",
+     "swivel_coupling_2"
     ]
    },
    {
@@ -519,7 +521,9 @@
     "parts": [
      "swivel_duct_mid",
      "swivel_bearing_2",
-     "swivel_drive_3"
+     "swivel_drive_3",
+     "swivel_hyd_mid",
+     "swivel_coupling_3"
     ]
    },
    {
@@ -545,7 +549,8 @@
      "nozzle_hinges",
      "nozzle_div_links",
      "nozzle_unison_ring",
-     "nozzle_actuators"
+     "nozzle_actuators",
+     "swivel_hyd_aft"
     ]
    }
   ],
@@ -979,8 +984,8 @@
    "kind": "hot",
    "x0": 2756.0,
    "x1": 4500.0,
-   "parts": 21,
-   "faces": 84132
+   "parts": 27,
+   "faces": 94838
   },
   {
    "key": "07 Frames and casings",
@@ -1009,8 +1014,8 @@
    "kind": "struct",
    "x0": 282.0,
    "x1": 2833.8,
-   "parts": 24,
-   "faces": 27718
+   "parts": 28,
+   "faces": 31318
   }
  ],
  "parts": {
@@ -1148,6 +1153,15 @@
    "f": 15732,
    "spool": "lp",
    "spin": 1.0
+  },
+  "bleed_valve": {
+   "m": "09 Accessories",
+   "mat": "titanium",
+   "x0": 450.0,
+   "x1": 544.0,
+   "f": 122,
+   "spool": null,
+   "spin": null
   },
   "brg_1_lp_roller": {
    "m": "08 Spools and bearings",
@@ -1464,12 +1478,21 @@
    "spool": null,
    "spin": null
   },
+  "front_harness": {
+   "m": "09 Accessories",
+   "mat": "rubber",
+   "x0": 501.1,
+   "x1": 925.0,
+   "f": 1652,
+   "spool": null,
+   "spin": null
+  },
   "fuel_lines": {
    "m": "09 Accessories",
    "mat": "steel",
    "x0": 347.9,
    "x1": 2079.0,
-   "f": 1734,
+   "f": 1862,
    "spool": null,
    "spin": null
   },
@@ -1497,6 +1520,24 @@
    "x0": 1380.0,
    "x1": 1422.0,
    "f": 5796,
+   "spool": null,
+   "spin": null
+  },
+  "fuel_oil_hx": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 528.0,
+   "x1": 658.0,
+   "f": 1658,
+   "spool": null,
+   "spin": null
+  },
+  "fuel_oil_hx_lines": {
+   "m": "09 Accessories",
+   "mat": "steel",
+   "x0": 544.0,
+   "x1": 642.0,
+   "f": 40,
    "spool": null,
    "spin": null
   },
@@ -1923,6 +1964,33 @@
    "spool": null,
    "spin": null
   },
+  "swivel_coupling_1": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 2830.0,
+   "x1": 2906.0,
+   "f": 198,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_coupling_2": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 2992.0,
+   "x1": 3075.4,
+   "f": 198,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_coupling_3": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 3804.6,
+   "x1": 3888.0,
+   "f": 198,
+   "spool": null,
+   "spin": null
+  },
   "swivel_drive_1": {
    "m": "06 Nozzle",
    "mat": "steel",
@@ -1983,6 +2051,33 @@
    "x0": 2850.0,
    "x1": 2880.0,
    "f": 11312,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_hyd_aft": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 3863.1,
+   "x1": 3977.0,
+   "f": 5620,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_hyd_fwd": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 2904.1,
+   "x1": 3382.6,
+   "f": 2768,
+   "spool": null,
+   "spin": null
+  },
+  "swivel_hyd_mid": {
+   "m": "06 Nozzle",
+   "mat": "steel",
+   "x0": 3058.2,
+   "x1": 3902.6,
+   "f": 1724,
    "spool": null,
    "spin": null
   },

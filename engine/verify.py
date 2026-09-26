@@ -182,6 +182,7 @@ def main():
     body = [r for r in parts.values()
             if r["collection"] != "09 Accessories"
             and not r["name"].startswith(("swivel_drive_", "nozzle_actuators",
+                                          "swivel_hyd_", "swivel_coupling_",
                                           "swivel_rotary_union", "ab_fuel_control",
                                           "ab_igniter"))]
     rmax = max(float(r["r_max_mm"]) for r in body)

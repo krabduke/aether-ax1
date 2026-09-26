@@ -74,11 +74,11 @@ area — and fails the build if any is out of band.
 | Combustor | Exit guide vanes, combustor case and inner case, single-skin SiC/SiC CMC liners with real dilution holes, dome with 18 swirlers seated in real holes, liner mount pins, 18 fuel nozzles off a manifold, two igniters |
 | Turbines | HP nozzle and HP rotor with real film-cooling holes (showerhead and pressure-side rows, in every aerofoil), HP disc, mid-turbine frame of 16 structural vanes, counter-rotating LP rotor and disc |
 | Augmentor | 16-lobe mixer, tail cone, augmentor case, a corrugated CMC liner with 1,200 real screech-damping holes, and the flameholder you see looking up the nozzle: three concentric V-gutter rings tied by 16 radial V-gutters that also carry the tail cone. Three staged reheat zones spray from concentric spray rings with 144 orifices, zone 1 on feeds from its manifold, zones 2 and 3 on 32 radial spraybars, each off its own manifold through a reheat fuel control with three zone valves, and a reheat igniter in the middle gutter's wake |
-| Swivel duct | Fixed ring on the outer case, three double-walled ducts (structural shell outside a cooling liner on hangers, the third stream between), three bearings each a flange pair round a race with a 150-tooth ring gear, three hydraulic motors with pinions in mesh, and a rotary union carrying pressure across the bearings |
+| Swivel duct | Fixed ring on the outer case, three double-walled ducts (structural shell outside a cooling liner on hangers, the third stream between), three bearings each a flange pair round a race with a 150-tooth ring gear, three hydraulic motors with pinions in mesh, and a rotary union and a swivel coupling at each bearing carrying pressure and return to the motors that turn and, through two rings round the aft duct, to the four nozzle actuators |
 | C-D nozzle | Static ring, 16 convergent flaps and 16 seals, 16 divergent flaps and seals, each flap with a backbone, 16 serrated external flaps on compression links, hinge knuckles at the static ring and the throat, a unison ring on links to every convergent flap, and four actuators turning it through bellcranks |
 | Spools | LP and HP shafts, five bearings (inner race, outer race, a full ring of balls or rollers) in two sumps hung from the fan frame and the mid-turbine frame |
 | Third stream | Mode valve (24 petals), 12-segment plate-fin heat exchanger, coolant lines to the aircraft |
-| Externals | Orthogrid stiffening on the outer cases, accessory gearbox with ribs, tower shaft off a bevel on the HP shaft, two generators, fuel pump and metering unit, oil tank and lines to both sumps, fuel lines to both manifolds, two FADEC channels on stand-offs with their looms, each channel's own instrumentation loom along an upper flank to seven pressure, temperature and flame probes, three ignition exciters with their HT leads to the two main igniters and the reheat igniter, forward trunnions, an aft thrust lug, mode-valve actuators, and a hydraulic pump feeding the swivel's motors |
+| Externals | Orthogrid stiffening on the outer cases, accessory gearbox with ribs, tower shaft off a bevel on the HP shaft, two starter-generators (the engine starts electrically, from the aircraft's bus), fuel pump, fuel-oil heat exchanger and metering unit, oil tank and lines to both sumps, fuel lines to both manifolds, two FADEC channels on stand-offs with their looms, each channel's own instrumentation loom along an upper flank to seven pressure, temperature and flame probes, three ignition exciters with their HT leads to the two main igniters and the reheat igniter, forward trunnions, an aft thrust lug, electromechanical mode-valve actuators on a loom from FADEC A, a customer bleed port with its shut-off valve through the fan frame's top strut for the aircraft's air conditioning, and a hydraulic pump feeding the swivel's motors |
 
 ## Build
 
@@ -125,7 +125,7 @@ generated from the build and checked against it by `audit_manifest`.
 
 ## The gates
 
-`make verify` runs ten checks, and all of them pass:
+`make verify` runs eleven checks, and all of them pass:
 
 | Gate | What it enforces |
 |---|---|
@@ -134,8 +134,9 @@ generated from the build and checked against it by `audit_manifest`.
 | `audit_geometry` | no part too crude to be what it is named |
 | `audit_structure` | attached, mirrored, distinct, singletons, named shapes |
 | `audit_intersect` | exact BVH interference: every overlap is a declared joint (a blade root in its disc, a vane in its case, a fuel nozzle through the cases it passes). **KNOWN defects: none** |
-| `audit_support` | every closed piece — each of 4,009, every blade and bolt — touches something. **DETACHED: none** |
-| `audit_joints` | one assembly, and 71 declared circuits joined link by link: each spool through its bearings and sumps to the frames and mounts, fuel from the aircraft's inlet through the pump and metering unit to every swirler, each FADEC channel through its loom to its probes, each igniter to its exciter, oil from tank to both sumps, reheat fuel through the zone valves to every spraybar, the swivel's ducts bearing to bearing with each motor in mesh, the nozzle's hinges, links and actuators |
+| `audit_support` | every closed piece — each of 4,072, every blade and bolt — touches something. **DETACHED: none** |
+| `audit_joints` | one assembly, and 76 declared circuits joined link by link: each spool through its bearings and sumps to the frames and mounts, fuel from the aircraft's inlet through the pump and metering unit to every swirler, each FADEC channel through its loom to its probes, each igniter to its exciter, oil from tank to both sumps, reheat fuel through the zone valves to every spraybar, the swivel's ducts bearing to bearing with each motor in mesh, the nozzle's hinges, links and actuators, hydraulic pressure across every bearing to the motors and the actuators, fuel through the oil cooler, FADEC A to the mode valve and the bleed valve |
+| `audit_ports` | every pipe, line and loom end runs into something -- the check that found the ducts' liner hangers short of their walls, and the mode valve's actuators and the nozzle's driven by nothing. **OPEN: none**; of this engine's pipe ends, about 15,000 are drawn in a local frame and cannot be tested this way, and the gate prints how many |
 | `audit_rotor` | nothing that turns comes within 0.5 mm of anything that does not turn with it — the check that found the fan running 3.2 mm clear instead of 1.6 |
 | `audit_manifest` | the viewer's manifest matches the build |
 | `validate_viewer` | the viewer's JavaScript parses and loads |

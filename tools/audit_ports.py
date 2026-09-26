@@ -29,8 +29,6 @@ FREE = {
 
 # --- OPEN: rewritten by --shrink, never by hand to add ---
 OPEN = {
-    "end mode_valve_actuators @ 530,-335,335",
-    "end mode_valve_actuators @ 530,335,335",
 }
 # --- end OPEN ---
 

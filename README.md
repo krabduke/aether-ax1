@@ -90,6 +90,8 @@ make build      # generate geometry, assemble build/aether.blend, write parts.cs
 make verify     # every gate below  <- the definition of done
 make render     # hero, rear quarter, cutaway, exploded
 make bom        # bom.csv: every part, its group, material, pieces and size
+make drawings   # drawings.pdf: A1 GA and assembly sheets, third angle, to scale, dimensioned,
+                #   ballooned, with parts lists
 make closeups   # detail shots used to inspect the model
 make web        # decimated, Draco-compressed GLB for the viewer
 make viewer     # serve the viewer on http://localhost:8791/viewer/

@@ -2,7 +2,7 @@ BLENDER := /Applications/Blender.app/Contents/MacOS/Blender
 BLEND   := build/aether.blend
 SAMPLES ?= 64
 
-.PHONY: all build verify audits render closeups export web stl manifest viewer cycle clean
+.PHONY: all build verify audits render closeups export web stl manifest viewer cycle clean bom drawings
 
 all: build verify render web
 
@@ -53,3 +53,7 @@ clean:
 
 bom:                         ## bill of materials: every part, its group, material, pieces, size
 	python3 ../_shared/tools/make_bom.py . build/aether.blend bom.csv
+
+drawings:                    ## drawings.pdf: a GA sheet and one per assembly, A1, dimensioned, with parts lists
+	python3 ../_shared/tools/make_drawings.py . build/aether.blend build/drawings
+	cp build/drawings/drawings.pdf drawings.pdf

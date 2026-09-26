@@ -65,7 +65,7 @@
     border-radius:3px; padding:6px 13px; cursor:pointer;
   }
   .toggle[aria-pressed="true"]{border-color:var(--ink)}
-  #swivel, #yaw{width:170px; accent-color:var(--warm)}
+  #swivel, #yaw, #apart{width:170px; accent-color:var(--warm)}
   .val{min-width:3.5em; display:inline-block}
   #gauges{display:flex; gap:22px; margin-left:auto; font-size:14px; pointer-events:none}
   #gauges b{display:block; font-size:24px; font-weight:600; line-height:1.05}
@@ -140,6 +140,13 @@
     <div style="display:flex; gap:8px">
       <button class="toggle" id="cut" aria-pressed="false">Cutaway</button>
       <button class="toggle" id="air" aria-pressed="true">Airflow</button>
+    </div>
+  </div>
+  <div class="group">
+    <label for="apart">Take it apart <span class="val" id="apartval">together</span></label>
+    <div style="display:flex; gap:8px; align-items:center">
+      <input id="apart" type="range" min="0" max="100" step="1" value="0">
+      <button class="toggle" id="build">Assemble it</button>
     </div>
   </div>
   <div id="gauges" aria-live="polite">
@@ -534,6 +541,63 @@ renderer.domElement.addEventListener('pointermove', (e) => {
   hoverSpan = [info.x0, info.x1]; drawStrip();
 });
 
+/* ---------------- taking it apart ----------------
+   The way an engine shop splits one: the casings lift off, the gearbox and
+   its accessories come off underneath, the shafts drop out, and the
+   modules slide apart along the axis -- fan forward, nozzle aft. They go
+   back in the order they are built up, which "Assemble it" plays.
+   Offsets in the engine's millimetres: [x aft, y, z up]. */
+const APART = {
+  '07 Frames and casings':  [0, 0, 1100],
+  '08 Spools and bearings': [0, 0, -650],
+  '03 Combustor':           [0, 0, 0],
+  '02 Compressor':          [-500, 0, 0],
+  '04 Turbines':            [450, 0, 0],
+  '01 Fan':                 [-1100, 0, 0],
+  '05 Augmentor':           [950, 0, 0],
+  '06 Nozzle':              [1500, 0, 0],
+  '09 Accessories':         [0, 0, -1350],
+};
+const ORDER = Object.keys(APART);       // the order they go on
+const STAGGER = 0.07;
+const apartMeshes = [];
+for (const [name, list] of meshes) {
+  const mod = M.parts[name].m;
+  if (!(mod in APART)) continue;
+  const off = toScene(APART[mod]).multiplyScalar(MM);
+  for (const m of list) apartMeshes.push({m, base: m.position.clone(), off, k: ORDER.indexOf(mod)});
+}
+const apartReach = 1.25 * new THREE.Box3().setFromObject(gltf.scene).getSize(new THREE.Vector3()).length();
+const apart = {s: 0, target: 0, playing: false, then: null, glow: false};
+const qInv = new THREE.Quaternion(), v3 = new THREE.Vector3();
+function applyApart(){
+  const n = ORDER.length, w = 1 - (n - 1) * STAGGER;
+  for (const a of apartMeshes) {
+    const p = Math.min(1, Math.max(0, (apart.s - (n - 1 - a.k) * STAGGER) / w));
+    const e = p * p * (3 - 2 * p);
+    a.m.parent.getWorldQuaternion(qInv).invert();
+    a.m.position.copy(a.base).add(v3.copy(a.off).multiplyScalar(e).applyQuaternion(qInv));
+  }
+  const pct = Math.round(apart.s * 100);
+  $('apartval').textContent = pct === 0 ? 'together' : pct === 100 ? 'all apart' : `${pct} %`;
+}
+$('apart').addEventListener('input', (e) => {
+  apart.playing = false;
+  apart.target = +e.target.value / 100;
+  if (reduced) { apart.s = apart.target; applyApart(); }
+});
+$('build').addEventListener('click', () => {
+  // from wherever it is, out to all apart and back together, in order
+  apart.playing = true;
+  apart.target = apart.s > 0.5 ? 0 : 1;
+  // stand back far enough to see it all apart
+  const d = camera.position.distanceTo(controls.target);
+  if (d < apartReach) apart.fly = {from: camera.position.clone(), t: 0,
+    to: controls.target.clone().add(camera.position.clone().sub(controls.target).setLength(apartReach))};
+  apart.then = apart.target === 1 ? 0 : null;
+  if (reduced) { apart.s = 0; apart.playing = false; $('apart').value = 0; applyApart(); }
+});
+
 /* ---------------- loop ---------------- */
 $('loading').classList.add('gone');
 drawStrip();
@@ -560,14 +624,32 @@ renderer.setAnimationLoop(() => {
     swivel.yaw = reduced ? swivel.ty : step(swivel.yaw, swivel.ty, 12);
     applySwivel();
   }
-  if (plume.visible !== state.reheat) setGlow(state.reheat);
-  plume.visible = state.reheat;
+  if (apart.fly) {
+    apart.fly.t = Math.min(1, apart.fly.t + dt / 1.2);
+    const k = apart.fly.t * apart.fly.t * (3 - 2 * apart.fly.t);
+    camera.position.lerpVectors(apart.fly.from, apart.fly.to, reduced ? 1 : k);
+    if (apart.fly.t >= 1 || reduced) apart.fly = null;
+  }
+  // apart and back: a slider drag follows quickly; the build plays slowly
+  if (apart.s !== apart.target) {
+    const v = dt / (apart.playing ? 7.0 : 0.6);
+    apart.s = Math.abs(apart.target - apart.s) < v ? apart.target
+      : apart.s + Math.sign(apart.target - apart.s) * v;
+    if (apart.playing) $('apart').value = Math.round(apart.s * 100);
+    if (apart.s === apart.target && apart.playing) {
+      if (apart.then != null) { apart.target = apart.then; apart.then = null; }
+      else apart.playing = false;
+    }
+    applyApart();
+  } else if (apart.s > 0 && (swivel.pitch !== swivel.tp || swivel.yaw !== swivel.ty)) applyApart();
+  if (apart.glow !== state.reheat) { apart.glow = state.reheat; setGlow(state.reheat); }
+  plume.visible = state.reheat && apart.s === 0;
   if (plume.visible && !reduced) {
     const f = 0.94 + 0.06 * Math.random();
     plume.scale.set(1, f, f);
     for (const d of flicker) d.material.opacity = d.userData.base * (0.8 + 0.4 * Math.random());
   }
-  particles.visible = state.air && state.n1 > 0.02;
+  particles.visible = state.air && state.n1 > 0.02 && apart.s === 0;
   if (particles.visible) updateParticles(reduced ? 0 : dt, 0.25 + state.n1);
   const thr = state.reheat ? F.thrust_ab_kn : F.thrust_dry_kn * Math.pow(state.n1, 2.4);
   $('g-n1').textContent = Math.round(state.n1 * 100);

@@ -985,7 +985,7 @@
    "x0": 2756.0,
    "x1": 4500.0,
    "parts": 27,
-   "faces": 94838
+   "faces": 94866
   },
   {
    "key": "07 Frames and casings",
@@ -1967,9 +1967,9 @@
   "swivel_coupling_1": {
    "m": "06 Nozzle",
    "mat": "steel",
-   "x0": 2830.0,
+   "x0": 2833.0,
    "x1": 2906.0,
-   "f": 198,
+   "f": 226,
    "spool": null,
    "spin": null
   },

@@ -502,7 +502,7 @@ def _couplings():
     out = {}
     frames = {1: square(N["x_brg1"]), 2: oblique(1), 3: oblique(2)}
     for k, fr in frames.items():
-        a0 = -50.0 if k == 1 else -26.0      # the first reaches the union
+        a0 = -26.0
         # its two halves, fixed and turning, either side of the joint, and
         # the bolts that close each round the bearing's rim
         halves = [common.sector_block(a0, -1.0, 486.0, 540.0, t - 0.07, t + 0.07, 12),
@@ -512,6 +512,18 @@ def _couplings():
             for dt in (-0.045, 0.045):
                 halves.append(common.radial_pin(ax, 539.0, 545.0, 4.5,
                                                 math.degrees(t + dt), 10))
+        if k == 1:
+            # the union is 18 mm ahead of the first coupling, on the fixed
+            # case: a short pair from its aft face into the coupling. (The
+            # coupling used to reach forward over the union to it, and stood
+            # into an airframe's aft closure where the body ends just ahead
+            # of this bearing.)
+            for side in (-1.0, 1.0):
+                c = math.radians(HYD_CLOCK + side * HYD_DC)
+                halves.append(mesh.pipe(
+                    [(UNION_X[1] - 3.0 - N["x_brg1"], 505.0 * math.cos(c), 505.0 * math.sin(c)),
+                     (a0 + 3.0, 505.0 * math.cos(c), 505.0 * math.sin(c))],
+                    HYD_LINE_R, 12, bend=0.0))
         out[f"swivel_coupling_{k}"] = to_frame(mesh.join(*halves), fr)
     return out
 

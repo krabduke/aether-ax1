@@ -50,3 +50,6 @@ viewer:
 
 clean:
 	rm -rf build
+
+bom:                         ## bill of materials: every part, its group, material, pieces, size
+	python3 ../_shared/tools/make_bom.py . build/aether.blend bom.csv
